@@ -22,17 +22,12 @@ Route::group(
                 Route::resource('quiz', Quiz::class);
             }
         );
-
-        Route::middleware('guest:sanctum')->group(
-            function () {
-                Route::resource('questionnaire', QuestionnaireController::class)->only(['index', 'show']);
-                Route::resource('category', CategoryController::class)->only(['index']);
-                Route::resource('stage', StageController::class)->only(['index']);
-                Route::resource('tool', ToolController::class)->only(['index', 'show']);
-                Route::post('/login', [UserController::class, 'login'])->name('login');
-                Route::post('/register', [UserController::class, 'register'])->name('register');
-                Route::post('/forgot-password', [UserController::class, 'forgotPassword'])->name('forgot-password');
-            }
-        );
+        Route::resource('questionnaire', QuestionnaireController::class)->only(['index', 'show']);
+        Route::resource('category', CategoryController::class)->only(['index']);
+        Route::resource('stage', StageController::class)->only(['index']);
+        Route::resource('tool', ToolController::class)->only(['index', 'show']);
+        Route::post('/login', [UserController::class, 'login'])->name('login');
+        Route::post('/register', [UserController::class, 'register'])->name('register');
+        Route::post('/forgot-password', [UserController::class, 'forgotPassword'])->name('forgot-password');
     }
 );

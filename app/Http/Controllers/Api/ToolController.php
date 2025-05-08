@@ -14,7 +14,12 @@ class ToolController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Tool::active()
+            ->orderBy('order', 'asc')
+            ->paginate(SELF::TAKE_LESS)
+            ->setPath('?')
+            ->withQueryString();
+        return $elements;
     }
 
     /**
@@ -38,7 +43,7 @@ class ToolController extends Controller
      */
     public function show(Tool $tool)
     {
-        //
+        return $tool->load('categories');
     }
 
     /**

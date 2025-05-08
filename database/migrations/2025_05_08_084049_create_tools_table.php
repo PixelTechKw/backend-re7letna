@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('image')->default('tool.png');
             $table->smallInteger("order")->unsigned()->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

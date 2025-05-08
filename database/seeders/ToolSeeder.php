@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Tool;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,6 +14,7 @@ class ToolSeeder extends Seeder
      */
     public function run(): void
     {
-        Tool::factory(app()->environment('production') ? 2 : 20)->create();
+        Tool::factory(app()->environment('production') ? 2 : 20)->create()
+            ->each(fn($t) => $t->categories()->saveMany(Category::factory(1)->make()));
     }
 }
