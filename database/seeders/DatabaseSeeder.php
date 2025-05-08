@@ -26,9 +26,9 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call(UserSeeder::class);
         $this->call(VideoSeeder::class);
+        $this->call(CategorySeeder::class);
         $this->call(StageSeeder::class);
         $this->call(ChildSeeder::class);
-        $this->call(CategorySeeder::class);
         $this->call(ToolSeeder::class);
         $this->call(QuizSeeder::class);
     }

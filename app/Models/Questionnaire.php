@@ -5,12 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
+
 
 class Questionnaire extends Model
 {
     /** @use HasFactory<\Database\Factories\QuestionnaireFactory> */
     use HasFactory, ModelHelpers;
+    protected $guarded = ['id'];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'active'
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+        ];
+    }
 
     public function stage()
     {
@@ -20,9 +38,5 @@ class Questionnaire extends Model
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class);
-    }
-    public function categories(): MorphToMany
-    {
-        return $this->morphToMany(Category::class, 'categorable');
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image')->default('default.png');
             $table->smallInteger("order")->unsigned()->nullable();
             $table->boolean('active')->default(true);
+            // $table->string('group'); // questionnaire / questions or videos /
             $table->timestamps();
         });
     }

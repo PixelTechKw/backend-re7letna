@@ -13,6 +13,6 @@ class ToolSeeder extends Seeder
      */
     public function run(): void
     {
-        Tool::factory(app()->environment('production') ? 2 : 50)->create();
+        Tool::factory(app()->environment('production') ? 2 : 20)->create();
     }
 }

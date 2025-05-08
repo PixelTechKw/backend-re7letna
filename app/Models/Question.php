@@ -11,18 +11,20 @@ class Question extends Model
 {
     /** @use HasFactory<\Database\Factories\QuestionFactory> */
     use HasFactory;
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    protected $guarded = ['id'];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'active'
+    ];
     protected function casts(): array
     {
         return [
             'answers' => 'array',
+            'active' => 'boolean'
         ];
     }
+
 
     public function questionnaire(): BelongsTo
     {
@@ -30,6 +32,6 @@ class Question extends Model
     }
     public function categories(): MorphToMany
     {
-        return $this->morphToMany(Category::class, 'categorable');
+        return $this->morphToMany(Category::class, 'categoryable');
     }
 }

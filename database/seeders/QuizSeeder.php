@@ -14,7 +14,7 @@ class QuizSeeder extends Seeder
      */
     public function run(): void
     {
-        Quiz::factory(app()->environment('production') ? 2 : 100)->create()->each(function ($quiz) {
+        Quiz::factory(app()->environment('production') ? 2 : 50)->create()->each(function ($quiz) {
             $quiz->questionnaire()->first()->questions()->each(function ($question) use ($quiz) {
                 $quiz->answers()->save(QuizAnswer::factory()->create());
             });

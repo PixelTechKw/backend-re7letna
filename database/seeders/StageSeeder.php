@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Models\Stage;
@@ -39,10 +40,16 @@ class StageSeeder extends Seeder
             'description' => fake()->realText(),
             'from' => $g['from'],
             'to' => $g['to'],
-        ])->each(function ($q) {
-            $q->videos()->saveMany(Video::factory(5)->make());
-            $q->questionnaires()->saveMany(Questionnaire::factory(5)->create()->each(function ($q) {
-                $q->questions()->saveMany(Question::factory(10)->create());
+        ])->each(function ($s) {
+            $s->questionnaires()->saveMany(Questionnaire::factory(5)->create()->each(function ($q) use ($s) {
+                $q->questions()->saveMany(Question::factory(10)->create())->each(function ($q) use ($s) {
+                    $q->categories()->saveMany(Category::factory(1)->create()->each(function ($c) use ($s) {
+                        Video::factory(2)->create()->each(function ($v) use ($c, $s) {
+                            $v->stages()->attach($s->id);
+                            $v->categories()->save($c);
+                        });
+                    }));
+                });
             }));
         }));
     }

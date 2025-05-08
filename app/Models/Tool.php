@@ -13,6 +13,6 @@ class Tool extends Model
 
     public function categories(): MorphToMany
     {
-        return $this->morphToMany(Category::class, 'categorable');
+        return $this->morphToMany(Category::class, 'categoryable');
     }
 }

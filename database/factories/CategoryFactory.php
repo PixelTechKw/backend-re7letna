@@ -20,7 +20,7 @@ class CategoryFactory extends Factory
             'name' => fake()->name(),
             'description' => fake()->realText(),
             'image' => fake()->imageUrl(),
-            
+            'order' => fake()->numberBetween(1, 10),
         ];
     }
 }

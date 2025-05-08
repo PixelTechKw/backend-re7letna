@@ -11,7 +11,18 @@ class Category extends Model
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
     protected $guarded = ['id'];
-
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'active',
+        'pivot'
+    ];
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean'
+        ];
+    }
     public function videos(): MorphToMany
     {
         return $this->morphedByMany(Video::class, 'categoryable');
@@ -22,10 +33,6 @@ class Category extends Model
         return $this->morphedByMany(Question::class, 'categoryable');
     }
 
-    public function questionnaires(): MorphToMany
-    {
-        return $this->morphedByMany(Questionnaire::class, 'categoryable');
-    }
 
     public function tools(): MorphToMany
     {

@@ -13,6 +13,6 @@ class VideoSeeder extends Seeder
      */
     public function run(): void
     {
-        Video::factory(app()->environment('production') ? 2 : 100)->create();
+        Video::factory(app()->environment('production') ? 2 : 10)->create();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Http\Requests\UpdateQuestionnaireRequest;
+use App\Models\Question;
 use App\Models\Questionnaire;
 
 class QuestionnaireController extends Controller
@@ -15,8 +16,10 @@ class QuestionnaireController extends Controller
     public function index()
     {
         $elements = Questionnaire::active()
-            ->with('questions')
-            ->orderBy('id', 'desc')
+            ->has('questions')
+            ->when(request()->stage_id, fn($q) => $q->where('stage_id', request()->stage_id))
+            ->with('stage')
+            ->orderBy('order', 'asc')
             ->paginate(SELF::TAKE_LESS)
             ->setPath('?')
             ->withQueryString();
@@ -44,7 +47,10 @@ class QuestionnaireController extends Controller
      */
     public function show(Questionnaire $questionnaire)
     {
-        //
+        $questionnaire->load(['questions' => function ($q) {
+            $q->orderBy('order', 'asc')->with(['categories' => fn($q) => $q->orderBy('order', 'asc')]);
+        }, 'stage']);
+        return response()->json(compact('questionnaire'), 200);
     }
 
     /**

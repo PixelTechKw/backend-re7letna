@@ -12,6 +12,11 @@ class Stage extends Model
 {
     /** @use HasFactory<\Database\Factories\StageFactory> */
     use HasFactory;
+    protected $guarded = ['id'];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
     public function children(): HasMany
     {

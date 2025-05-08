@@ -15,8 +15,6 @@ class ChildSeeder extends Seeder
      */
     public function run(): void
     {
-        Child::factory(app()->environment('production') ? 2 : 100)->create()->each(function ($q) {
-            
-        });
+        Child::factory(app()->environment('production') ? 2 : 50)->create()->each(function ($q) {});
     }
 }
