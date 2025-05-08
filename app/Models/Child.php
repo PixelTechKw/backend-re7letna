@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Models;
+
+use App\Casts\UserAgeCast;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Child extends Model
+{
+    /** @use HasFactory<\Database\Factories\ChildFactory> */
+    use HasFactory;
+    protected $guarded = ['id'];
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'children';
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    // protected function casts(): array
+    // {
+    //     return [
+    //         'age' => UserAgeCast::class,
+    //     ];
+    // }
+
+    public function stage()
+    {
+        return $this->belongsTo(Stage::class);
+    }
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class, 'child_id');
+    }
+
+    public function latestQuiz()
+    {
+        return $this->hasOne(Quiz::class)->latestOfMany();
+    }
+}
