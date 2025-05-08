@@ -16,7 +16,7 @@ class ToolController extends Controller
     {
         $elements = Tool::active()
             ->orderBy('order', 'asc')
-            ->paginate(SELF::TAKE_LESS)
+            ->paginate(SELF::TAKE_MIN)
             ->setPath('?')
             ->withQueryString();
         return $elements;

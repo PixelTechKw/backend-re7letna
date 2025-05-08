@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\QuestionnaireController;
 use App\Http\Controllers\Api\StageController;
 use App\Http\Controllers\Api\ToolController;
+use App\Http\Controllers\Api\VideoController;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,13 +21,16 @@ Route::group(
             function () {
                 Route::post('/change-password', [UserController::class, 'changePassword'])->name('change-password');
                 Route::resource('quiz', Quiz::class);
+                Route::post('/logout', [UserController::class, 'logout'])->name('logout');
             }
         );
         Route::resource('questionnaire', QuestionnaireController::class)->only(['index', 'show']);
         Route::resource('category', CategoryController::class)->only(['index']);
+        Route::resource('video', VideoController::class)->only(['index', 'show']);
         Route::resource('stage', StageController::class)->only(['index']);
         Route::resource('tool', ToolController::class)->only(['index', 'show']);
         Route::post('/login', [UserController::class, 'login'])->name('login');
+
         Route::post('/register', [UserController::class, 'register'])->name('register');
         Route::post('/forgot-password', [UserController::class, 'forgotPassword'])->name('forgot-password');
     }

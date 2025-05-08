@@ -13,7 +13,13 @@ class Video extends Model
 {
     /** @use HasFactory<\Database\Factories\VideoFactory> */
     use HasFactory, ModelHelpers;
+    protected $guarded = ['id'];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'active'
 
+    ];
     /**
      * Get the attributes that should be cast.
      *

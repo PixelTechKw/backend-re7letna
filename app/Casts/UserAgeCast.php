@@ -15,8 +15,7 @@ class UserAgeCast implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        // return Carbon::parse($model->dob)->age;
-        return now()->diffInYears($model->dob);
+        return Carbon::parse($model->dob)->age;
     }
 
     /**

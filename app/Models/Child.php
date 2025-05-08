@@ -17,17 +17,23 @@ class Child extends Model
      * @var string
      */
     protected $table = 'children';
+    protected $appends = ['age'];
+    protected $hidden = [
+        'created_at',
+        'deleted_at',
+        'updated_at',
+    ];
     /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
      */
-    // protected function casts(): array
-    // {
-    //     return [
-    //         'age' => UserAgeCast::class,
-    //     ];
-    // }
+    protected function casts(): array
+    {
+        return [
+            'age' => UserAgeCast::class,
+        ];
+    }
 
     public function stage()
     {

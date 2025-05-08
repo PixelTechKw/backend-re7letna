@@ -128,16 +128,18 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->all()], 404);
         }
-        $user = User::where('email', $request->login)->orWhere('mobile', $request->login)->first();
+        $user = User::where('email', $request->login)->orWhere('mobile', $request->login)->with('children')->first();
         if (!$user || !Hash::check($request->password, $user->password) || !$user->active) {
             return response()->json(["message" => trans("general.credentials_not_correct")], 404);
         }
         if (
             Auth::attempt(['mobile' => $request->login, 'password' => $request->password]) ||
-            Auth::attempt(['email' => $request->login, 'password' => $request->password]) ||
-            Auth::attempt(['username' => $request->login, 'password' => $request->password])
+            Auth::attempt(['email' => $request->login, 'password' => $request->password])
+
         ) {
-            return response()->json(AuthResource::make(auth()->user()), 200);
+            $token = $user->createToken('personal')->plainTextToken;
+            $user->token = $token;
+            return response()->json(AuthResource::make($user), 200);
         }
         return response()->json(["message" => trans("general.credentials_not_correct")], 404);
     }

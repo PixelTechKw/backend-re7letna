@@ -14,7 +14,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Category::active()
+            ->orderBy('order', 'asc')
+            ->paginate(SELF::TAKE_MIN)
+            ->setPath('?')
+            ->withQueryString();
+        return $elements;
     }
 
     /**

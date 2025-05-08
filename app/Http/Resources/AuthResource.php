@@ -18,10 +18,12 @@ class AuthResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'username' => $this->username,
             'name' => $this->name,
             'mobile' => $this->mobile,
             'email' => $this->email,
+            'token' => $this->token,
+            'children' => $this->whenLoaded('children')
+
         ];
     }
 }

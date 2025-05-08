@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVideoRequest;
 use App\Http\Requests\UpdateVideoRequest;
+use App\Models\Category;
 use App\Models\Video;
 
 class VideoController extends Controller
@@ -14,7 +15,23 @@ class VideoController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Video::active()
+            ->when(request()->category_id, function ($q) {
+                $q->whereHas('categories', function ($q) {
+                    $q->where('category_id', request()->category_id);
+                });
+            })
+            ->when(request()->stage_id, function ($q) {
+                $q->whereHas('stages', function ($q) {
+                    $q->where('stage_id', request()->stage_id);
+                });
+            })
+            ->with('categories','stages')
+            ->orderBy('order', 'asc')
+            ->paginate(SELF::TAKE_MIN)
+            ->setPath('?')
+            ->withQueryString();
+        return $elements;
     }
 
     /**
@@ -38,7 +55,7 @@ class VideoController extends Controller
      */
     public function show(Video $video)
     {
-        //
+        return $video->load('categories');
     }
 
     /**
