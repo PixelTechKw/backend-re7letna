@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Comment>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Consultant>
  */
-class CommentFactory extends Factory
+class ConsultantFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +17,11 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
+            'name' => fake()->name(),
             'mobile' => fake()->numberBetween(11111111, 999999999),
-            'content' => fake()->realText(),
+            'email' => fake()->unique()->safeEmail(),
+            'description' => fake()->realText(),
+            'order' => fake()->numberBetween(1, 10),
         ];
     }
 }
