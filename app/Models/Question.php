@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Question extends Model
 {
     /** @use HasFactory<\Database\Factories\QuestionFactory> */
-    use HasFactory;
+    use HasFactory, ModelHelpers;
     protected $guarded = ['id'];
     protected $hidden = [
         'created_at',

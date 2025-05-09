@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ValidAnswerStructure;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreQuizRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreQuizRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user() && request()->user()->children()->pluck('id')->contains($this->child_id);
     }
 
     /**
@@ -21,8 +22,6 @@ class StoreQuizRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 }

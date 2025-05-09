@@ -16,7 +16,6 @@ class Quiz extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $hidden = ['updated_at'];
-    protected $appends = ['score_percentage'];
     /**
      * Get the attributes that should be cast.
      *
@@ -53,16 +52,5 @@ class Quiz extends Model
     public function answers(): HasMany
     {
         return $this->hasMany(QuizAnswer::class);
-    }
-
-    public function getCalculateScoreAttribute()
-    {
-        // Get total questions in the questionnaire
-        $totalQuestions = $this->questionnaire->questions()->count();
-        // Get sum of all answer scores (100, 50, or 9)
-        $totalScore = $this->answers()->sum('score');
-        // Calculate percentage score
-        $percentageScore = ($totalScore / ($totalScore * 100)) * 100;
-        return $percentageScore;
     }
 }

@@ -48,7 +48,8 @@ class QuestionnaireController extends Controller
     public function show(Questionnaire $questionnaire)
     {
         $questionnaire->load(['questions' => function ($q) {
-            $q->orderBy('order', 'asc')->with(['categories' => fn($q) => $q->orderBy('order', 'asc')]);
+            $q->active()->orderBy('order', 'asc')
+                ->with(['categories' => fn($q) => $q->orderBy('order', 'asc')]);
         }, 'stage']);
         return response()->json(compact('questionnaire'), 200);
     }

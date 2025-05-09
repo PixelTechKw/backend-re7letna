@@ -14,8 +14,9 @@ class TotalScoreCast implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        $noOfanswers = $model->answers()->count();
-        return ($model->score / ($noOfanswers * 100)) * 100;
+        $questions = $model->questionnaire()->first()->questions()->active()->get()->count();
+        $totalScore = $model->answers()->sum('value');
+        return ($totalScore / ($questions * 100)) * 100;
     }
 
     /**
