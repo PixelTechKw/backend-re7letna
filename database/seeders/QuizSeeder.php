@@ -16,7 +16,11 @@ class QuizSeeder extends Seeder
     {
         Quiz::factory(app()->environment('production') ? 2 : 50)->create()->each(function ($quiz) {
             $quiz->questionnaire()->first()->questions()->each(function ($question) use ($quiz) {
-                $quiz->answers()->save(QuizAnswer::factory()->create());
+                $answer = QuizAnswer::factory()->create();
+                $quiz->answers()->save($answer);
+                $quiz->update([
+                    'score' => $answer->value + $quiz->score,
+                ]);
             });
         });
     }

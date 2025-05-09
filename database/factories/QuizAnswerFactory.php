@@ -21,8 +21,8 @@ class QuizAnswerFactory extends Factory
         return [
             'quiz_id' => Quiz::all()->random()->id,
             'question_id' => Question::all()->random()->id,
-            'value' => fn($array) => collect(Question::whereId($array['question_id'])->first()->answers)->random()['value'],
-            'is_correct' => fn($array) => collect(Question::whereId($array['question_id'])->first()->answers)->where('value', $array['value'])->first()['is_correct'],
+            'name' => fn($array) => collect(Question::whereId($array['question_id'])->first()->answers)->random()['name'],
+            'value' => fn($array) => collect(Question::whereId($array['question_id'])->first()->answers)->where('name', $array['name'])->first()['value'],
         ];
     }
 }

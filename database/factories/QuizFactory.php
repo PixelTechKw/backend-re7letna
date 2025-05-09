@@ -22,7 +22,6 @@ class QuizFactory extends Factory
         return [
             'child_id' => Child::all()->random()->id,
             'questionnaire_id' => Questionnaire::all()->random()->id,
-            'score' => fake()->numberBetween(20, 100),
         ];
     }
 }

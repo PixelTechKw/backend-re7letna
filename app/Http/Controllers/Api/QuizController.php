@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuizRequest;
 use App\Http\Requests\UpdateQuizRequest;
+use App\Models\Child;
 use App\Models\Quiz;
 
 class QuizController extends Controller
@@ -14,7 +15,26 @@ class QuizController extends Controller
      */
     public function index()
     {
-        //
+        request()->validate([
+            'child_id' => 'sometimes|exists:children,id',
+        ]);
+        $child = request()->user()->children()
+            ->where('id', request('child_id'))
+            ->first();
+        if (!$child) {
+            return response()->json([
+                'message' => 'Child not found',
+            ], 404);
+        }
+        $elements = Quiz::with('answers.question', 'questionnaire')
+            ->when(request('child_id'), function ($query) {
+                return $query->where('child_id', request('child_id'));
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10)
+            ->setPath('?')
+            ->withQueryString();
+        return $elements;
     }
 
     /**
@@ -38,7 +58,15 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        //
+        $child = request()->user()->children()
+            ->where('id', $quiz->child_id)
+            ->first();
+        if (!$child) {
+            return response()->json([
+                'message' => 'Child not found',
+            ], 404);
+        }
+        return $quiz->load('answers.question', 'questionnaire');
     }
 
     /**

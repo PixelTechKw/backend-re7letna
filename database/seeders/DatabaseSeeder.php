@@ -31,5 +31,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ChildSeeder::class);
         $this->call(ToolSeeder::class);
         $this->call(QuizSeeder::class);
+        $this->call(CommentSeeder::class);
     }
 }

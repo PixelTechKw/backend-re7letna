@@ -12,6 +12,7 @@ class QuizAnswer extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $table = 'quiz_answers';
+    protected $hidden = ['updated_at', 'created_at'];
     /**
      * Get the attributes that should be cast.
      *

@@ -24,18 +24,18 @@ class QuestionFactory extends Factory
             'questionnaire_id' => Questionnaire::all()->random()->id,
             'answers' => [
                 [
-                    'value' => 'نعم',
-                    'is_correct' => true,
+                    'name' => 'نعم',
+                    'value' => 100,
 
                 ],
                 [
-                    'value' => 'احيانا',
-                    'is_correct' => true,
+                    'name' => 'احيانا',
+                    'value' => 50,
 
                 ],
                 [
-                    'value' => 'لا',
-                    'is_correct' => false,
+                    'name' => 'لا',
+                    'value' => 0,
 
                 ],
             ]

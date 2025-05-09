@@ -165,7 +165,6 @@ class UserController extends Controller
                 'mobile' => $request->mobile,
                 'gender' => $request->has('gender') ? $request->gender : UserGenderEnum::MALE->value,
                 'password' => Hash::make($request->password),
-                'api_token' => hash('sha256', Str::random(60)),
             ]);
             if (app()->environment("production")) {
                 event(new Registered($user));
@@ -200,9 +199,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->all()], 403);
         }
-        $element = $request->user()->load([
-            'orders' => fn($q) => $q->paid(),
-        ]);
+        $element = $request->user()->load('children');
         try {
             $update = $element->update(["password" => Hash::make($request->password)]);
             if ($update) {
@@ -216,11 +213,14 @@ class UserController extends Controller
 
     public function forgotPassword(Request $request): JsonResponse
     {
-        $request->validate([
-            "mobile" => "required",
+        $validator = validator($request->all(), [
+            "email" => "required|email|exists:users,email",
         ]);
+        if ($validator->fails()) {
+            return response()->json(["message" => $validator->errors()->all()], 403);
+        }
         $status = Password::sendResetLink(
-            $request->only("mobile")
+            $request->only("email")
         );
         if ($status == Password::RESET_LINK_SENT) {
             return response()->json(['message' => trans('general.process_success')], 200);
