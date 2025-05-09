@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\UserGenderEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreChildRequest;
 use App\Http\Requests\UpdateChildRequest;
 use App\Models\Child;
+use App\Models\Stage;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Validation\Rule;
 
 class ChildController extends Controller
 {
@@ -14,7 +19,11 @@ class ChildController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Child::where('user_id', request()->user()->id)->orderBy('id', 'desc')
+            ->paginate(SELF::TAKE_LESS)
+            ->setPath('?')
+            ->withQueryString();
+        return $elements;
     }
 
     /**
@@ -30,7 +39,27 @@ class ChildController extends Controller
      */
     public function store(StoreChildRequest $request)
     {
-        //
+        try {
+            $validator = validator(request()->all(), [
+                'name' => 'required|string|max:255',
+                'gender' => [Rule::in(UserGenderEnum::cases()), 'required'],
+                'dob' => 'required|date',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(["message" => $validator->errors()->all()], 403);
+            }
+            $age = Carbon::parse($request->dob)->age;
+            $stage = Stage::where('from', '<=', $age)
+                ->where('to', '>=', $age)
+                ->firstOr(function () {
+                    return Stage::orderByDesc('to')->first();
+                });
+            $request->request->add(['stage_id' => $stage->id]);
+            $element = request()->user()->children()->create($request->all());
+            return response()->json($element, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -38,7 +67,10 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
-        //
+        if ($child->user_id === request()->user()->id) {
+            return response()->json($child, 200);
+        }
+        return response()->json(['message' => 'Unauthorized'], 403);
     }
 
     /**
@@ -54,7 +86,30 @@ class ChildController extends Controller
      */
     public function update(UpdateChildRequest $request, Child $child)
     {
-        //
+        try {
+            if ($child->user_id !== request()->user()->id) {
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
+            $validator = validator(request()->all(), [
+                'name' => 'string|max:255',
+                'gender' => [Rule::in(UserGenderEnum::cases())],
+                'dob' => 'date',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(["message" => $validator->errors()->all()], 403);
+            }
+            $age = Carbon::parse($request->dob)->age;
+            $stage = Stage::where('from', '<=', $age)
+                ->where('to', '>=', $age)
+                ->firstOr(function () {
+                    return Stage::orderByDesc('to')->first();
+                });
+            $request->request->add(['stage_id' => $stage->id]);
+            $child->update($request->all());
+            return response()->json($child, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -62,6 +117,16 @@ class ChildController extends Controller
      */
     public function destroy(Child $child)
     {
-        //
+        try {
+            if ($child->user_id === request()->user()->id) {
+                $child->quizzes()->delete();
+                if ($child->delete()) {
+                    return response()->json(['message' => trans('general.process_success')], 200);
+                }
+            }
+            return response()->json(['message' => trans('general.process_failure')], 403);
+        } catch (\Throwable $e) {
+            return response()->json(['message' => trans('general.process_failure')], 403);
+        }
     }
 }

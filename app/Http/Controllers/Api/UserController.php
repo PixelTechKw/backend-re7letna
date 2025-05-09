@@ -69,40 +69,25 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Request $request)
-    {
-        // $user = User::whereId(auth()->id())->with('categories', 'tags', 'title', 'grade', 'parent', 'roles')->first();
-        // $categories = CategoryExtraLightResource::collection(Category::active()->forUsers()->get());
-        // $tags = TagExtraLightResource::collection(Tag::active()->forUsers()->get());
-        // $genders = collect(UserGenderEnum::cases())->pluck('value');
-        // $roles = collect(RoleNameEnum::cases())->pluck('value');
-        // $titles = TitleResource::collection(Title::all());
-        // $parents = UserResource::collection(User::active()->parents()->get());
-        // $grades = GradeResource::collection(Grade::active()->with('stage')->get());
-        // return response()->json(compact('user', 'genders', 'grades'), 200);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update($id)
     {
         try {
             $validator = validator(request()->all(), [
-                'username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($id)],
+                'name' => ['string', 'max:255', Rule::unique(User::class)->ignore($id)],
                 'email' => ['string', 'required', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($id)],
-                'mobile' => ['required', 'min:6', 'max:16', 'regex:/[0-9]/', Rule::unique(User::class)->ignore($id)],
-                'gender' => ['required', Rule::in(UserGenderEnum::cases())],
-                'grade_id' => 'required|exists:grades,id',
-                'school_name' => 'string|max:255'
+                'mobile' => ['min:6', 'max:16', 'regex:/[0-9]/', Rule::unique(User::class)->ignore($id)],
+                'gender' => [Rule::in(UserGenderEnum::cases())],
+                'dob' => 'nullable|string|date|before:' . Carbon::now()->subtract('15 years'),
             ]);
             if ($validator->fails()) {
                 return response()->json(["message" => $validator->errors()->all()], 403);
             }
             $element = User::whereId(request()->user()->id)->first();
             $element->update(request()->all());
+            $token = $element->createToken('personal')->plainTextToken;
+            $element->token = $token;
             return response()->json(AuthResource::make($element), 200);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
@@ -148,11 +133,12 @@ class UserController extends Controller
     {
 
         $validator = validator($request->all(), [
-            'username' => 'required|string|min:10|max:255',
+            'name' => 'required|string|min:6|max:255',
             'email' => 'string|required|email|lowercase|max:255|unique:' . User::class,
             'mobile' => 'required|string|min:6|max:16|regex:/[0-9]{6}/|unique:' . User::class,
             'dob' => 'nullable|string|date|before:' . Carbon::now()->subtract('15 years'),
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'gender' => ['required', Rule::in(UserGenderEnum::cases())],
 
         ]);
         if ($validator->fails()) {
@@ -169,8 +155,7 @@ class UserController extends Controller
             if (app()->environment("production")) {
                 event(new Registered($user));
             }
-            Auth::login($user);
-            $user->token = $user->createToken('personal')->plainTextToken();
+            $user->token = $user->createToken('personal')->plainTextToken;
             return response()->json(AuthResource::make($user), 200);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 404);

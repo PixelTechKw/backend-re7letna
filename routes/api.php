@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ChildController;
 use App\Http\Controllers\Api\QuestionnaireController;
 use App\Http\Controllers\Api\QuizController;
 use App\Http\Controllers\Api\StageController;
@@ -26,6 +27,8 @@ Route::group(
                 Route::post('/forgot-password', [UserController::class, 'forgotPassword'])->name('change-password');
                 Route::resource('quiz', QuizController::class);
                 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+                Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
+                Route::resource('child', ChildController::class);
             }
         );
         Route::resource('questionnaire', QuestionnaireController::class)->only(['index', 'show']);
