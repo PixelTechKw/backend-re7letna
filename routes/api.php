@@ -10,7 +10,6 @@ use App\Http\Controllers\Api\ToolController;
 use App\Http\Controllers\Api\VideoController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ConsultantController;
-use App\Models\Consultant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
