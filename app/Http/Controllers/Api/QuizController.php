@@ -81,7 +81,7 @@ class QuizController extends Controller
     public function show(Quiz $quiz)
     {
         $child = request()->user()->children()
-            ->where('id', $quiz->child_id)
+            ->where('id', request()->child_id)
             ->first();
         if (!$child) {
             return response()->json([

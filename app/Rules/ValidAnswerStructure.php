@@ -33,6 +33,15 @@ class ValidAnswerStructure implements ValidationRule
             if (!in_array($item['name'], ['نعم', 'أحيانا', 'لا'])) {
                 $fail('The value must be one of the following: نعم, احيانا, or لا');
             }
+            if ($item['name'] === 'نعم' && $item['value'] != 100) {
+                $fail('values are wrong, check your values according to answers');
+            }
+            if ($item['name'] == 'أحيانا' && $item['value'] != 50) {
+                $fail('values are wrong, check your values according to answers');
+            }
+            if ($item['name'] == 'لا' && $item['value'] != 0) {
+                $fail('values are wrong, check your values according to answers');
+            }
         }
     }
 
