@@ -42,7 +42,7 @@ class StageSeeder extends Seeder
             'to' => $g['to'],
         ])->each(function ($s) {
             $s->questionnaires()->saveMany(Questionnaire::factory(5)->create()->each(function ($q) use ($s) {
-                $q->questions()->saveMany(Question::factory(10)->create())->each(function ($q) use ($s) {
+                $q->questions()->saveMany(Question::factory(2)->create())->each(function ($q) use ($s) {
                     $q->categories()->saveMany(Category::factory(1)->create()->each(function ($c) use ($s) {
                         Video::factory(2)->create()->each(function ($v) use ($c, $s) {
                             $v->stages()->attach($s->id);
