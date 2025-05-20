@@ -70,8 +70,7 @@ class QuizController extends Controller
             'questionnaire_id' => $request->questionnaire_id,
             'score' => $request->score,
         ]);
-        $element->answers()->createMany($request->answers);
-
+        $element->answers()->saveMany($request->answers);
         return $element->load('answers.question', 'questionnaire');
     }
 
