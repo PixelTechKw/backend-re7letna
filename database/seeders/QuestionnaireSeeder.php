@@ -15,7 +15,7 @@ class QuestionnaireSeeder extends Seeder
     public function run(): void
     {
         Questionnaire::factory(app()->environment('production') ? 2 : 50)->create()->each(function ($q) {
-            $q->questions()->createMany(Question::factory(8)->create());
+            $q->questions()->createMany(Question::factory(2)->create());
         });
     }
 }
