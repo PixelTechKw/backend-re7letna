@@ -55,7 +55,7 @@ class QuizController extends Controller
     {
         try {
             $questions = Questionnaire::find(request()->questionnaire_id)->questions()->active()->get();
-            if (collect($request->answers)->pluck('question_id')->sort()->values() == $questions->pluck('id')->sort()->values()) {
+            if (collect($request->answers)->pluck('question_id')->sort()->values() != $questions->pluck('id')->sort()->values()) {
                 return response()->json([
                     'message' => 'question ids are not valid. check these questions are related to questionnaire.',
                 ], 403);
