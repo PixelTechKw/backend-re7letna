@@ -13,6 +13,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(app()->environment('production') ? 2 : 50)->create()->each(function () {});
+        User::factory(app()->environment('production') ? 2 : 10)->create()->each(function () {});
     }
 }
