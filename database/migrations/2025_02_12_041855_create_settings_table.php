@@ -41,14 +41,6 @@ return new class extends Migration
             $table->mediumText('keywords')->nullable();
             $table->longText('code')->nullable();
 
-            $table->string('image')->default('default.png')->nullable();
-            $table->string('image_1')->default('default.png')->nullable();
-            $table->string('link_1')->nullable();
-            $table->string('image_2')->default('default.png')->nullable();
-            $table->string('link_2')->nullable();
-            $table->string('image_3')->default('default.png')->nullable();
-            $table->string('link_3')->nullable();
-
             $table->longText('aboutus')->nullable();
             $table->longText('policy')->nullable();
             $table->longText('terms_and_conditions')->nullable();
