@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\ToolController;
 use App\Http\Controllers\Api\VideoController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ConsultantController;
+use App\Http\Controllers\Api\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,7 @@ Route::group(
         Route::resource('tool', ToolController::class)->only(['index', 'show']);
         Route::resource('comment', CommentController::class)->only(['store']);
         Route::resource('consultant', ConsultantController::class)->only(['index', 'show']);
+        Route::resource('setting', SettingController::class)->only(['index']);
         Route::post('/login', [UserController::class, 'login'])->name('login');
         Route::post('/register', [UserController::class, 'register'])->name('register');
         Route::post('/forgot-password', [UserController::class, 'forgotPassword'])->name('forgot-password');
