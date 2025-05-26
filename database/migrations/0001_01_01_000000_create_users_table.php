@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('gender', collect(UserGenderEnum::cases())->pluck('value')->toArray())->default('male');
             $table->boolean('active')->default(true);
+            $table->boolean('is_admin')->default(false);
             $table->date('dob')->nullable();
             $table->string('image')->default('default.png')->nullable();
             $table->rememberToken();

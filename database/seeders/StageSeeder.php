@@ -37,7 +37,7 @@ class StageSeeder extends Seeder
         ]);
         $stages->each(fn($g) => Stage::factory()->create([
             'name' => fake()->name(),
-            'description' => fake()->realText(),
+            'description' => fake()->sentence,
             'from' => $g['from'],
             'to' => $g['to'],
         ])->each(function ($s) {

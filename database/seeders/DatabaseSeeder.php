@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@gmail.com',
+            'is_admin' => true
         ]);
         User::factory()->create([
             'name' => 'Parent',
@@ -33,5 +34,6 @@ class DatabaseSeeder extends Seeder
         $this->call(QuizSeeder::class);
         $this->call(ConsultantSeeder::class);
         $this->call(CommentSeeder::class);
+        $this->call(SettingSeeder::class);
     }
 }

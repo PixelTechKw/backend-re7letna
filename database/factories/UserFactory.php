@@ -34,6 +34,7 @@ class UserFactory extends Factory
             'mobile' => fake()->unique()->numberBetween(11111111, 999999999),
             'dob' => fake()->dateTimeBetween('-30 years')->format('Y-m-d'),
             'gender' => fake()->randomElement(UserGenderEnum::cases()),
+            'mobile' => fake()->unique()->numberBetween(11111111, 999999999),
             'remember_token' => Str::random(10),
         ];
     }

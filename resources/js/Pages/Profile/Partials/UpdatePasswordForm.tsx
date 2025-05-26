@@ -2,50 +2,53 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Transition } from '@headlessui/react';
-import { useForm } from '@inertiajs/react';
-import { FormEventHandler, useRef } from 'react';
+import {useToast} from '@/hooks/use-toast';
+import {Transition} from '@headlessui/react';
+import {useForm, usePage} from '@inertiajs/react';
+import {FormEventHandler, useRef} from 'react';
 
 export default function UpdatePasswordForm({
     className = '',
 }: {
     className?: string;
 }) {
+    const {
+        auth: {user},
+    }: any = usePage().props;
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);
-
-    const {
-        data,
-        setData,
-        errors,
-        put,
-        reset,
-        processing,
-        recentlySuccessful,
-    } = useForm({
-        current_password: '',
-        password: '',
-        password_confirmation: '',
-    });
+    const {toast} = useToast();
+    const {data, setData, errors, put, reset, processing, recentlySuccessful} =
+        useForm({
+            current_password: '',
+            password: '',
+            password_confirmation: '',
+        });
 
     const updatePassword: FormEventHandler = (e) => {
         e.preventDefault();
+        if (user.active) {
+            put(route('password.update'), {
+                preserveScroll: true,
+                onSuccess: () => reset(),
+                onError: (errors) => {
+                    if (errors.password) {
+                        reset('password', 'password_confirmation');
+                        passwordInput.current?.focus();
+                    }
 
-        put(route('password.update'), {
-            preserveScroll: true,
-            onSuccess: () => reset(),
-            onError: (errors) => {
-                if (errors.password) {
-                    reset('password', 'password_confirmation');
-                    passwordInput.current?.focus();
-                }
-
-                if (errors.current_password) {
-                    reset('current_password');
-                    currentPasswordInput.current?.focus();
-                }
-            },
-        });
+                    if (errors.current_password) {
+                        reset('current_password');
+                        currentPasswordInput.current?.focus();
+                    }
+                },
+            });
+        } else {
+            toast({
+                variant: 'destructive',
+                description: 'you are not active user, please contact admin.',
+            });
+        }
     };
 
     return (
@@ -126,7 +129,9 @@ export default function UpdatePasswordForm({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <PrimaryButton disabled={processing || !user.active}>
+                        Save
+                    </PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}

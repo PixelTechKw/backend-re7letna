@@ -18,7 +18,7 @@ class ToolFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'description' => fake()->realText(),
+            'description' => fake()->sentence,
             'order' => fake()->numberBetween(1, 10),
         ];
     }

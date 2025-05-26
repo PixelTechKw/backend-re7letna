@@ -1,37 +1,115 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link, usePage } from '@inertiajs/react';
-import { PropsWithChildren, ReactNode, useState } from 'react';
+import DeleteModal from "@/Components/DeleteModal";
+import Dropdown from "@/Components/Dropdown";
+import NavLink from "@/Components/NavLink";
+import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+    showErrorToastMessage,
+    showSuccessToastMessage,
+} from "@/redux/slices/toastMessageSlice";
+import { PageProps } from "@/types";
+import { Link, usePage } from "@inertiajs/react";
+import { first, isEmpty, isNull, values } from "lodash";
+import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 
-export default function Authenticated({
+export default function ({
     header,
     children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
-    const user = usePage().props.auth.user;
-
+    const {
+        auth: { user },
+        flash,
+        errors,
+        settings,
+    }: PageProps = usePage().props;
+    const {
+        settings: { deleteModal },
+        toastMessage: { showToast, content, type },
+    } = useAppSelector((state) => state);
+    const dispatch = useAppDispatch();
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    useEffect(() => {
+        if (!showToast) {
+            if (flash && !isNull(flash.success)) {
+                dispatch(showSuccessToastMessage({ content: flash.success }));
+            } else if (flash && !isNull(flash.error)) {
+                dispatch(showErrorToastMessage({ content: flash.error }));
+            } else if (!isEmpty(errors)) {
+                dispatch(
+                    showErrorToastMessage({
+                        content: first(values(errors)),
+                    }),
+                );
+            }
+        }
+    }, [flash, errors]);
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
+            <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800 capitalize">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                    <img
+                                        alt={settings.name}
+                                        src={settings.thumb}
+                                        className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
+                                    />
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex capitalize">
                                 <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
+                                    prefetch
+                                    cacheFor={1000}
+                                    href={route("backend.home")}
+                                    active={route().current("backend.home")}
                                 >
-                                    Dashboard
+                                    Pages
+                                </NavLink>
+                                <NavLink
+                                    prefetch
+                                    cacheFor={1000}
+                                    href={route("backend.setting.index")}
+                                    active={route().current(
+                                        "backend.setting.index",
+                                    )}
+                                >
+                                    settings
+                                </NavLink>
+                                <NavLink
+                                    prefetch
+                                    cacheFor={1000}
+                                    href={route("backend.policy.edit")}
+                                    active={route().current(
+                                        "backend.policy.edit",
+                                    )}
+                                >
+                                    Policies & Terms
+                                </NavLink>
+                                <NavLink
+                                    prefetch
+                                    cacheFor={1000}
+                                    href={route("backend.plan.index")}
+                                    active={route().current(
+                                        "backend.plan.index",
+                                    )}
+                                >
+                                    Plans
+                                </NavLink>
+                                <NavLink
+                                    prefetch
+                                    cacheFor={1000}
+                                    href={route("backend.faq.index")}
+                                    active={route().current(
+                                        "backend.faq.index",
+                                    )}
+                                >
+                                    Faqs
                                 </NavLink>
                             </div>
                         </div>
@@ -65,12 +143,17 @@ export default function Authenticated({
 
                                     <Dropdown.Content>
                                         <Dropdown.Link
-                                            href={route('profile.edit')}
+                                            href={route("frontend.home")}
+                                        >
+                                            website
+                                        </Dropdown.Link>
+                                        <Dropdown.Link
+                                            href={route("backend.profile.edit")}
                                         >
                                             Profile
                                         </Dropdown.Link>
                                         <Dropdown.Link
-                                            href={route('logout')}
+                                            href={route("logout")}
                                             method="post"
                                             as="button"
                                         >
@@ -99,8 +182,8 @@ export default function Authenticated({
                                     <path
                                         className={
                                             !showingNavigationDropdown
-                                                ? 'inline-flex'
-                                                : 'hidden'
+                                                ? "inline-flex"
+                                                : "hidden"
                                         }
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
@@ -110,8 +193,8 @@ export default function Authenticated({
                                     <path
                                         className={
                                             showingNavigationDropdown
-                                                ? 'inline-flex'
-                                                : 'hidden'
+                                                ? "inline-flex"
+                                                : "hidden"
                                         }
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
@@ -126,14 +209,14 @@ export default function Authenticated({
 
                 <div
                     className={
-                        (showingNavigationDropdown ? 'block' : 'hidden') +
-                        ' sm:hidden'
+                        (showingNavigationDropdown ? "block" : "hidden") +
+                        " sm:hidden"
                     }
                 >
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            href={route("backend.home")}
+                            active={route().current("backend.home")}
                         >
                             Dashboard
                         </ResponsiveNavLink>
@@ -150,12 +233,43 @@ export default function Authenticated({
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>
-                                Profile
+                            <ResponsiveNavLink href={route("frontend.home")}>
+                                Back to website
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
+                                href={route("backend.page.index")}
+                            >
+                                Pages
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("backend.setting.index")}
+                            >
+                                Settings
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("backend.policy.edit")}
+                            >
+                                Polices
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("backend.plan.index")}
+                            >
+                                Plans
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("backend.faq.index")}
+                            >
+                                Faqs
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("backend.profile.edit")}
+                            >
+                                Profile
+                            </ResponsiveNavLink>
+
+                            <ResponsiveNavLink
                                 method="post"
-                                href={route('logout')}
+                                href={route("logout")}
                                 as="button"
                             >
                                 Log Out
@@ -164,16 +278,20 @@ export default function Authenticated({
                     </div>
                 </div>
             </nav>
+            <div className=" max-w-7xl mx-auto p-6 mt-4">
+                {header && (
+                    <header className="bg-white shadow dark:bg-gray-800">
+                        <div className=" px-4 py-6 sm:px-6 lg:px-8">
+                            {header}
+                        </div>
+                    </header>
+                )}
 
-            {header && (
-                <header className="bg-white shadow dark:bg-gray-800">
-                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                        {header}
-                    </div>
-                </header>
+                <main>{children}</main>
+            </div>
+            {deleteModal?.showDeleteModal && !isNull(deleteModal?.element) && (
+                <DeleteModal />
             )}
-
-            <main>{children}</main>
         </div>
     );
 }

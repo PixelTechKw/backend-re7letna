@@ -21,6 +21,7 @@ class AuthResource extends JsonResource
             'name' => $this->name,
             'mobile' => $this->mobile,
             'email' => $this->email,
+            'is_admin' => $this->is_admin,
             'token' => $this->token,
             'children' => $this->whenLoaded('children')
 
