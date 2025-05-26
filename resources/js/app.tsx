@@ -6,7 +6,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import "../css/app.css";
 import "./bootstrap";
-const appName = import.meta.env.VITE_APP_NAME || "School.how";
+const appName = import.meta.env.VITE_APP_NAME || "re7letna";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

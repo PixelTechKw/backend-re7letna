@@ -203,11 +203,7 @@ export default function () {
                         />
                     </div>
                     <div>
-                        <p className="text-center text-xs text-white ">
-                            School.How is a registered Cambridge International
-                            School also approved to offer Cambridge programmes
-                            online.
-                        </p>
+                        <p className="text-center text-xs text-white "></p>
                     </div>
                 </div>
             </div>
