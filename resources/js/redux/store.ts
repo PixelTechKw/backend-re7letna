@@ -44,8 +44,6 @@ if (isLocal) {
 }
 let store: any = configureStore({
     reducer: persistedReducer,
-    // Adding the api middleware enables caching, invalidation, polling,
-    // and other useful features of `rtk-query`.
     middleware: (gDM) =>
         gDM({
             serializableCheck: {

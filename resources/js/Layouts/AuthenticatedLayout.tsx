@@ -7,7 +7,6 @@ import {
     showErrorToastMessage,
     showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { PageProps } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { first, isEmpty, isNull, values } from "lodash";
 import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
@@ -21,7 +20,7 @@ export default function ({
         flash,
         errors,
         settings,
-    }: PageProps = usePage().props;
+    } = usePage().props;
     const {
         settings: { deleteModal },
         toastMessage: { showToast, content, type },
@@ -39,8 +38,8 @@ export default function ({
             } else if (!isEmpty(errors)) {
                 dispatch(
                     showErrorToastMessage({
-                        content: first(values(errors)),
-                    }),
+                        content: first(values(errors)) ?? "",
+                    })
                 );
             }
         }
@@ -76,7 +75,7 @@ export default function ({
                                     cacheFor={1000}
                                     href={route("backend.setting.index")}
                                     active={route().current(
-                                        "backend.setting.index",
+                                        "backend.setting.index"
                                     )}
                                 >
                                     settings
@@ -86,7 +85,7 @@ export default function ({
                                     cacheFor={1000}
                                     href={route("backend.policy.edit")}
                                     active={route().current(
-                                        "backend.policy.edit",
+                                        "backend.policy.edit"
                                     )}
                                 >
                                     Policies & Terms
@@ -96,7 +95,7 @@ export default function ({
                                     cacheFor={1000}
                                     href={route("backend.plan.index")}
                                     active={route().current(
-                                        "backend.plan.index",
+                                        "backend.plan.index"
                                     )}
                                 >
                                     Plans
@@ -106,7 +105,7 @@ export default function ({
                                     cacheFor={1000}
                                     href={route("backend.faq.index")}
                                     active={route().current(
-                                        "backend.faq.index",
+                                        "backend.faq.index"
                                     )}
                                 >
                                     Faqs
@@ -168,7 +167,7 @@ export default function ({
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
-                                        (previousState) => !previousState,
+                                        (previousState) => !previousState
                                     )
                                 }
                                 className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400"

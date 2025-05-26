@@ -1,7 +1,7 @@
 import { loginURL, registerURL } from "@/constants";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setActivePath } from "@/redux/slices/appSettingSlice";
-import { Page, PageProps } from "@/types";
+import { PageProps } from "@/types";
 import {
     Disclosure,
     DisclosureButton,
@@ -18,7 +18,7 @@ import { ChevronRight, UserCircle, UserIcon } from "lucide-react";
 
 export default function () {
     const dispatch = useAppDispatch();
-    const { settings, pages, auth }: PageProps = usePage().props;
+    const { settings, auth }: any = usePage().props;
     const { settings: appSetting } = useAppSelector((state) => state);
 
     return (
@@ -71,7 +71,7 @@ export default function () {
                                 >
                                     home
                                 </Link>
-                                {map(
+                                {/* {map(
                                     filter(pages, (e) => e.menu),
                                     (p: Page, i) => (
                                         <Link
@@ -89,7 +89,7 @@ export default function () {
                                             {p.name}
                                         </Link>
                                     ),
-                                )}
+                                )} */}
                                 <Link
                                     onClick={() =>
                                         dispatch(setActivePath("fees"))
@@ -159,7 +159,7 @@ export default function () {
                                     <MenuItem>
                                         <Link
                                             href={route(
-                                                "backend.setting.index",
+                                                "backend.setting.index"
                                             )}
                                             className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                         >
@@ -203,7 +203,7 @@ export default function () {
                     >
                         home
                     </DisclosureButton>
-                    {map(
+                    {/* {map(
                         filter(pages, (e: Page) => e.menu),
                         (p: Page, i: number) => (
                             <DisclosureButton
@@ -221,8 +221,8 @@ export default function () {
                             >
                                 {p.name}
                             </DisclosureButton>
-                        ),
-                    )}
+                        )
+                    )} */}
                     <DisclosureButton
                         as="button"
                         onClick={() => {
@@ -230,7 +230,7 @@ export default function () {
                             router.visit(
                                 route("frontend.{slug}.index", {
                                     slug: "fees",
-                                }),
+                                })
                             );
                         }}
                         className={`${

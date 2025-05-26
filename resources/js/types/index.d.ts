@@ -6,6 +6,7 @@ export interface User {
     email: string;
     mobile: string;
     is_admin: boolean;
+    token: string;
     email_verified_at?: string;
 }
 

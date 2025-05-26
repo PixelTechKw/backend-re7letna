@@ -15,9 +15,9 @@ export default function () {
     } = useAppSelector((state) => state);
     const {
         auth: {
-            user: { api_token },
+            user: { token },
         },
-    }: any = usePage().props;
+    } = usePage().props;
     const dispatch = useAppDispatch();
 
     const handleDelete = () => {
@@ -27,11 +27,11 @@ export default function () {
             }),
             {
                 headers: {
-                    Authorization: `Bearer ${api_token}`,
+                    Authorization: `Bearer ${token}`,
                 },
                 preserveScroll: true,
                 onFinish: () => closeModal(),
-            },
+            }
         );
     };
 

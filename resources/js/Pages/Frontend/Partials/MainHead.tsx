@@ -10,7 +10,7 @@ export default function ({
     title?: string;
     description?: string;
 }): ReactNode {
-    const { settings }: PageProps = usePage().props;
+    const { settings }: any = usePage().props;
 
     return (
         <Head>

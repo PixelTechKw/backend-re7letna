@@ -7,7 +7,6 @@ import {
     showErrorToastMessage,
     showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { AppProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { capitalize, first, isEmpty, isNull, values } from "lodash";
 import { ReactNode, useEffect } from "react";
@@ -25,7 +24,7 @@ export default function ({
     } = useAppSelector((state) => state);
     const {
         props: { flash, errors, pages, settings, currentRouteName },
-    }: AppProps = usePage();
+    } = usePage();
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -43,27 +42,21 @@ export default function ({
             } else if (!isEmpty(errors)) {
                 dispatch(
                     showErrorToastMessage({
-                        content: first(values(errors)),
-                    }),
+                        content: first(values(errors)) ?? '',
+                    })
                 );
             }
         }
     }, [flash, errors]);
 
     return (
-        <motion.div
-            className="pb-8 sm:py-6 md:py-2 min-h-screen"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ ease: "easeInOut", duration: 0.75 }}
-        >
+        <div className="pb-8 sm:py-6 md:py-2 min-h-screen">
             <MainHead title={capitalize(title)} />
             <MainMenu />
             <div className="mx-auto max-w-6xl px-6 lg:px-0 py-10">
                 {children}
                 <MainFooter />
-                <Crisp />
             </div>
-        </motion.div>
+        </div>
     );
 }

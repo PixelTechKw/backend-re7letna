@@ -1,17 +1,17 @@
-import {useAppSelector} from '@/redux/hooks';
-import {PageProps} from '@/types';
-import {usePage} from '@inertiajs/react';
-import {InstagramLogoIcon, TwitterLogoIcon} from '@radix-ui/react-icons';
+import { useAppSelector } from "@/redux/hooks";
+import { PageProps } from "@/types";
+import { usePage } from "@inertiajs/react";
+import { InstagramLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import {
     FaFacebook,
     FaLinkedin,
     FaTelegram,
     FaTiktok,
     FaYoutube,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
 export default function () {
-    const {settings}: PageProps = usePage().props;
+    const { settings }: any = usePage().props;
     return (
         <div>
             <div className="flex flex-wrap justify-center gap-6">

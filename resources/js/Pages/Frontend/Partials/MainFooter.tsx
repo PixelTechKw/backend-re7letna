@@ -1,13 +1,12 @@
 import { getImage } from "@/constants";
 import { useAppDispatch } from "@/redux/hooks";
 import { setActivePath } from "@/redux/slices/appSettingSlice";
-import { Page } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { filter, map } from "lodash";
 import SocialIcons from "./SocialIcons";
 
 export default function () {
-    const { settings, pages } = usePage().props;
+    const { settings } = usePage().props;
     const dispatch = useAppDispatch();
 
     return (
@@ -47,14 +46,14 @@ export default function () {
                                         home
                                     </Link>
                                 </li>
-                                {map(
+                                {/* {map(
                                     filter(pages, (e: Page) => e.footer),
                                     (p: Page, i: number) => (
                                         <li key={i}>
                                             <Link
                                                 onClick={() =>
                                                     dispatch(
-                                                        setActivePath(p.slug),
+                                                        setActivePath(p.slug)
                                                     )
                                                 }
                                                 href={p.slug}
@@ -68,8 +67,8 @@ export default function () {
                                                 {p.name}
                                             </Link>
                                         </li>
-                                    ),
-                                )}
+                                    )
+                                )} */}
                             </ul>
                         </div>
                         <div className=" ">
@@ -97,7 +96,7 @@ export default function () {
                                         <Link
                                             onClick={() =>
                                                 dispatch(
-                                                    setActivePath("contact"),
+                                                    setActivePath("contact")
                                                 )
                                             }
                                             href={route("frontend.contactus")}
@@ -144,7 +143,7 @@ export default function () {
                                         <Link
                                             onClick={() =>
                                                 dispatch(
-                                                    setActivePath("aboutus"),
+                                                    setActivePath("aboutus")
                                                 )
                                             }
                                             href={`aboutus`}
