@@ -20,7 +20,7 @@ export default function Welcome({
     }, []);
     return (
         <>
-            <Head title="Schoo.how" />
+            <Head title="re7letna" />
             <div className=" text-black/50 dark:bg-black dark:text-white/50">
                 <img
                     id="background"
