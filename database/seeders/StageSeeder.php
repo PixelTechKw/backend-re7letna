@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Models\Stage;
+use App\Models\Tool;
 use App\Models\Video;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -44,6 +45,7 @@ class StageSeeder extends Seeder
             $s->questionnaires()->saveMany(Questionnaire::factory(5)->create()->each(function ($q) use ($s) {
                 $q->questions()->saveMany(Question::factory(2)->create())->each(function ($q) use ($s) {
                     $q->categories()->saveMany(Category::factory(1)->create()->each(function ($c) use ($s) {
+                        $c->tools()->saveMany(Tool::factory(2)->make());
                         Video::factory(2)->create()->each(function ($v) use ($c, $s) {
                             $v->stages()->attach($s->id);
                             $v->categories()->save($c);
