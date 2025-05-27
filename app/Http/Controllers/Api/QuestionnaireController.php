@@ -51,7 +51,7 @@ class QuestionnaireController extends Controller
             $q->active()->orderBy('order', 'asc')
                 ->with(['categories' => fn($q) => $q->orderBy('order', 'asc')]);
         }, 'stage']);
-        return response()->json(compact('questionnaire'), 200);
+        return response()->json($questionnaire, 200);
     }
 
     /**
