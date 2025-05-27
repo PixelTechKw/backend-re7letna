@@ -96,9 +96,9 @@ class QuizController extends Controller
         $child = request()->user()->children()
             ->where('id', request()->child_id)
             ->first();
-        if (!$child) {
+        if (!$child || $child->id !== $quiz->child_id) {
             return response()->json([
-                'message' => 'Child not found',
+                'message' => 'Child or Quize not found',
             ], 404);
         }
         return $quiz->load('answers.question', 'questionnaire');
