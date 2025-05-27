@@ -14,7 +14,6 @@ class ToolSeeder extends Seeder
      */
     public function run(): void
     {
-        Tool::factory(app()->environment('production') ? 2 : 20)->create()
-            ->each(fn($t) => $t->categories()->saveMany(Category::factory(1)->make()));
+        Tool::factory(app()->environment('production') ? 2 : 20)->create();
     }
 }

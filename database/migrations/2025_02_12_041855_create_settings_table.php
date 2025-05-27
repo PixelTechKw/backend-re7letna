@@ -19,6 +19,7 @@ return new class extends Migration
             $table->mediumText('description')->nullable();
             $table->string('country')->nullable();
 
+            $table->string('image')->nullable()->default('default.png');
             $table->string('mobile')->nullable();
             $table->string('registration_no')->nullable();
             $table->string('zipcode')->nullable();

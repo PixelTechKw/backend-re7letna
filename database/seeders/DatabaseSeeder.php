@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@gmail.com',
-            'is_admin' => true
+            'is_admin' => true,
         ]);
         User::factory()->create([
             'name' => 'Parent',
@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call(UserSeeder::class);
         $this->call(VideoSeeder::class);
+        $this->call(ToolSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(StageSeeder::class);
         $this->call(ChildSeeder::class);
-        $this->call(ToolSeeder::class);
         $this->call(QuizSeeder::class);
         $this->call(ConsultantSeeder::class);
         $this->call(CommentSeeder::class);
