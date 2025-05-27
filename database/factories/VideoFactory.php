@@ -20,7 +20,7 @@ class VideoFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'description' => fake()->realText(),
+            'description' => fake()->sentence,
             'url' => fake()->randomElement(['https://www.youtube.com/watch?v=t45FopmV_y0', 'https://www.youtube.com/watch?v=AyKvvHFx0bU']),
             'level' => fake()->randomElement(LevelEnum::cases()),
             'order' => fake()->numberBetween(1, 10),

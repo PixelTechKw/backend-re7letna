@@ -20,7 +20,7 @@ class ConsultantFactory extends Factory
             'name' => fake()->name(),
             'mobile' => fake()->numberBetween(11111111, 999999999),
             'email' => fake()->unique()->safeEmail(),
-            'description' => fake()->realText(),
+            'description' => fake()->sentence,
             'order' => fake()->numberBetween(1, 10),
         ];
     }

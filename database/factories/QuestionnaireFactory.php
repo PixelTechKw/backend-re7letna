@@ -19,7 +19,7 @@ class QuestionnaireFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'description' => fake()->realText(),
+            'description' => fake()->sentence,
             'order' => fake()->numberBetween(1, 10),
             'stage_id' => Stage::all()->random()->id,
         ];
