@@ -101,7 +101,7 @@ class QuizController extends Controller
                 'message' => 'Child or Quize not found',
             ], 404);
         }
-        return $quiz->load('answers.question', 'questionnaire');
+        return $quiz->load('answers.question.categories.videos', 'questionnaire');
     }
 
     /**
