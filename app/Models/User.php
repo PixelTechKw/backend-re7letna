@@ -61,7 +61,7 @@ class User extends Authenticatable
             'dob' => DateCast::class,
             'gender' => UserGenderEnum::class,
             'active' => 'boolean',
-            'isAdmin' => isAdminCast::class,
+            'is_admin' => isAdminCast::class,
             'age' => UserAgeCast::class,
         ];
     }
