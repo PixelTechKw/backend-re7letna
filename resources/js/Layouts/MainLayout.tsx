@@ -14,8 +14,8 @@ type Props = {
 export default function ({ children }: Props): React.ReactNode {
     return (
         <div
-            // className={`w-full  min-h-screen mx-auto  bg-gray-50 font-expo-medium`}
-            className={`w-full  min-h-screen mx-auto  bg-gray-50 suissie-medium`}
+            className={`w-full  min-h-screen mx-auto  bg-gray-50 font-expo-medium`}
+            // className={`w-full  min-h-screen mx-auto  bg-gray-50 suissie-medium`}
         >
             {children}
             <ToastContainer

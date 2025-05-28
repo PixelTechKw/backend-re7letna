@@ -35,7 +35,7 @@ class UserController extends Controller
     public function create()
     {
         $genders = collect(UserGenderEnum::cases())->pluck('value');
-        return inertia('Backend/User/UserCreate', compact('roles', 'genders', 'roles'));
+        return inertia('Backend/User/UserCreate', compact('genders'));
     }
 
     /**
@@ -81,8 +81,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $genders = collect(UserGenderEnum::cases())->pluck('value');
-        $element = $user->load('roles');
-        return inertia('Backend/User/UserEdit', compact('roles', 'genders', 'element'));
+        $element = $user->load('children');
+        return inertia('Backend/User/UserEdit', compact( 'genders', 'element'));
     }
 
     /**

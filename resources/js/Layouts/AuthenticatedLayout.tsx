@@ -68,7 +68,7 @@ export default function ({
                                     href={route("backend.home")}
                                     active={route().current("backend.home")}
                                 >
-                                    Pages
+                                    Users
                                 </NavLink>
                                 <NavLink
                                     prefetch

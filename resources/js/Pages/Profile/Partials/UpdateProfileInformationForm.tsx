@@ -40,13 +40,11 @@ export default function UpdateProfileInformation({
         processing,
         recentlySuccessful,
     }: any = useForm({
-        first_name: user.first_name,
-        last_name: user.last_name,
+        name: user.name,
         email: user.email,
         mobile: user.mobile,
         gender: user.gender,
         dob: moment(user.dob, "DD/MM/YYYY").locale("en").format("YYYY-MM-DD"),
-        receive_campains: user.receive_campains,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -76,41 +74,22 @@ export default function UpdateProfileInformation({
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
                     <InputLabel
-                        htmlFor="first_name"
-                        value="First Name"
+                        htmlFor="name"
+                        value=" Name"
                         className="required"
                     />
 
                     <TextInput
                         id="name"
                         className="mt-1 block w-full"
-                        value={data.first_name}
-                        onChange={(e) => setData("first_name", e.target.value)}
+                        value={data.name}
+                        onChange={(e) => setData("name", e.target.value)}
                         required
                         isFocused
-                        autoComplete="first_name"
+                        autoComplete="name"
                     />
 
-                    <InputError className="mt-2" message={errors.first_name} />
-                </div>
-                <div>
-                    <InputLabel
-                        htmlFor="last_name"
-                        value="last Name"
-                        className="required capitalize"
-                    />
-
-                    <TextInput
-                        id="name"
-                        className="mt-1 block w-full"
-                        value={data.last_name}
-                        onChange={(e) => setData("last_name", e.target.value)}
-                        required
-                        isFocused
-                        autoComplete="last_name"
-                    />
-
-                    <InputError className="mt-2" message={errors.last_name} />
+                    <InputError className="mt-2" message={errors.name} />
                 </div>
 
                 <div>
@@ -280,26 +259,6 @@ export default function UpdateProfileInformation({
                         </PopoverContent>
                     </Popover> */}
                     <InputError message={get(errors, "dob")} className="mt-2" />
-                </div>
-
-                <div className="items-top flex space-x-2 my-8">
-                    <Checkbox
-                        defaultChecked={data.receive_campains}
-                        onCheckedChange={(e: any) =>
-                            setData("receive_campains", e)
-                        }
-                    />
-                    <div className="grid gap-1.5 leading-none">
-                        <label
-                            htmlFor="terms1"
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                            Receive newsletter campains
-                        </label>
-                        <p className="text-sm text-muted-foreground">
-                            Get all the latest courses'news and updates.
-                        </p>
-                    </div>
                 </div>
 
                 <div className="flex items-center gap-4">

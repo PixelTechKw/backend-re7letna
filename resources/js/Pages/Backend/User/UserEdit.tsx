@@ -11,8 +11,8 @@ import { FormEventHandler } from "react";
 import Select from "react-select";
 
 interface FormProps {
-    first_name: string;
-    last_name: string;
+    name: string;
+
     email: string;
     mobile: string;
     gender: "male" | "female";
@@ -24,7 +24,7 @@ interface FormProps {
 
 export default function ({
     element,
-    roles,
+
     genders,
 }: PageProps): React.ReactNode {
     const {
@@ -33,17 +33,16 @@ export default function ({
     }: any = usePage().props;
     const { data, setData, post, processing, errors, transform, reset }: any =
         useForm<any>({
-            first_name: element.first_name,
-            last_name: element.last_name,
+            name: element.name,
+
             email: element.email,
             mobile: element.mobile,
             gender: element.gender,
             active: element.active,
-            role: element.roles[0].name,
+
             dob: moment(element.dob, "DD/MM/YYYY")
                 .locale("en")
                 .format("YYYY-MM-DD"),
-            user_id: element.id,
         });
 
     const handleChange = (
@@ -89,47 +88,23 @@ export default function ({
                         <div className="col-span-1">
                             <div>
                                 <InputLabel
-                                    htmlFor="first_name"
-                                    value={"first_name"}
+                                    htmlFor="name"
+                                    value={"name"}
                                     className="required capitalize"
                                 />
                                 <TextInput
-                                    id="first_name"
-                                    name="first_name"
+                                    id="name"
+                                    name="name"
                                     required
                                     aria-required
                                     onChange={(e) =>
-                                        setData("first_name", e.target.value)
+                                        setData("name", e.target.value)
                                     }
-                                    defaultValue={data.first_name}
+                                    defaultValue={data.name}
                                     className="block w-full px-4 py-2 mt-2 "
                                 />
                                 <InputError
-                                    message={get(errors, "first_name")}
-                                    className="mt-2"
-                                />
-                            </div>
-                        </div>
-                        <div className="col-span-1">
-                            <div>
-                                <InputLabel
-                                    htmlFor="last_name"
-                                    value={"last_name"}
-                                    className="required capitalize"
-                                />
-                                <TextInput
-                                    id="last_name"
-                                    name="last_name"
-                                    required
-                                    aria-required
-                                    onChange={(e) =>
-                                        setData("last_name", e.target.value)
-                                    }
-                                    defaultValue={data.last_name}
-                                    className="block w-full px-4 py-2 mt-2 "
-                                />
-                                <InputError
-                                    message={get(errors, "last_name")}
+                                    message={get(errors, "name")}
                                     className="mt-2"
                                 />
                             </div>
@@ -177,60 +152,7 @@ export default function ({
                                 className="mt-2"
                             />
                         </div>
-                        {/* role */}
-                        {auth.isAdmin && (
-                            <div className="col-span-1">
-                                <InputLabel
-                                    htmlFor="role"
-                                    value="role"
-                                    className="required capitalize"
-                                />
-                                <Select
-                                    name="role"
-                                    required
-                                    isMulti={false}
-                                    options={map(roles, (c: any, i) => {
-                                        return {
-                                            label: c.name,
-                                            value: c.name,
-                                        };
-                                    })}
-                                    onChange={(e: any) => {
-                                        setData("role", e.value);
-                                    }}
-                                    defaultValue={{
-                                        label: data.role,
-                                        value: data.role,
-                                    }}
-                                    className="basic-multi-select pt-2 capitalize"
-                                    classNamePrefix="select select-box capitalize"
-                                    placeholder="roles"
-                                    styles={{
-                                        control: (baseStyles, state) => ({
-                                            ...baseStyles,
-                                            borderColor: state.isFocused
-                                                ? "#1422B5"
-                                                : "lightgrey",
-                                            borderRadius: 20,
-                                            padding: 8,
-                                        }),
-                                    }}
-                                    theme={(theme) => ({
-                                        ...theme,
-                                        colors: {
-                                            ...theme.colors,
-                                            primary25: "#5CBDAD",
-                                            primary: "#5CBDAD",
-                                            dangerLight: "#5CBDAD",
-                                        },
-                                    })}
-                                />
-                                <InputError
-                                    message={get(errors, "role")}
-                                    className="mt-2"
-                                />
-                            </div>
-                        )}
+
                         {/* dob */}
                         <div className="col-span-1">
                             <InputLabel
