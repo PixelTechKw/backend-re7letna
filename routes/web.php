@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -20,6 +22,12 @@ Route::group(
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::resource('user', UserController::class);
+        Route::resource('setting', SettingController::class);
+        Route::get("toggle/activate", [DashboardController::class, "toggleActivate"])->name("toggle.activate");
+        Route::get("toggle/order", [DashboardController::class, "toggleOrder"])->name("toggle.order");
+        Route::get("toggle/home", [DashboardController::class, "toggleOnHome"])->name("toggle.home");
+        Route::get("update/status", [DashboardController::class, "updateStatus"])->name("update.status");
     }
 );
 Route::group(

@@ -80,36 +80,6 @@ export default function ({
                                 >
                                     settings
                                 </NavLink>
-                                <NavLink
-                                    prefetch
-                                    cacheFor={1000}
-                                    href={route("backend.policy.edit")}
-                                    active={route().current(
-                                        "backend.policy.edit"
-                                    )}
-                                >
-                                    Policies & Terms
-                                </NavLink>
-                                <NavLink
-                                    prefetch
-                                    cacheFor={1000}
-                                    href={route("backend.plan.index")}
-                                    active={route().current(
-                                        "backend.plan.index"
-                                    )}
-                                >
-                                    Plans
-                                </NavLink>
-                                <NavLink
-                                    prefetch
-                                    cacheFor={1000}
-                                    href={route("backend.faq.index")}
-                                    active={route().current(
-                                        "backend.faq.index"
-                                    )}
-                                >
-                                    Faqs
-                                </NavLink>
                             </div>
                         </div>
 
@@ -235,31 +205,13 @@ export default function ({
                             <ResponsiveNavLink href={route("frontend.home")}>
                                 Back to website
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                href={route("backend.page.index")}
-                            >
-                                Pages
-                            </ResponsiveNavLink>
+
                             <ResponsiveNavLink
                                 href={route("backend.setting.index")}
                             >
                                 Settings
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                href={route("backend.policy.edit")}
-                            >
-                                Polices
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                href={route("backend.plan.index")}
-                            >
-                                Plans
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                href={route("backend.faq.index")}
-                            >
-                                Faqs
-                            </ResponsiveNavLink>
+
                             <ResponsiveNavLink
                                 href={route("backend.profile.edit")}
                             >

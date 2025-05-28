@@ -3,7 +3,6 @@
 namespace App\Services\Search;
 
 use App\Http\Resources\CategoryLightResource;
-use App\Models\Tag;
 use App\Models\Collection;
 use App\Models\Service;
 use App\Models\User;
@@ -20,12 +19,11 @@ use Illuminate\Support\Facades\DB;
  */
 class UserFilters extends QueryFilters
 {
-    public $tag;
 
-    public function __construct(Request $request, Tag $tag)
+
+    public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->tag = $tag;
     }
 
     public function search($search)
@@ -48,12 +46,7 @@ class UserFilters extends QueryFilters
 
 
 
-    public function tag_id()
-    {
-        return $this->builder->whereHas('tags', function ($q) {
-            return $q->where('tag_id', request()->tag_id);
-        });
-    }
+
 
 
     public function active()

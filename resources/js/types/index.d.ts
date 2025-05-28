@@ -8,6 +8,7 @@ export interface User {
     is_admin: boolean;
     token: string;
     email_verified_at?: string;
+    children?: Child[];
 }
 
 export type PageProps<
@@ -44,4 +45,10 @@ export type Setting = {
     [key: string]: any;
 }
 
-
+export type Child = {
+    id: number | string;
+    name: string;
+    dob: Date;
+    user_id: number | string;
+    [key: string]: any;
+}

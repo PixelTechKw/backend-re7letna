@@ -8,26 +8,14 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Services\Search\UserFilters;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 use Throwable;
 
 class UserController extends Controller
 {
-    
-    /**
-     * Create the controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        Gate::authorize('viewAny', User::class);
-    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -35,6 +23,7 @@ class UserController extends Controller
     {
         $elements = User::filters($filters)
             ->orderBy('id', 'desc')
+            ->with('children')
             ->get();
         return inertia('Backend/User/UserIndex', compact('elements'));
     }
@@ -91,11 +80,6 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (request()->user()->hasRole('admin')) {
-            $roles = Role::all();
-        } else {
-            $roles = Role::where('name', 'student')->orWhere('name', 'parent')->get();
-        }
         $genders = collect(UserGenderEnum::cases())->pluck('value');
         $element = $user->load('roles');
         return inertia('Backend/User/UserEdit', compact('roles', 'genders', 'element'));
