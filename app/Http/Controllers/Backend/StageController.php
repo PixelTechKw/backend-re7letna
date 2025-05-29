@@ -13,7 +13,8 @@ class StageController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Stage::orderBy('id', 'desc')->get();
+        return inertia('Backend/Stage/StageIndex', compact('elements'));
     }
 
     /**

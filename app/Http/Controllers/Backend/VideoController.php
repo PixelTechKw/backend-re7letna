@@ -13,7 +13,9 @@ class VideoController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Video::when(request()->category_id, fn($q) => $q->categories()->where('id', request()->category_id))
+            ->orderBy('id', 'desc')->get();
+        return inertia('Backend/Video/VideoIndex', compact('elements'));
     }
 
     /**

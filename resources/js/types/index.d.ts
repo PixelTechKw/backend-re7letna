@@ -86,3 +86,38 @@ export type Quiz = {
     child?: Child;
     [key: string]: any;
 }
+
+export type Category = {
+    id: number | string;
+    name: string;
+    description: string;
+    [key: string]: any;
+}
+
+export type Video = {
+    id: number | string;
+    name: string;
+    description: string;
+    [key: string]: any;
+}
+
+export type Tool = {
+    id: number | string;
+    name: string;
+    description: string;
+    [key: string]: any;
+}
+
+export type Consultant = {
+    id: number | string;
+    name: string;
+    description: string;
+    [key: string]: any;
+}
+
+export type Comment = {
+    id: number | string;
+    name: string;
+    description: string;
+    [key: string]: any;
+}

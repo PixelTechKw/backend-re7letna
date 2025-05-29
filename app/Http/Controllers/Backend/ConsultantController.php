@@ -13,7 +13,8 @@ class ConsultantController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Consultant::orderBy('id', 'desc')->get();
+        return inertia('Backend/Consultant/ConsultantIndex', compact('elements'));
     }
 
     /**

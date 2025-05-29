@@ -159,7 +159,7 @@ export default function ({
                                 (c: Child, i: any) => (
                                     <li
                                         key={i}
-                                        className="truncate w-20 p-1  text-gray-600 hover:text-white hover:bg-gray-600"
+                                        className="truncate w-40 p-1  text-gray-600 hover:text-white hover:bg-gray-600"
                                     >
                                         {c.name}
                                     </li>

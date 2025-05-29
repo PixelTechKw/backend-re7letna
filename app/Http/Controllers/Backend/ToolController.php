@@ -13,7 +13,8 @@ class ToolController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Tool::orderBy('id', 'desc')->get();
+        return inertia('Backend/Tool/ToolIndex', compact('elements'));
     }
 
     /**

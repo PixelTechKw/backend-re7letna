@@ -102,6 +102,16 @@ export default function ({ element }: PageProps) {
                                 </div>
                             ))}
                         </div>
+                        <div className="border-t border-b border-prime-400 px-4 py-6  col-span-full">
+                            <dt className="text-xl font-bold text-gray-900">
+                                Quiz Score{" "}
+                                {`(${element.answers.length} questions)`}
+                            </dt>
+                            <dd className="mt-1 text-xl font-bold text-gray-900 sm:mt-2">
+                                <span>{element.score} / </span>
+                                <span className="text-red-600">{`${element.answers.length * 100}`}</span>
+                            </dd>
+                        </div>
                         <div className="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
                             <dt className="text-sm/6 font-medium text-gray-900">
                                 created at
@@ -112,6 +122,7 @@ export default function ({ element }: PageProps) {
                                     .format("ll")}`}
                             </dd>
                         </div>
+
                         <div className="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
                             <dt className="text-sm/6 font-medium text-gray-900">
                                 Questionnaire Name

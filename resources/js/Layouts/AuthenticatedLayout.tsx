@@ -114,22 +114,22 @@ export default function ({
                                 <NavLink
                                     prefetch
                                     cacheFor={1000}
-                                    href={route("backend.questionnaire.index")}
+                                    href={route("backend.category.index")}
                                     active={
                                         route().current(
                                             "backend.quesstionnaire.index",
                                         ) ||
                                         route().current(
-                                            "backend.questionnaire.create",
+                                            "backend.category.create",
                                         ) ||
                                         route().current(
-                                            "backend.questionnaire.edit",
+                                            "backend.category.edit",
                                         ) ||
                                         route().current(
-                                            "backend.questionnaire.show",
+                                            "backend.category.show",
                                         ) ||
                                         route().current(
-                                            "backend.questionnaire.index",
+                                            "backend.category.index",
                                         )
                                     }
                                 >
@@ -138,23 +138,17 @@ export default function ({
                                 <NavLink
                                     prefetch
                                     cacheFor={1000}
-                                    href={route("backend.questionnaire.index")}
+                                    href={route("backend.video.index")}
                                     active={
                                         route().current(
                                             "backend.quesstionnaire.index",
                                         ) ||
                                         route().current(
-                                            "backend.questionnaire.create",
+                                            "backend.video.create",
                                         ) ||
-                                        route().current(
-                                            "backend.questionnaire.edit",
-                                        ) ||
-                                        route().current(
-                                            "backend.questionnaire.show",
-                                        ) ||
-                                        route().current(
-                                            "backend.questionnaire.index",
-                                        )
+                                        route().current("backend.video.edit") ||
+                                        route().current("backend.video.show") ||
+                                        route().current("backend.video.index")
                                     }
                                 >
                                     Videos

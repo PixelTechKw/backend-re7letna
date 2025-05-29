@@ -13,7 +13,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Comment::orderBy('id', 'desc')->get();
+        return inertia('Backend/Comment/CommentIndex', compact('elements'));
     }
 
     /**

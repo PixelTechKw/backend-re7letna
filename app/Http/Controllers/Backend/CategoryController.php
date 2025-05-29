@@ -13,7 +13,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Category::orderBy('id', 'desc')->get();
+        return inertia('Backend/Category/CategoryIndex', compact('elements'));
     }
 
     /**

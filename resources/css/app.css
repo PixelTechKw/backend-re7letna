@@ -107,7 +107,7 @@
 
 @layer components {
     .btn-default {
-        @apply w-auto h-11 p-2 px-5 lg:px-7 border border-prime-800 rounded-full bg-prime-800 hover:bg-prime-200 text-white hover:border-prime-800 first-letter:uppercase transition-colors duration-75;
+        @apply w-auto h-11 p-2 px-5 lg:px-7 border border-prime-800 rounded-full bg-prime-800 hover:bg-prime-200 text-xs md:text-sm text-white hover:border-prime-800  hover:text-gray-800 first-letter:uppercase transition-colors duration-75;
     }
     .btn-white {
         @apply btn-default bg-white text-gray-600 hover:text-prime-800 hover:border-gray-400 hover:bg-white;
