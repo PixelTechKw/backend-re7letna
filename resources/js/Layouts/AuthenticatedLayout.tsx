@@ -63,7 +63,7 @@ export default function ({
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex capitalize">
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 lg:flex capitalize">
                                 <NavLink
                                     prefetch
                                     cacheFor={1000}
@@ -208,7 +208,7 @@ export default function ({
                             </div>
                         </div>
 
-                        <div className="hidden sm:ms-6 sm:flex sm:items-center">
+                        <div className="hidden sm:ms-6 lg:flex sm:items-center">
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -258,7 +258,7 @@ export default function ({
                             </div>
                         </div>
 
-                        <div className="-me-2 flex items-center sm:hidden">
+                        <div className="-me-2 flex items-center lg:hidden">
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
@@ -300,11 +300,11 @@ export default function ({
                         </div>
                     </div>
                 </div>
-
+                {/* mobile */}
                 <div
                     className={
                         (showingNavigationDropdown ? "block" : "hidden") +
-                        " sm:hidden"
+                        " lg:hidden"
                     }
                 >
                     <div className="space-y-1 pb-3 pt-2">
@@ -313,6 +313,50 @@ export default function ({
                             active={route().current("backend.home")}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("backend.user.index")}
+                            active={route().current("backend.user.index")}
+                        >
+                            parents
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("backend.questionnaire.index")}
+                            active={route().current(
+                                "backend.questionnaire.index",
+                            )}
+                        >
+                            questionnaires
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("backend.category.index")}
+                            active={route().current("backend.category.index")}
+                        >
+                            categories
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("backend.tool.index")}
+                            active={route().current("backend.tool.index")}
+                        >
+                            tools
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("backend.stage.index")}
+                            active={route().current("backend.stage.index")}
+                        >
+                            stages
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("backend.consultant.index")}
+                            active={route().current("backend.consultant.index")}
+                        >
+                            consultants
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("backend.comment.index")}
+                            active={route().current("backend.comment.index")}
+                        >
+                            comments
                         </ResponsiveNavLink>
                     </div>
 
@@ -354,6 +398,7 @@ export default function ({
                     </div>
                 </div>
             </nav>
+            {/* content */}
             <div className=" max-w-7xl mx-auto p-6 mt-4">
                 {header && (
                     <header className="bg-white shadow dark:bg-gray-800 hidden">
