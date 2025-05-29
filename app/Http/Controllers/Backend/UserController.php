@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function index(UserFilters $filters)
     {
-        $elements = User::filters($filters)
+        $elements = User::notAdmin()->filters($filters)
             ->orderBy('id', 'desc')
             ->with('children')
             ->get();

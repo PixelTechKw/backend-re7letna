@@ -237,11 +237,11 @@ export default function ({
                 </div>
                 <Alert className="bg-gray-50 border border-gray-600">
                     <InfoCircledIcon className="size-6 text-gray-400 " />
-                    <AlertTitle className="ml-6 text-lg">
+                    <AlertTitle className="ml-6 text-sm md:text-lg">
                         Quizzes Information
                     </AlertTitle>
                     <AlertDescription>
-                        <div className="grid grid-cols-4 gap-4 mt-4 ml-6 capitalize">
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-4 ml-6 capitalize">
                             <div className="col-span-2 flex flex-row gap-4">
                                 <div>Child Name:</div>
                                 <div>{element.name}</div>

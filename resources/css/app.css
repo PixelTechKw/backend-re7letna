@@ -116,7 +116,7 @@
         @apply btn-default bg-transparent border-white text-white hover:text-white hover:border-second-600 hover:bg-prime-400;
     }
     .header-one {
-        @apply text-xl  md:text-lg xl:text-xl capitalize my-4;
+        @apply text-sm md:text-lg xl:text-xl capitalize my-4;
     }
     .nav-icon {
         @apply size-4 text-gray-600;

@@ -27,7 +27,7 @@ export default function ({ element }: PageProps) {
                     </div>
                     <button
                         onClick={() => window.print()}
-                        className="print:hidden flex flex-row  justify-evenly items-center gap-x-2 border border-prime-700 text-prime-700 hover:text-white hover:bg-prime-700 rounded-3xl  py-2  w-28 capitalize "
+                        className="print:hidden hidden sm:flex flex-row  justify-evenly items-center gap-x-2 border border-prime-700 text-prime-700 hover:text-white hover:bg-prime-700 rounded-3xl  py-2  w-28 capitalize "
                     >
                         <div>
                             <PrinterIcon className="size-6 " />
@@ -37,7 +37,7 @@ export default function ({ element }: PageProps) {
                 </div>
 
                 <div className="mt-6">
-                    <dl className="grid grid-cols-2 sm:grid-cols-3 capitalize">
+                    <dl className="grid grid-cols- sm:grid-cols-3 capitalize">
                         <div className="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
                             <dt className="text-sm/6 font-medium text-gray-900">
                                 Child Name
@@ -82,7 +82,7 @@ export default function ({ element }: PageProps) {
                             <dt className="text-sm/6 font-medium text-gray-900">
                                 Categories
                             </dt>
-                            <dd className="mt-1 text-sm/6 text-gray-700 sm:mt-2 flex flex-row flex-wrap">
+                            <dd className="mt-1 text-sm/6 text-gray-700 sm:mt-2 flex flex-row flex-wrap gap-2">
                                 {map(element.child.categories, (c, i) => (
                                     <Badge key={i}>{c.name}</Badge>
                                 ))}
