@@ -7,7 +7,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import copy from "copy-to-clipboard";
-import { get, map } from "lodash";
+import { capitalize, get, map } from "lodash";
 import { ArrowLeft, CopyCheckIcon } from "lucide-react";
 import moment from "moment";
 import { FormEventHandler, useEffect } from "react";
@@ -82,7 +82,7 @@ export default function ({ roles, genders }: PageProps): React.ReactNode {
     };
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header={capitalize("create parent")}>
             <form onSubmit={submit} className={`flex flex-1 flex-col gap-y-2 `}>
                 <section className="flex flex-col w-full bg-white p-4 gap-y-4 rounded-xl my-1">
                     <div className="flex flex-row gap-x-4 justify-start items-center capitalize">

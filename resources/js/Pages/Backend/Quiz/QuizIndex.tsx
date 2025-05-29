@@ -16,6 +16,7 @@ import { Child, PageProps, Quiz, User } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
+import { capitalize } from "lodash";
 import {
     ArrowLeft,
     ArrowUpDown,
@@ -207,7 +208,7 @@ export default function ({
     );
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header={capitalize("list of quizzes")}>
             <div className="w-full flex flex-1 flex-col bg-white  rounded-xl min-h-screen gap-y-4 p-6">
                 <div className="flex justify-between items-center">
                     <div className="flex flex-row justify-center items-center gap-x-4">

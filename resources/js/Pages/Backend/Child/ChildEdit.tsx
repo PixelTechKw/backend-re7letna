@@ -7,7 +7,7 @@ import { Input } from "@/shadcn/ui/input";
 import { Label } from "@/shadcn/ui/label";
 import { Gender, PageProps } from "@/types";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
-import { get } from "lodash";
+import { capitalize, get } from "lodash";
 import { ArrowLeft, UploadIcon } from "lucide-react";
 import moment from "moment";
 import { ChangeEvent, FormEventHandler } from "react";
@@ -63,7 +63,7 @@ export default function ({ element, genders }: PageProps): React.ReactNode {
     };
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header={capitalize("edit child")}>
             <form onSubmit={submit} className={`flex flex-1 flex-col gap-y-2 `}>
                 <section className="flex flex-col w-full bg-white p-4 gap-y-4 rounded-xl my-1">
                     <div className="flex flex-row gap-x-4 justify-start items-center capitalize">

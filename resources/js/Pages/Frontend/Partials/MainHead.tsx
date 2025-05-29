@@ -7,7 +7,7 @@ export default function ({
     title,
     description,
 }: {
-    title?: string;
+    title?: string | any;
     description?: string;
 }): ReactNode {
     const {settings}: any = usePage().props;

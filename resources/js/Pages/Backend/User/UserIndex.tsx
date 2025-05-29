@@ -1,38 +1,39 @@
-import {MainDataTable} from '@/Components/MainDataTable';
-import UserDropDownMenu from '@/Components/User/UserDropDownMenu';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {useAppDispatch} from '@/redux/hooks';
-import {Badge} from '@/shadcn/ui/badge';
-import {Button} from '@/shadcn/ui/button';
-import {DropdownMenu, DropdownMenuTrigger} from '@/shadcn/ui/dropdown-menu';
-import {PageProps, User, Child} from '@/types';
-import {Link, usePage} from '@inertiajs/react';
-import {ColumnDef} from '@tanstack/react-table';
-import {map, take} from 'lodash';
-import {ArrowUpDown, MoreHorizontalIcon} from 'lucide-react';
-import {useMemo} from 'react';
-import {Tooltip, TooltipContent, TooltipTrigger} from '@/shadcn/ui/tooltip';
-import ElementDropDownMenu from '@/Components/ElementDropDownMenu';
+import { MainDataTable } from "@/Components/MainDataTable";
+import UserDropDownMenu from "@/Components/User/UserDropDownMenu";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { useAppDispatch } from "@/redux/hooks";
+import { Badge } from "@/shadcn/ui/badge";
+import { Button } from "@/shadcn/ui/button";
+import { DropdownMenu, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu";
+import { PageProps, User, Child } from "@/types";
+import { Link, usePage } from "@inertiajs/react";
+import { ColumnDef } from "@tanstack/react-table";
+import { capitalize, map, take } from "lodash";
+import { ArrowUpDown, MoreHorizontalIcon } from "lucide-react";
+import { useMemo } from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
+import ElementDropDownMenu from "@/Components/ElementDropDownMenu";
+import MainHead from "@/Pages/Frontend/Partials/MainHead";
 export default function ({
     elements,
-}: PageProps<{elements: any}>): React.ReactNode {
+}: PageProps<{ elements: any }>): React.ReactNode {
     const {
-        ziggy: {location, query},
+        ziggy: { location, query },
     } = usePage().props;
     const dispatch = useAppDispatch();
 
     const columns: ColumnDef<User>[] = useMemo(
         () => [
             {
-                accessorKey: 'id',
-                header: ({column}: any) => {
+                accessorKey: "id",
+                header: ({ column }: any) => {
                     return (
                         <Button
                             variant="ghost"
                             className="capitalize !p-0"
                             onClick={() =>
                                 column.toggleSorting(
-                                    column.getIsSorted() === 'asc',
+                                    column.getIsSorted() === "asc",
                                 )
                             }
                         >
@@ -41,7 +42,7 @@ export default function ({
                         </Button>
                     );
                 },
-                cell: ({row}: any) => {
+                cell: ({ row }: any) => {
                     return (
                         <div className="flex flex-row justify-start items-center">
                             <div className="truncate text-xxs px-2">
@@ -54,15 +55,15 @@ export default function ({
             },
 
             {
-                accessorKey: 'name',
-                header: ({column}: any) => {
+                accessorKey: "name",
+                header: ({ column }: any) => {
                     return (
                         <Button
                             variant="ghost"
                             className="capitalize !p-0"
                             onClick={() =>
                                 column.toggleSorting(
-                                    column.getIsSorted() === 'asc',
+                                    column.getIsSorted() === "asc",
                                 )
                             }
                         >
@@ -71,7 +72,7 @@ export default function ({
                         </Button>
                     );
                 },
-                cell: ({row}: any) => {
+                cell: ({ row }: any) => {
                     return (
                         <div className="flex flex-col justify-start items-start  sm-text gap-y-2 capitalize max-w-40 truncate">
                             <div>{row.original.name}</div>
@@ -80,15 +81,15 @@ export default function ({
                 },
             },
             {
-                accessorKey: 'email',
-                header: ({column}: any) => {
+                accessorKey: "email",
+                header: ({ column }: any) => {
                     return (
                         <Button
                             variant="ghost"
                             className="capitalize !p-0"
                             onClick={() =>
                                 column.toggleSorting(
-                                    column.getIsSorted() === 'asc',
+                                    column.getIsSorted() === "asc",
                                 )
                             }
                         >
@@ -97,7 +98,7 @@ export default function ({
                         </Button>
                     );
                 },
-                cell: ({row}: any) => {
+                cell: ({ row }: any) => {
                     return (
                         <div className="flex flex-col justify-start items-start  sm-text gap-y-2  max-w-40 truncate">
                             <div>{row.original.email}</div>
@@ -106,15 +107,15 @@ export default function ({
                 },
             },
             {
-                accessorKey: 'mobile',
-                header: ({column}: any) => {
+                accessorKey: "mobile",
+                header: ({ column }: any) => {
                     return (
                         <Button
                             variant="ghost"
                             className="capitalize !p-0"
                             onClick={() =>
                                 column.toggleSorting(
-                                    column.getIsSorted() === 'asc',
+                                    column.getIsSorted() === "asc",
                                 )
                             }
                         >
@@ -123,7 +124,7 @@ export default function ({
                         </Button>
                     );
                 },
-                cell: ({row}: any) => {
+                cell: ({ row }: any) => {
                     return (
                         <div className="flex flex-col justify-start items-start  sm-text gap-y-2 capitalize max-w-40 truncate">
                             <div>{row.original.mobile}</div>
@@ -133,15 +134,15 @@ export default function ({
             },
 
             {
-                accessorKey: 'children',
-                header: ({column}: any) => {
+                accessorKey: "children",
+                header: ({ column }: any) => {
                     return (
                         <Button
                             variant="ghost"
                             className="capitalize !p-0"
                             onClick={() =>
                                 column.toggleSorting(
-                                    column.getIsSorted() === 'asc',
+                                    column.getIsSorted() === "asc",
                                 )
                             }
                         >
@@ -150,7 +151,7 @@ export default function ({
                         </Button>
                     );
                 },
-                cell: ({row}: any) => {
+                cell: ({ row }: any) => {
                     return (
                         <ul className="flex flex-col gap-2">
                             {map(
@@ -169,15 +170,15 @@ export default function ({
                 },
             },
             {
-                accessorKey: 'active',
-                header: ({column}) => {
+                accessorKey: "active",
+                header: ({ column }) => {
                     return (
                         <Button
                             variant="ghost"
                             className="capitalize !p-0"
                             onClick={() =>
                                 column.toggleSorting(
-                                    column.getIsSorted() === 'asc',
+                                    column.getIsSorted() === "asc",
                                 )
                             }
                         >
@@ -202,7 +203,7 @@ export default function ({
                         </Button>
                     );
                 },
-                cell: ({row}: any) => {
+                cell: ({ row }: any) => {
                     return (
                         <div
                             className={`w-3 h-3 rounded-full text-center border text-[6px] lg:text-xxs ${
@@ -215,12 +216,12 @@ export default function ({
                 },
             },
             {
-                accessorKey: 'actions',
+                accessorKey: "actions",
                 header: () => <div className="capitalize !p-0">actions</div>,
                 enableColumnFilter: false,
                 enableGlobalFilter: false,
                 enableSorting: false,
-                cell: ({row}) => {
+                cell: ({ row }) => {
                     const element: any = row.original;
                     return (
                         <DropdownMenu>
@@ -241,12 +242,12 @@ export default function ({
     );
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header={capitalize("list of parents")}>
             <div className="w-full flex flex-1 flex-col bg-white  rounded-xl min-h-screen gap-y-4 p-6">
                 <div className="flex justify-between items-center">
                     <div className="header-one capitalize">list of Parents</div>
                     <Link
-                        href={route('backend.user.create')}
+                        href={route("backend.user.create")}
                         className="btn-default capitalize"
                     >
                         new parent

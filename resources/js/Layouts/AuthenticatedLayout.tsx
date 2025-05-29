@@ -2,6 +2,7 @@ import DeleteModal from "@/Components/DeleteModal";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import MainHead from "@/Pages/Frontend/Partials/MainHead";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
     showErrorToastMessage,
@@ -15,7 +16,7 @@ import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 export default function ({
     header,
     children,
-}: PropsWithChildren<{ header?: ReactNode }>) {
+}: PropsWithChildren<{ header?: ReactNode | string }>) {
     const {
         auth: { user },
         flash,
@@ -361,10 +362,11 @@ export default function ({
             </nav>
             <div className=" max-w-7xl mx-auto p-6 mt-4">
                 {header && (
-                    <header className="bg-white shadow dark:bg-gray-800">
+                    <header className="bg-white shadow dark:bg-gray-800 hidden">
                         <div className=" px-4 py-6 sm:px-6 lg:px-8">
                             {header}
                         </div>
+                        <MainHead title={header} />
                     </header>
                 )}
 

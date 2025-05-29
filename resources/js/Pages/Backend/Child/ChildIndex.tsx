@@ -16,6 +16,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
 import { Child, PageProps, User } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
+import { capitalize } from "lodash";
 import {
     ArrowDown,
     ArrowLeft,
@@ -220,7 +221,7 @@ export default function ({
     );
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header={capitalize("list of children")}>
             <div className="w-full flex flex-1 flex-col bg-white  rounded-xl min-h-screen gap-y-4 p-6">
                 <div className="flex justify-between items-center">
                     <div className="flex flex-row gap-4">

@@ -4,18 +4,19 @@ import {PageProps} from '@/types';
 import {PaperClipIcon} from '@heroicons/react/20/solid';
 import {Link} from '@inertiajs/react';
 import DOMPurify from 'isomorphic-dompurify';
+import { capitalize } from 'lodash';
 import {Download} from 'lucide-react';
 
 export default function ({element}: PageProps) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header={capitalize("settings")}>
             <div className="w-full flex flex-1 flex-col bg-white  rounded-xl min-h-screen gap-y-4 p-6">
                 <div className="flex justify-between items-center">
                     <div className="header-one capitalize">
                         Website Information & Settings
                     </div>
                     <Link
-                        href={route('backend.setting.edit', {id: element.id})}
+                        href={route("backend.setting.edit", { id: element.id })}
                         className="btn-default capitalize"
                     >
                         edit settings

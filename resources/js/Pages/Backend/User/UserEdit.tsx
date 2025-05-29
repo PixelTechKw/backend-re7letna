@@ -4,7 +4,7 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
-import { get, map } from "lodash";
+import { capitalize, get, map } from "lodash";
 import { ArrowLeft } from "lucide-react";
 import moment from "moment";
 import { FormEventHandler } from "react";
@@ -68,7 +68,7 @@ export default function ({
     };
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header={capitalize("edit parent")}>
             <form onSubmit={submit} className={`flex flex-1 flex-col gap-y-2 `}>
                 <section className="flex flex-col w-full bg-white p-4 gap-y-4 rounded-xl my-1">
                     <div className="flex flex-row gap-x-4 justify-start items-center capitalize">

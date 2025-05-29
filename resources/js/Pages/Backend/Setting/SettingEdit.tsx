@@ -1,24 +1,24 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import {TextEditor} from '@/Components/TextEditor';
-import TextInput from '@/Components/TextInput';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {getIcon, getImage} from '@/constants';
-import {useAppDispatch} from '@/redux/hooks';
-import {Input} from '@/shadcn/ui/input';
-import {Label} from '@/shadcn/ui/label';
-import {PageProps} from '@/types/index.d';
-import {Link, router, useForm} from '@inertiajs/react';
-import {get} from 'lodash';
-import {ArrowLeft} from 'lucide-react';
-import {ChangeEvent, FormEventHandler, useState} from 'react';
-import {ReactSVG} from 'react-svg';
-import 'suneditor/dist/css/suneditor.min.css';
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import { TextEditor } from "@/Components/TextEditor";
+import TextInput from "@/Components/TextInput";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { getIcon, getImage } from "@/constants";
+import { useAppDispatch } from "@/redux/hooks";
+import { Input } from "@/shadcn/ui/input";
+import { Label } from "@/shadcn/ui/label";
+import { PageProps } from "@/types/index.d";
+import { Link, router, useForm } from "@inertiajs/react";
+import { capitalize, get } from "lodash";
+import { ArrowLeft } from "lucide-react";
+import { ChangeEvent, FormEventHandler, useState } from "react";
+import { ReactSVG } from "react-svg";
+import "suneditor/dist/css/suneditor.min.css";
 
-export default function ({element}: PageProps) {
+export default function ({ element }: PageProps) {
     const [currentImages, setCurrentImages] = useState([]);
     const dispatch = useAppDispatch();
-    const {data, setData, post, put, processing, errors, transform, reset} =
+    const { data, setData, post, put, processing, errors, transform, reset } =
         useForm({
             name: element.name,
             caption: element.caption,
@@ -69,7 +69,7 @@ export default function ({element}: PageProps) {
         router.post(
             route(`backend.setting.update`, element.id),
             {
-                _method: 'put',
+                _method: "put",
                 ...data,
                 image: data.image,
             },
@@ -81,7 +81,7 @@ export default function ({element}: PageProps) {
     };
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header={capitalize("edit settings")}>
             <form
                 onSubmit={submit}
                 className={`flex flex-1 flex-col gap-y-2 capitalize`}
@@ -89,7 +89,7 @@ export default function ({element}: PageProps) {
                 <section className="flex flex-col w-full bg-white p-4 gap-y-4 rounded-xl my-1">
                     <div className="flex flex-row gap-x-4 justify-start items-center capitalize">
                         <Link
-                            href={route('backend.setting.index')}
+                            href={route("backend.setting.index")}
                             className="p-4 bg-gray-100 border border-gray-200 rounded-2xl"
                         >
                             <ArrowLeft />
@@ -101,7 +101,7 @@ export default function ({element}: PageProps) {
                         <div className="col-span-1">
                             <InputLabel
                                 htmlFor="name"
-                                value={'name (seo)'}
+                                value={"name (seo)"}
                                 aria-required
                             />
                             <TextInput
@@ -111,12 +111,12 @@ export default function ({element}: PageProps) {
                                 required
                                 aria-required
                                 onChange={(e) =>
-                                    setData('name', e.target.value)
+                                    setData("name", e.target.value)
                                 }
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                             />
                             <InputError
-                                message={get(errors, 'name')}
+                                message={get(errors, "name")}
                                 className="mt-2"
                             />
                         </div>
@@ -125,19 +125,19 @@ export default function ({element}: PageProps) {
                             <div>
                                 <InputLabel
                                     htmlFor="caption"
-                                    value={'caption'}
+                                    value={"caption"}
                                 />
                                 <TextInput
                                     defaultValue={element.caption}
                                     id="caption"
                                     name="caption"
                                     onChange={(e) =>
-                                        setData('caption', e.target.value)
+                                        setData("caption", e.target.value)
                                     }
                                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                 />
                                 <InputError
-                                    message={get(errors, 'caption')}
+                                    message={get(errors, "caption")}
                                     className="mt-2"
                                 />
                             </div>
@@ -146,7 +146,7 @@ export default function ({element}: PageProps) {
                         <div className="col-span-1">
                             <InputLabel
                                 htmlFor="email"
-                                value={'email'}
+                                value={"email"}
                                 aria-required
                             />
                             <TextInput
@@ -160,7 +160,7 @@ export default function ({element}: PageProps) {
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                             />
                             <InputError
-                                message={get(errors, 'email')}
+                                message={get(errors, "email")}
                                 className="mt-2"
                             />
                         </div>
@@ -168,7 +168,7 @@ export default function ({element}: PageProps) {
                         <div className="col-span-1">
                             <InputLabel
                                 htmlFor="whatsapp"
-                                value={'whatsapp'}
+                                value={"whatsapp"}
                                 aria-required
                             />
                             <TextInput
@@ -182,7 +182,7 @@ export default function ({element}: PageProps) {
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                             />
                             <InputError
-                                message={get(errors, 'whatsapp')}
+                                message={get(errors, "whatsapp")}
                                 className="mt-2"
                             />
                         </div>
@@ -190,7 +190,7 @@ export default function ({element}: PageProps) {
                         <div className="col-span-1">
                             <InputLabel
                                 htmlFor="mobile"
-                                value={'mobile'}
+                                value={"mobile"}
                                 aria-required
                             />
                             <TextInput
@@ -202,14 +202,14 @@ export default function ({element}: PageProps) {
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                             />
                             <InputError
-                                message={get(errors, 'mobile')}
+                                message={get(errors, "mobile")}
                                 className="mt-2"
                             />
                         </div>
                         <div className="col-span-3">
                             <InputLabel
                                 htmlFor="description"
-                                value={'description (seo)'}
+                                value={"description (seo)"}
                             />
                             <textarea
                                 id="description"
@@ -217,13 +217,13 @@ export default function ({element}: PageProps) {
                                 rows={5}
                                 maxLength={1000}
                                 onChange={(e) =>
-                                    setData('description', e.target.value)
+                                    setData("description", e.target.value)
                                 }
                                 defaultValue={data.description}
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-xl border border-gray-200 focus:border-none focus:ring focus:ring-prime-700"
                             />
                             <InputError
-                                message={get(errors, 'description')}
+                                message={get(errors, "description")}
                                 className="mt-2"
                             />
                         </div>
@@ -232,19 +232,19 @@ export default function ({element}: PageProps) {
                             <div>
                                 <InputLabel
                                     htmlFor="keywords"
-                                    value={'keywords (seo)'}
+                                    value={"keywords (seo)"}
                                 />
                                 <TextInput
                                     defaultValue={element.keywords}
                                     id="keywords"
                                     name="keywords"
                                     onChange={(e) =>
-                                        setData('keywords', e.target.value)
+                                        setData("keywords", e.target.value)
                                     }
                                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                 />
                                 <InputError
-                                    message={get(errors, 'keywords')}
+                                    message={get(errors, "keywords")}
                                     className="mt-2"
                                 />
                             </div>
@@ -253,7 +253,7 @@ export default function ({element}: PageProps) {
 
                         <div className="col-span-full mb-2 flex flex-row justify-between items-center">
                             <div className="w-1/4">
-                                <InputLabel htmlFor="logo" value={'logo'} />
+                                <InputLabel htmlFor="logo" value={"logo"} />
                                 <img
                                     src={element.thumb}
                                     className="object-contain  h-28 w-auto"
@@ -265,7 +265,7 @@ export default function ({element}: PageProps) {
                                     className="w-full flex flex-1 flex-col justify-center items-center relative top-4 z-0 gap-y-4"
                                 >
                                     <ReactSVG
-                                        src={getIcon('download.svg')}
+                                        src={getIcon("download.svg")}
                                         className="h-8 w-8 p-2 text-gray-500 border border-gray-200 rounded-xl"
                                     />
                                     <div className="text-lg text-prime-600">
@@ -278,7 +278,7 @@ export default function ({element}: PageProps) {
                                     ) => {
                                         e.target.files
                                             ? setData(
-                                                  'image',
+                                                  "image",
                                                   e.target.files[0],
                                               )
                                             : null;
@@ -291,7 +291,7 @@ export default function ({element}: PageProps) {
                                 />
                             </div>
                             <InputError
-                                message={get(errors, 'image')}
+                                message={get(errors, "image")}
                                 className="mt-2"
                             />
                         </div>
@@ -313,7 +313,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="address"
-                                    value={'address'}
+                                    value={"address"}
                                     aria-required
                                 />
                                 <TextInput
@@ -323,12 +323,12 @@ export default function ({element}: PageProps) {
                                     required
                                     aria-required
                                     onChange={(e) =>
-                                        setData('address', e.target.value)
+                                        setData("address", e.target.value)
                                     }
                                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                 />
                                 <InputError
-                                    message={get(errors, 'address')}
+                                    message={get(errors, "address")}
                                     className="mt-2"
                                 />
                             </div>
@@ -337,7 +337,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="website"
-                                    value={'website'}
+                                    value={"website"}
                                 />
                                 <TextInput
                                     id="website"
@@ -356,7 +356,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="facebook"
-                                    value={'facebook'}
+                                    value={"facebook"}
                                 />
                                 <TextInput
                                     id="facebook"
@@ -375,7 +375,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="instagram"
-                                    value={'instagram'}
+                                    value={"instagram"}
                                 />
                                 <TextInput
                                     id="instagram"
@@ -394,7 +394,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="twitter"
-                                    value={'twitter'}
+                                    value={"twitter"}
                                 />
                                 <TextInput
                                     id="twitter"
@@ -411,7 +411,7 @@ export default function ({element}: PageProps) {
                             </div>
                             {/* apple */}
                             <div className="col-span-1">
-                                <InputLabel htmlFor="apple" value={'apple'} />
+                                <InputLabel htmlFor="apple" value={"apple"} />
                                 <TextInput
                                     id="apple"
                                     name="apple"
@@ -427,7 +427,7 @@ export default function ({element}: PageProps) {
                             </div>
                             {/* linked */}
                             <div className="col-span-1">
-                                <InputLabel htmlFor="linked" value={'linked'} />
+                                <InputLabel htmlFor="linked" value={"linked"} />
                                 <TextInput
                                     id="linked"
                                     name="linked"
@@ -445,7 +445,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="snapchat"
-                                    value={'snapchat'}
+                                    value={"snapchat"}
                                 />
                                 <TextInput
                                     id="snapchat"
@@ -464,7 +464,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="youtube"
-                                    value={'youtube'}
+                                    value={"youtube"}
                                 />
                                 <TextInput
                                     id="youtube"
@@ -481,7 +481,7 @@ export default function ({element}: PageProps) {
                             </div>
                             {/* tiktok */}
                             <div className="col-span-1">
-                                <InputLabel htmlFor="tiktok" value={'tiktok'} />
+                                <InputLabel htmlFor="tiktok" value={"tiktok"} />
                                 <TextInput
                                     id="tiktok"
                                     name="tiktok"
@@ -499,7 +499,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="telegram"
-                                    value={'telegram'}
+                                    value={"telegram"}
                                 />
                                 <TextInput
                                     id="telegram"
@@ -521,7 +521,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="country"
-                                    value={'country'}
+                                    value={"country"}
                                     aria-required
                                 />
                                 <TextInput
@@ -531,12 +531,12 @@ export default function ({element}: PageProps) {
                                     required
                                     aria-required
                                     onChange={(e) =>
-                                        setData('country', e.target.value)
+                                        setData("country", e.target.value)
                                     }
                                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                 />
                                 <InputError
-                                    message={get(errors, 'country')}
+                                    message={get(errors, "country")}
                                     className="mt-2"
                                 />
                             </div>
@@ -545,7 +545,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="longitude"
-                                    value={'longitude'}
+                                    value={"longitude"}
                                 />
                                 <TextInput
                                     id="longitude"
@@ -563,7 +563,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="latitude"
-                                    value={'latitude'}
+                                    value={"latitude"}
                                 />
                                 <TextInput
                                     id="latitude"
@@ -581,7 +581,7 @@ export default function ({element}: PageProps) {
                             <div className="col-span-1">
                                 <InputLabel
                                     htmlFor="map_url"
-                                    value={'map_url'}
+                                    value={"map_url"}
                                 />
                                 <TextInput
                                     id="map_url"
@@ -624,7 +624,7 @@ export default function ({element}: PageProps) {
                                 defaultValue={data.aboutus}
                             />
                             <InputError
-                                message={get(errors, 'aboutus')}
+                                message={get(errors, "aboutus")}
                                 className="mt-2"
                             />
                         </div>
@@ -642,7 +642,7 @@ export default function ({element}: PageProps) {
                                 defaultValue={data.policy}
                             />
                             <InputError
-                                message={get(errors, 'policy')}
+                                message={get(errors, "policy")}
                                 className="mt-2"
                             />
                         </div>
@@ -660,7 +660,7 @@ export default function ({element}: PageProps) {
                                 defaultValue={data.terms_and_conditions}
                             />
                             <InputError
-                                message={get(errors, 'terms_and_conditions')}
+                                message={get(errors, "terms_and_conditions")}
                                 className="mt-2"
                             />
                         </div>
