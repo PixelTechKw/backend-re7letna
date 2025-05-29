@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\UserAgeCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Child extends Model
 {
@@ -52,5 +53,10 @@ class Child extends Model
     public function latestQuiz()
     {
         return $this->hasOne(Quiz::class)->latestOfMany();
+    }
+
+    public function categories(): MorphToMany
+    {
+        return $this->morphToMany(Category::class, 'categoryable');
     }
 }

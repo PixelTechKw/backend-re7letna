@@ -6,6 +6,7 @@ import { Button } from "@/shadcn/ui/button";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { router, usePage } from "@inertiajs/react";
 import { isNull } from "lodash";
+import { LucideRecycle } from "lucide-react";
 
 export default function () {
     const {
@@ -31,7 +32,7 @@ export default function () {
                 },
                 preserveScroll: true,
                 onFinish: () => closeModal(),
-            }
+            },
         );
     };
 
@@ -47,14 +48,11 @@ export default function () {
                 <div className="flex flex-row justify-center items-center">
                     <XMarkIcon
                         onClick={() => closeModal()}
-                        className="absolute left-6  top-10 mx-3 w-6 h-6 text-gray-600"
+                        className="absolute left-6  top-10 mx-3 size-6 text-gray-600"
                     />
                 </div>
                 <div className="flex flex-col justify-center items-center gap-y-6">
-                    <img
-                        src={getIcon("delete-illustration.svg")}
-                        className="w-60 h-60 object-cover"
-                    />
+                    <LucideRecycle className="size-8" />
                     {!isNull(element) && (
                         <div className="header-one capitalize">
                             confirm delete this element ?

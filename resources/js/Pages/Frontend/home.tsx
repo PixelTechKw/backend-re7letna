@@ -1,22 +1,22 @@
-import { PageProps } from "@/types";
-import { Head, Link } from "@inertiajs/react";
-import { useEffect, useState } from "react";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { getImage } from "@/constants";
-import { useAppDispatch } from "@/redux/hooks";
-import { setActivePath } from "@/redux/slices/appSettingSlice";
+import {PageProps} from '@/types';
+import {Head, Link} from '@inertiajs/react';
+import {useEffect, useState} from 'react';
+import {Dialog, DialogPanel} from '@headlessui/react';
+import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline';
+import {getImage} from '@/constants';
+import {useAppDispatch} from '@/redux/hooks';
+import {setActivePath} from '@/redux/slices/appSettingSlice';
 
 export default function Welcome({
     auth,
     laravelVersion,
     isDev,
-}: PageProps<{ laravelVersion: string; isDev: boolean }>) {
+}: PageProps<{laravelVersion: string; isDev: boolean}>) {
     const dispatch = useAppDispatch();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
-        dispatch(setActivePath("root"));
+        dispatch(setActivePath('root'));
     }, []);
     return (
         <>
@@ -34,8 +34,8 @@ export default function Welcome({
                     >
                         <div className="flex lg:flex-1">
                             <Link
-                                onClick={() => dispatch(setActivePath("home"))}
-                                href={route("frontend.home")}
+                                onClick={() => dispatch(setActivePath('home'))}
+                                href={route('frontend.home')}
                                 className="-m-1.5 p-1.5"
                             >
                                 <span className="sr-only">Your Company</span>
@@ -72,7 +72,7 @@ export default function Welcome({
                         </div>
                         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                             <Link
-                                href={route("login")}
+                                href={route('login')}
                                 className="text-sm/6 font-semibold text-gray-900"
                             >
                                 Log in <span aria-hidden="true">&rarr;</span>
@@ -124,7 +124,7 @@ export default function Welcome({
                                     </div>
                                     <div className="py-6">
                                         <Link
-                                            href={route("login")}
+                                            href={route('login')}
                                             className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                                         >
                                             Log in
@@ -144,7 +144,7 @@ export default function Welcome({
                         <div
                             style={{
                                 clipPath:
-                                    "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+                                    'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
                             }}
                             className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#f4fc5a] to-[#f6e526] opacity-80 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                         />
@@ -153,13 +153,13 @@ export default function Welcome({
                     <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
                         <div className="w-full flex justify-center items-center my-6">
                             <Link
-                                onClick={() => dispatch(setActivePath("home"))}
-                                href={route("frontend.home")}
+                                onClick={() => dispatch(setActivePath('home'))}
+                                href={route('frontend.home')}
                             >
                                 <img
                                     id="background"
                                     className="w-40 h-auto"
-                                    src={getImage("logo.png")}
+                                    src={getImage('logo.png')}
                                 />
                             </Link>
                         </div>
@@ -201,7 +201,7 @@ export default function Welcome({
                         <div
                             style={{
                                 clipPath:
-                                    "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+                                    'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
                             }}
                             className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#f1fc57] to-[#b7ff00] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
                         />

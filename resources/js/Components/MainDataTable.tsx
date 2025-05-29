@@ -114,7 +114,7 @@ export function MainDataTable<TData, TValue>({
                             className="w-12 h-12 flex justify-center items-center bg-gray-50 border hover:bg-red-300 text-gray-400 hover:text-white border-gray-200 hover:border-red-50 rounded-xl mt-2"
                             href={resetPath}
                         >
-                            <ArrowPathIcon className="w-6 h-6 " />
+                            <ArrowPathIcon className="size-6 " />
                         </Link>
                     ) : null}
                 </div>
@@ -139,7 +139,7 @@ export function MainDataTable<TData, TValue>({
                                                 : flexRender(
                                                       header.column.columnDef
                                                           .header,
-                                                      header.getContext()
+                                                      header.getContext(),
                                                   )}
                                         </TableHead>
                                     );
@@ -161,7 +161,7 @@ export function MainDataTable<TData, TValue>({
                                         <TableCell key={cell.id}>
                                             {flexRender(
                                                 cell.column.columnDef.cell,
-                                                cell.getContext()
+                                                cell.getContext(),
                                             )}
                                         </TableCell>
                                     ))}

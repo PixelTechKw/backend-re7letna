@@ -1,37 +1,42 @@
-import {getIcon} from '@/constants';
-import {useAppDispatch, useAppSelector} from '@/redux/hooks';
-import {toggleshowDeleteModal} from '@/redux/slices/appSettingSlice';
+import { getIcon } from "@/constants";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { toggleshowDeleteModal } from "@/redux/slices/appSettingSlice";
 import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuSeparator,
-} from '@/shadcn/ui/dropdown-menu';
-import {Label} from '@/shadcn/ui/label';
-import {Switch} from '@/shadcn/ui/switch';
-import {PencilIcon} from '@heroicons/react/24/outline';
-import {Link, usePage} from '@inertiajs/react';
-import {CircleArrowOutDownLeft, RecycleIcon} from 'lucide-react';
-import {Suspense} from 'react';
-import {ReactSVG} from 'react-svg';
+} from "@/shadcn/ui/dropdown-menu";
+import { Label } from "@/shadcn/ui/label";
+import { Switch } from "@/shadcn/ui/switch";
+import { PencilIcon } from "@heroicons/react/24/outline";
+import { Link, usePage } from "@inertiajs/react";
+import { PlusCircledIcon } from "@radix-ui/react-icons";
+import {
+    CircleArrowOutDownLeft,
+    ListCollapse,
+    RecycleIcon,
+} from "lucide-react";
+import { Suspense } from "react";
+import { ReactSVG } from "react-svg";
 
-export default function ({id, active}: any): React.ReactNode {
+export default function ({ id, active }: any): React.ReactNode {
     const dispatch = useAppDispatch();
     const {
-        ziggy: {query},
+        ziggy: { query },
     }: any = usePage().props;
     return (
         <Suspense>
             <DropdownMenuContent
                 className="w-40 xl:w-60"
                 align="start"
-                side={'left'}
+                side={"left"}
             >
                 <DropdownMenuGroup>
                     <DropdownMenuItem>
                         <Link
                             as="button"
-                            type={'button'}
+                            type={"button"}
                             href={route(`backend.user.edit`, id)}
                             className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
                         >
@@ -43,10 +48,35 @@ export default function ({id, active}: any): React.ReactNode {
                     <DropdownMenuItem>
                         <Link
                             as="button"
-                            type={'button'}
+                            type={"button"}
+                            href={route(`backend.child.index`, { user_id: id })}
+                            className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
+                        >
+                            <ListCollapse className="nav-icon" />
+                            <div>list of children</div>
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Link
+                            as="button"
+                            type={"button"}
+                            href={route(`backend.child.create`, {
+                                user_id: id,
+                            })}
+                            className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
+                        >
+                            <PlusCircledIcon className="nav-icon" />
+                            <div>create child</div>
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                        <Link
+                            as="button"
+                            type={"button"}
                             href={route(`backend.toggle.activate`, {
                                 id: id,
-                                model: 'user',
+                                model: "user",
                             })}
                             className="flex flex-row flex-1 justify-between items-center"
                         >
@@ -74,7 +104,7 @@ export default function ({id, active}: any): React.ReactNode {
                             onClick={() =>
                                 dispatch(
                                     toggleshowDeleteModal({
-                                        name: 'user',
+                                        name: "user",
                                         id: id,
                                     }),
                                 )

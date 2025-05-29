@@ -22,6 +22,7 @@ export type PageProps<
     element?: any,
     currentRouteName: string,
     settings: Setting,
+    genders?: string[],
     elements?: any,
     [key: string]: string;
 };
@@ -45,10 +46,43 @@ export type Setting = {
     [key: string]: any;
 }
 
+export type Gender = 'male' | 'female';
+
+export type Stage = {
+    id: number | string;
+    name: string;
+    description: string;
+    from: string;
+    to: string;
+};
 export type Child = {
     id: number | string;
     name: string;
     dob: Date;
+    gender: Gender;
     user_id: number | string;
+    stage_id: number | string;
+    user?: User;
+    stage?: Stage;
+    [key: string]: any;
+}
+
+export type Questionnaire = {
+    id: number | string;
+    name: string;
+    description: string;
+    stage_id: number | string;
+    stage?: Stage;
+    questions?: Question[];
+    [key: string]: any;
+}
+
+export type Quiz = {
+    id: number | string;
+    child_id: number | string;
+    questionnaire_id: number | string;
+    questionnaire?: Questionnaire;
+    score: number;
+    child?: Child;
     [key: string]: any;
 }

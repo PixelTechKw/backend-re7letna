@@ -5,37 +5,41 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Input } from "@/shadcn/ui/input";
 import { Label } from "@/shadcn/ui/label";
-import { PageProps } from "@/types";
+import { Gender, PageProps } from "@/types";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
 import { get } from "lodash";
 import { ArrowLeft, UploadIcon } from "lucide-react";
+import moment from "moment";
 import { ChangeEvent, FormEventHandler } from "react";
 
 interface FormProps {
     name: string;
-    role?: string;
-    image: string;
+    gender: Gender;
+    dob: string;
+    user_id: string;
+    stage_id: string;
     [key: string]: any;
 }
 
-export default function ({
-    element,
-    currentRouteName,
-}: PageProps): React.ReactNode {
+export default function ({ element, genders }: PageProps): React.ReactNode {
     const {
         ziggy: { query },
-    }: any = usePage().props;
+    } = usePage().props;
     const { data, setData, post, processing, errors, transform, reset }: any =
         useForm<FormProps>({
             name: element.name,
-            role: element.role,
-            image: element.image,
+            gender: element.gender,
+            dob: moment(element.dob, "YYYY-MM-DD")
+                .locale("en")
+                .format("YYYY-MM-DD"),
+            user_id: element.user_id,
+            stage_id: element.stage_id,
         });
 
     const handleChange = (
         e:
             | React.ChangeEvent<HTMLInputElement>
-            | React.ChangeEvent<HTMLSelectElement>
+            | React.ChangeEvent<HTMLSelectElement>,
     ): void => {
         setData((values: any) => ({
             ...values,
@@ -46,7 +50,7 @@ export default function ({
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         router.post(
-            route(`backend.member.update`, element.id),
+            route(`backend.child.update`, element.id),
             {
                 _method: "put",
                 ...data,
@@ -54,7 +58,7 @@ export default function ({
             {
                 forceFormData: true,
                 preserveScroll: true,
-            }
+            },
         );
     };
 
@@ -64,12 +68,14 @@ export default function ({
                 <section className="flex flex-col w-full bg-white p-4 gap-y-4 rounded-xl my-1">
                     <div className="flex flex-row gap-x-4 justify-start items-center capitalize">
                         <Link
-                            href={route("backend.member.index")}
+                            href={route("backend.child.index", {
+                                user_id: element.user_id,
+                            })}
                             className="p-4 bg-gray-100 border border-gray-200 rounded-2xl"
                         >
                             <ArrowLeft />
                         </Link>
-                        <div className="header-one my-4">edit member</div>
+                        <div className="header-one my-4">edit child</div>
                     </div>
                     <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                         <div className="col-span-1">
@@ -119,12 +125,12 @@ export default function ({
                                 </Label>
                                 <Input
                                     onChange={(
-                                        e: ChangeEvent<HTMLInputElement>
+                                        e: ChangeEvent<HTMLInputElement>,
                                     ) => {
                                         e.target.files
                                             ? setData(
                                                   "image",
-                                                  e.target.files[0]
+                                                  e.target.files[0],
                                               )
                                             : null;
                                     }}
@@ -166,7 +172,7 @@ export default function ({
 
                     <div className="flex flex-row justify-end items-end w-full gap-x-4 my-6">
                         <Link
-                            href={route(`backend.member.index`)}
+                            href={route(`backend.child.index`)}
                             className="text-center  rounded-3xl p-3 px-6 w-24 border border-prime-700 text-prime-700 hover:border-red-700 hover:text-red-700 capitalize"
                             disabled={processing}
                         >

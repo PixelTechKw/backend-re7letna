@@ -27,10 +27,11 @@ trait DashboardTrait
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors()->first());
         }
-        $model =  $request->model === 'newslettersubscriber' ? 'NewsletterSubscriber' : ucfirst(request()->model);
+        $model =  ucfirst(request()->model);
         $className = 'App\Models\\' . $model;
         $element = new $className();
         $element = $element->whereId($request->id)->first();
+
         $element->update([
             'active' => !$element->active
         ]);

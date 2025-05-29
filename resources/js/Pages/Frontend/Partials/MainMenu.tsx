@@ -159,7 +159,7 @@ export default function () {
                                     <MenuItem>
                                         <Link
                                             href={route(
-                                                "backend.setting.index"
+                                                "backend.setting.index",
                                             )}
                                             className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                         >
@@ -230,7 +230,7 @@ export default function () {
                             router.visit(
                                 route("frontend.{slug}.index", {
                                     slug: "fees",
-                                })
+                                }),
                             );
                         }}
                         className={`${
@@ -284,7 +284,7 @@ export default function () {
                             className="hidden flex flex-row justify-between items-center  w-full border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-prime-400  "
                         >
                             <span>CP Login</span>
-                            <ChevronRight className="text-gray-600 w-6 h-6" />
+                            <ChevronRight className="text-gray-600 size-6" />
                         </DisclosureButton>
                     )}
                 </div>

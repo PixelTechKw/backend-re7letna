@@ -32,6 +32,7 @@ class User extends Authenticatable
         'dob',
         'gender',
         'password',
+        'active'
     ];
 
     /**
@@ -45,6 +46,7 @@ class User extends Authenticatable
         'email_verified_at',
         'created_at',
         'deleted_at',
+
         'updated_at',
     ];
 

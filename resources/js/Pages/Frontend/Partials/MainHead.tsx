@@ -1,7 +1,7 @@
-import { baseUrl } from "@/constants";
-import { PageProps } from "@/types";
-import { Head, usePage } from "@inertiajs/react";
-import { ReactNode } from "react";
+import {baseUrl} from '@/constants';
+import {PageProps} from '@/types';
+import {Head, usePage} from '@inertiajs/react';
+import {ReactNode} from 'react';
 
 export default function ({
     title,
@@ -10,7 +10,7 @@ export default function ({
     title?: string;
     description?: string;
 }): ReactNode {
-    const { settings }: any = usePage().props;
+    const {settings}: any = usePage().props;
 
     return (
         <Head>
@@ -130,7 +130,7 @@ export default function ({
                 property="description"
                 content={description ? description : settings.description}
             />
-            <meta property="og:locale" content={"en"} />
+            <meta property="og:locale" content={'en'} />
             <meta
                 property="og:site_name"
                 content={title ? title : settings.name}

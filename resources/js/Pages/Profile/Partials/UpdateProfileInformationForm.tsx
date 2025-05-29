@@ -1,25 +1,25 @@
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
-import { useToast } from "@/hooks/use-toast";
-import { cn } from "@/shadcn/lib/utils";
-import { Button } from "@/shadcn/ui/button";
-import { Calendar } from "@/shadcn/ui/calendar";
-import { Checkbox } from "@/shadcn/ui/checkbox";
-import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
-import { Transition } from "@headlessui/react";
-import { CalendarIcon } from "@heroicons/react/24/outline";
-import { Link, useForm, usePage } from "@inertiajs/react";
-import { get, map } from "lodash";
-import moment from "moment";
-import { FormEventHandler } from "react";
-import Select from "react-select";
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
+import {useToast} from '@/hooks/use-toast';
+import {cn} from '@/shadcn/lib/utils';
+import {Button} from '@/shadcn/ui/button';
+import {Calendar} from '@/shadcn/ui/calendar';
+import {Checkbox} from '@/shadcn/ui/checkbox';
+import {Popover, PopoverContent, PopoverTrigger} from '@/shadcn/ui/popover';
+import {Transition} from '@headlessui/react';
+import {CalendarIcon} from '@heroicons/react/24/outline';
+import {Link, useForm, usePage} from '@inertiajs/react';
+import {get, map} from 'lodash';
+import moment from 'moment';
+import {FormEventHandler} from 'react';
+import Select from 'react-select';
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
     status,
-    className = "",
+    className = '',
     submitRoute,
 }: {
     mustVerifyEmail: boolean;
@@ -28,24 +28,20 @@ export default function UpdateProfileInformation({
     submitRoute: string;
 }) {
     const {
-        auth: { user },
+        auth: {user},
         genders,
     }: any = usePage().props;
-    const { toast } = useToast();
-    const {
-        data,
-        setData,
-        patch,
-        errors,
-        processing,
-        recentlySuccessful,
-    }: any = useForm({
-        name: user.name,
-        email: user.email,
-        mobile: user.mobile,
-        gender: user.gender,
-        dob: moment(user.dob, "DD/MM/YYYY").locale("en").format("YYYY-MM-DD"),
-    });
+    const {toast} = useToast();
+    const {data, setData, patch, errors, processing, recentlySuccessful}: any =
+        useForm({
+            name: user.name,
+            email: user.email,
+            mobile: user.mobile,
+            gender: user.gender,
+            dob: moment(user.dob, 'DD/MM/YYYY')
+                .locale('en')
+                .format('YYYY-MM-DD'),
+        });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -53,8 +49,8 @@ export default function UpdateProfileInformation({
             patch(submitRoute);
         } else {
             toast({
-                variant: "destructive",
-                description: "you are not active user. please contact admin.",
+                variant: 'destructive',
+                description: 'you are not active user. please contact admin.',
             });
         }
     };
@@ -83,7 +79,7 @@ export default function UpdateProfileInformation({
                         id="name"
                         className="mt-1 block w-full"
                         value={data.name}
-                        onChange={(e) => setData("name", e.target.value)}
+                        onChange={(e) => setData('name', e.target.value)}
                         required
                         isFocused
                         autoComplete="name"
@@ -104,7 +100,7 @@ export default function UpdateProfileInformation({
                         type="email"
                         className="mt-1 block w-full"
                         value={data.email}
-                        onChange={(e) => setData("email", e.target.value)}
+                        onChange={(e) => setData('email', e.target.value)}
                         required
                         autoComplete="username"
                     />
@@ -117,7 +113,7 @@ export default function UpdateProfileInformation({
                         <p className="mt-2 text-sm text-gray-800 dark:text-gray-200">
                             Your email address is unverified.
                             <Link
-                                href={route("verification.send")}
+                                href={route('verification.send')}
                                 method="post"
                                 as="button"
                                 className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
@@ -126,7 +122,7 @@ export default function UpdateProfileInformation({
                             </Link>
                         </p>
 
-                        {status === "verification-link-sent" && (
+                        {status === 'verification-link-sent' && (
                             <div className="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
                                 A new verification link has been sent to your
                                 email address.
@@ -150,7 +146,7 @@ export default function UpdateProfileInformation({
                         className="mt-1 block w-full "
                         autoComplete="mobile"
                         isFocused={true}
-                        onChange={(e) => setData("mobile", e.target.value)}
+                        onChange={(e) => setData('mobile', e.target.value)}
                     />
 
                     <InputError message={errors.mobile} className="mt-2" />
@@ -173,7 +169,7 @@ export default function UpdateProfileInformation({
                             };
                         })}
                         onChange={(e: any) => {
-                            setData("gender", e.value);
+                            setData('gender', e.value);
                         }}
                         defaultValue={{
                             label: data.gender,
@@ -186,8 +182,8 @@ export default function UpdateProfileInformation({
                             control: (baseStyles, state) => ({
                                 ...baseStyles,
                                 borderColor: state.isFocused
-                                    ? "#1422B5"
-                                    : "lightgrey",
+                                    ? '#1422B5'
+                                    : 'lightgrey',
                                 borderRadius: 20,
                                 padding: 8,
                             }),
@@ -196,14 +192,14 @@ export default function UpdateProfileInformation({
                             ...theme,
                             colors: {
                                 ...theme.colors,
-                                primary25: "#5CBDAD",
-                                primary: "#5CBDAD",
-                                dangerLight: "#5CBDAD",
+                                primary25: '#5CBDAD',
+                                primary: '#5CBDAD',
+                                dangerLight: '#5CBDAD',
                             },
                         })}
                     />
                     <InputError
-                        message={get(errors, "gender")}
+                        message={get(errors, 'gender')}
                         className="mt-2"
                     />
                 </div>
@@ -221,7 +217,7 @@ export default function UpdateProfileInformation({
                         type="date"
                         required
                         aria-required
-                        onChange={(e) => setData("dob", e.target.value)}
+                        onChange={(e) => setData('dob', e.target.value)}
                         value={data.dob}
                         className="block w-full px-4 py-2 mt-2 rounded-tr-xl"
                     />
@@ -258,7 +254,7 @@ export default function UpdateProfileInformation({
                             />
                         </PopoverContent>
                     </Popover> */}
-                    <InputError message={get(errors, "dob")} className="mt-2" />
+                    <InputError message={get(errors, 'dob')} className="mt-2" />
                 </div>
 
                 <div className="flex items-center gap-4">

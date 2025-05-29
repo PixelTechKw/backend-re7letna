@@ -1,12 +1,12 @@
-import { getImage } from "@/constants";
-import { useAppDispatch } from "@/redux/hooks";
-import { setActivePath } from "@/redux/slices/appSettingSlice";
-import { Link, usePage } from "@inertiajs/react";
-import { filter, map } from "lodash";
-import SocialIcons from "./SocialIcons";
+import {getImage} from '@/constants';
+import {useAppDispatch} from '@/redux/hooks';
+import {setActivePath} from '@/redux/slices/appSettingSlice';
+import {Link, usePage} from '@inertiajs/react';
+import {filter, map} from 'lodash';
+import SocialIcons from './SocialIcons';
 
 export default function () {
-    const { settings } = usePage().props;
+    const {settings} = usePage().props;
     const dispatch = useAppDispatch();
 
     return (
@@ -34,11 +34,11 @@ export default function () {
                                 <li>
                                     <Link
                                         onClick={() =>
-                                            dispatch(setActivePath("home"))
+                                            dispatch(setActivePath('home'))
                                         }
-                                        href={"home"}
+                                        href={'home'}
                                         className={`${
-                                            settings.activePath == "home"
+                                            settings.activePath == 'home'
                                                 ? `border-b border-white`
                                                 : `border-none`
                                         }  text-white hover:text-white`}
@@ -80,11 +80,11 @@ export default function () {
                                     <li>
                                         <Link
                                             onClick={() =>
-                                                dispatch(setActivePath("fees"))
+                                                dispatch(setActivePath('fees'))
                                             }
                                             href={`fees`}
                                             className={`${
-                                                settings.activePath == "fees"
+                                                settings.activePath == 'fees'
                                                     ? `border-b border-white`
                                                     : `border-none`
                                             }  text-white hover:text-white`}
@@ -96,12 +96,12 @@ export default function () {
                                         <Link
                                             onClick={() =>
                                                 dispatch(
-                                                    setActivePath("contact")
+                                                    setActivePath('contact'),
                                                 )
                                             }
-                                            href={route("frontend.contactus")}
+                                            href={route('frontend.contactus')}
                                             className={`${
-                                                settings.activePath == "contact"
+                                                settings.activePath == 'contact'
                                                     ? `border-b border-white`
                                                     : `border-none`
                                             }  text-white hover:text-white`}
@@ -112,11 +112,11 @@ export default function () {
                                     <li>
                                         <Link
                                             onClick={() =>
-                                                dispatch(setActivePath("faqs"))
+                                                dispatch(setActivePath('faqs'))
                                             }
                                             href={`faqs`}
                                             className={`${
-                                                settings.activePath == "faqs"
+                                                settings.activePath == 'faqs'
                                                     ? `border-b border-white`
                                                     : `border-none`
                                             }  text-white hover:text-white`}
@@ -127,11 +127,11 @@ export default function () {
                                     <li>
                                         <Link
                                             onClick={() =>
-                                                dispatch(setActivePath("terms"))
+                                                dispatch(setActivePath('terms'))
                                             }
                                             href={`terms`}
                                             className={`${
-                                                settings.activePath == "terms"
+                                                settings.activePath == 'terms'
                                                     ? `border-b border-white`
                                                     : `border-none`
                                             }  text-white hover:text-white`}
@@ -143,12 +143,12 @@ export default function () {
                                         <Link
                                             onClick={() =>
                                                 dispatch(
-                                                    setActivePath("aboutus")
+                                                    setActivePath('aboutus'),
                                                 )
                                             }
                                             href={`aboutus`}
                                             className={`${
-                                                settings.activePath == "aboutus"
+                                                settings.activePath == 'aboutus'
                                                     ? `border-b border-white`
                                                     : `border-none`
                                             }  text-white hover:text-white`}

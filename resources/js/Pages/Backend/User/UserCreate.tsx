@@ -35,14 +35,12 @@ export default function ({ roles, genders }: PageProps): React.ReactNode {
     const { data, setData, post, processing, errors, transform, reset }: any =
         useForm<FormProps>({
             name: "",
-
             email: "",
             mobile: "",
             password: "",
             password_confirmation: "",
             gender: "male",
             active: true,
-
             dob: moment().locale("en").add(-10, "years").format("YYYY-MM-DD"),
         });
 
@@ -55,7 +53,7 @@ export default function ({ roles, genders }: PageProps): React.ReactNode {
     const handleChange = (
         e:
             | React.ChangeEvent<HTMLInputElement>
-            | React.ChangeEvent<HTMLSelectElement>
+            | React.ChangeEvent<HTMLSelectElement>,
     ): void => {
         setData((values: any) => ({
             ...values,
@@ -71,7 +69,7 @@ export default function ({ roles, genders }: PageProps): React.ReactNode {
             {
                 forceFormData: true,
                 preserveScroll: true,
-            }
+            },
         );
     };
 
@@ -94,7 +92,7 @@ export default function ({ roles, genders }: PageProps): React.ReactNode {
                         >
                             <ArrowLeft />
                         </Link>
-                        <div className="header-one my-4">create user</div>
+                        <div className="header-one my-4">create parent</div>
                     </div>
                     <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                         <div className="col-span-1">

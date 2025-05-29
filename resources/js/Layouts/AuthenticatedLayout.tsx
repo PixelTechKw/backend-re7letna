@@ -9,6 +9,7 @@ import {
 } from "@/redux/slices/toastMessageSlice";
 import { Link, usePage } from "@inertiajs/react";
 import { first, isEmpty, isNull, values } from "lodash";
+import { ChevronDown } from "lucide-react";
 import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 
 export default function ({
@@ -39,7 +40,7 @@ export default function ({
                 dispatch(
                     showErrorToastMessage({
                         content: first(values(errors)) ?? "",
-                    })
+                    }),
                 );
             }
         }
@@ -66,16 +67,145 @@ export default function ({
                                     prefetch
                                     cacheFor={1000}
                                     href={route("backend.home")}
-                                    active={route().current("backend.home")}
+                                    active={
+                                        route().current("backend.home") ||
+                                        route().current("backend.user.index") ||
+                                        route().current(
+                                            "backend.user.create",
+                                        ) ||
+                                        route().current("backend.user.edit") ||
+                                        route().current(
+                                            "backend.child.index",
+                                        ) ||
+                                        route().current(
+                                            "backend.child.create",
+                                        ) ||
+                                        route().current("backend.child.edit") ||
+                                        route().current("backend.child.show")
+                                    }
                                 >
-                                    Users
+                                    Parents
                                 </NavLink>
+                                <NavLink
+                                    prefetch
+                                    cacheFor={1000}
+                                    href={route("backend.questionnaire.index")}
+                                    active={
+                                        route().current(
+                                            "backend.quesstionnaire.index",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.create",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.edit",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.show",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.index",
+                                        )
+                                    }
+                                >
+                                    Questionnaires
+                                </NavLink>
+                                <NavLink
+                                    prefetch
+                                    cacheFor={1000}
+                                    href={route("backend.questionnaire.index")}
+                                    active={
+                                        route().current(
+                                            "backend.quesstionnaire.index",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.create",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.edit",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.show",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.index",
+                                        )
+                                    }
+                                >
+                                    categories
+                                </NavLink>
+                                <NavLink
+                                    prefetch
+                                    cacheFor={1000}
+                                    href={route("backend.questionnaire.index")}
+                                    active={
+                                        route().current(
+                                            "backend.quesstionnaire.index",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.create",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.edit",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.show",
+                                        ) ||
+                                        route().current(
+                                            "backend.questionnaire.index",
+                                        )
+                                    }
+                                >
+                                    Videos
+                                </NavLink>
+
+                                <Dropdown>
+                                    <Dropdown.Trigger>
+                                        <span className="inline-flex rounded-md mt-2.5 text-gray-500">
+                                            <button
+                                                type="button"
+                                                className="inline-flex  items-center h-12   text-sm  transition duration-150 ease-in-out focus:outline-none hover:border-b-2 hover:border-gray-400 capitalize"
+                                            >
+                                                others
+                                                <ChevronDown className="size-4 mx-2" />
+                                            </button>
+                                        </span>
+                                    </Dropdown.Trigger>
+
+                                    <Dropdown.Content>
+                                        <Dropdown.Link
+                                            href={route("backend.stage.index")}
+                                        >
+                                            stages
+                                        </Dropdown.Link>
+                                        <Dropdown.Link
+                                            href={route("backend.tool.index")}
+                                        >
+                                            tools
+                                        </Dropdown.Link>
+                                        <Dropdown.Link
+                                            href={route(
+                                                "backend.consultant.index",
+                                            )}
+                                        >
+                                            consultants
+                                        </Dropdown.Link>
+                                        <Dropdown.Link
+                                            href={route(
+                                                "backend.comment.index",
+                                            )}
+                                        >
+                                            comments
+                                        </Dropdown.Link>
+                                    </Dropdown.Content>
+                                </Dropdown>
+
                                 <NavLink
                                     prefetch
                                     cacheFor={1000}
                                     href={route("backend.setting.index")}
                                     active={route().current(
-                                        "backend.setting.index"
+                                        "backend.setting.index",
                                     )}
                                 >
                                     settings
@@ -137,7 +267,7 @@ export default function ({
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
-                                        (previousState) => !previousState
+                                        (previousState) => !previousState,
                                     )
                                 }
                                 className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400"

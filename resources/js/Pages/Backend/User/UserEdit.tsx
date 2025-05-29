@@ -12,13 +12,11 @@ import Select from "react-select";
 
 interface FormProps {
     name: string;
-
     email: string;
     mobile: string;
     gender: "male" | "female";
     active: boolean;
-    role: "student" | "staff";
-    dob: Date;
+    dob: string;
     [key: string]: any;
 }
 
@@ -32,14 +30,12 @@ export default function ({
         ziggy: { query },
     }: any = usePage().props;
     const { data, setData, post, processing, errors, transform, reset }: any =
-        useForm<any>({
+        useForm<FormProps>({
             name: element.name,
-
             email: element.email,
             mobile: element.mobile,
             gender: element.gender,
             active: element.active,
-
             dob: moment(element.dob, "DD/MM/YYYY")
                 .locale("en")
                 .format("YYYY-MM-DD"),
@@ -48,7 +44,7 @@ export default function ({
     const handleChange = (
         e:
             | React.ChangeEvent<HTMLInputElement>
-            | React.ChangeEvent<HTMLSelectElement>
+            | React.ChangeEvent<HTMLSelectElement>,
     ): void => {
         setData((values: any) => ({
             ...values,
@@ -67,7 +63,7 @@ export default function ({
             {
                 forceFormData: true,
                 preserveScroll: true,
-            }
+            },
         );
     };
 
@@ -82,7 +78,7 @@ export default function ({
                         >
                             <ArrowLeft />
                         </Link>
-                        <div className="header-one my-4">edit user</div>
+                        <div className="header-one my-4">edit parent</div>
                     </div>
                     <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                         <div className="col-span-1">

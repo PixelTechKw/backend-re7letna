@@ -82,7 +82,7 @@ class UserController extends Controller
     {
         $genders = collect(UserGenderEnum::cases())->pluck('value');
         $element = $user->load('children');
-        return inertia('Backend/User/UserEdit', compact( 'genders', 'element'));
+        return inertia('Backend/User/UserEdit', compact('genders', 'element'));
     }
 
     /**
@@ -111,8 +111,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->courses()->sync([]);
-        $user->roles()->sync([]);
+        $user->load('children.quizzes');
+        $user->children()->each(fn($q) => $q->quizzes()->delete());
+        $user->children()->delete();
         $user->delete();
         return redirect()->route("backend.user.index")->with("success", trans("general.process_success"));
     }

@@ -38,4 +38,9 @@ class Category extends Model
     {
         return $this->morphedByMany(Tool::class, 'categoryable');
     }
+
+    public function children(): MorphToMany
+    {
+        return $this->morphedByMany(Child::class, 'categoryable');
+    }
 }

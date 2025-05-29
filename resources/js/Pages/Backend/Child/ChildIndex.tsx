@@ -2,26 +2,39 @@ import ElementDropDownMenu from "@/Components/ElementDropDownMenu";
 import { MainDataTable } from "@/Components/MainDataTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useAppDispatch } from "@/redux/hooks";
+import { toggleshowDeleteModal } from "@/redux/slices/appSettingSlice";
 import { Button } from "@/shadcn/ui/button";
-import { DropdownMenu, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/shadcn/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
-import { Child, PageProps } from "@/types";
+import { Child, PageProps, User } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import {
     ArrowDown,
+    ArrowLeft,
     ArrowUp,
     ArrowUpDown,
+    LucideListCheck,
     MoreHorizontalIcon,
+    PencilIcon,
+    RecycleIcon,
 } from "lucide-react";
 import { useMemo } from "react";
 
 export default function ({
+    element,
     elements,
-}: PageProps<{ elements: any }>): React.ReactNode {
+}: PageProps<{ element: User; elements: Child[] }>): React.ReactNode {
     const {
-        ziggy: { location },
-    }: any = usePage().props;
+        ziggy: { location, query },
+    } = usePage().props;
     const dispatch = useAppDispatch();
 
     const columns: ColumnDef<Child>[] = useMemo(
@@ -35,7 +48,7 @@ export default function ({
                             className="capitalize !p-0"
                             onClick={() =>
                                 column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 )
                             }
                         >
@@ -64,7 +77,7 @@ export default function ({
                             className="capitalize !p-0"
                             onClick={() =>
                                 column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 )
                             }
                         >
@@ -82,7 +95,7 @@ export default function ({
                 },
             },
             {
-                accessorKey: "image",
+                accessorKey: "gender",
                 header: ({ column }: any) => {
                     return (
                         <Button
@@ -90,11 +103,11 @@ export default function ({
                             className="capitalize !p-0"
                             onClick={() =>
                                 column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 )
                             }
                         >
-                            image
+                            gender
                             <ArrowUpDown className="mx-2 h-4 w-4" />
                         </Button>
                     );
@@ -102,87 +115,38 @@ export default function ({
                 cell: ({ row }: any) => {
                     return (
                         <div className="flex flex-col justify-start items-start  sm-text gap-y-2 capitalize max-w-40 truncate">
-                            <img
-                                src={row.original.thumb}
-                                className="w-14 h-14 object-cover rounded-xl"
-                            />
+                            {row.original.gender}
                         </div>
                     );
                 },
             },
             {
-                accessorKey: "order",
-                header: ({ column }) => {
+                accessorKey: "age",
+                header: ({ column }: any) => {
                     return (
                         <Button
                             variant="ghost"
                             className="capitalize !p-0"
                             onClick={() =>
                                 column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 )
                             }
                         >
-                            <Tooltip>
-                                <TooltipTrigger className="capitalize">
-                                    order
-                                </TooltipTrigger>
-                                <TooltipContent
-                                    side="bottom"
-                                    align="center"
-                                    className="w-[300px] p-4" // Fixed width + padding
-                                    sideOffset={5}
-                                >
-                                    <p className="text-balance whitespace-pre-line leading-relaxed">
-                                        Member will appear on the frontend in
-                                        ascending numerical order (with 1
-                                        representing the first/starting
-                                        position).
-                                    </p>
-                                </TooltipContent>
-                            </Tooltip>
+                            age
                             <ArrowUpDown className="mx-2 h-4 w-4" />
                         </Button>
                     );
                 },
                 cell: ({ row }: any) => {
                     return (
-                        <div className="flex flex-row justify-center items-center truncate sm-text gap-3">
-                            {row.original.order > 1 ? (
-                                <Link
-                                    className="p-3"
-                                    href={route("backend.toggle.order", {
-                                        model: "member",
-                                        type: "up",
-                                        id: row.original.id,
-                                    })}
-                                >
-                                    <ArrowUp className="w-5 h-5 text-gray-400 " />
-                                </Link>
-                            ) : (
-                                <div className="w-12"></div>
-                            )}
-                            <div className="w-12 h-12 border border-gray-300 rounded-xl flex justify-center items-center">
-                                {row.original.order}
-                            </div>
-                            {row.original.order >= 1 ? (
-                                <Link
-                                    className="p-3"
-                                    href={route("backend.toggle.order", {
-                                        model: "member",
-                                        type: "down",
-                                        id: row.original.id,
-                                    })}
-                                >
-                                    <ArrowDown className="w-5 h-5 text-gray-400 " />
-                                </Link>
-                            ) : (
-                                <div className="w-12"></div>
-                            )}
+                        <div className="flex flex-col justify-start items-start  sm-text gap-y-2 capitalize max-w-40 truncate">
+                            {row.original.age} years
                         </div>
                     );
                 },
             },
+
             {
                 accessorKey: "actions",
                 header: () => <div className="capitalize !p-0">actions</div>,
@@ -196,30 +160,87 @@ export default function ({
                             <DropdownMenuTrigger asChild>
                                 <MoreHorizontalIcon className="w-4 h-4 text-gray-600" />
                             </DropdownMenuTrigger>
-                            <ElementDropDownMenu
-                                type="member"
-                                id={element.id}
-                                active={true}
-                                key={element.id}
-                            />
+                            <DropdownMenuContent
+                                className="w-40 xl:w-60"
+                                align="start"
+                                side={"left"}
+                            >
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem>
+                                        <Link
+                                            as="button"
+                                            type={"button"}
+                                            href={`${route(`backend.child.edit`, row.original.id)}?user_id=${query.user_id}`}
+                                            className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
+                                        >
+                                            <PencilIcon className="nav-icon" />
+                                            <div>edit element</div>
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+
+                                    <DropdownMenuItem>
+                                        <Link
+                                            as="button"
+                                            type={"button"}
+                                            href={`${route(`backend.quiz.index`, { user_id: query.user_id, child_id: row.original.id })}`}
+                                            className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
+                                        >
+                                            <LucideListCheck className="nav-icon" />
+                                            <div>list of quizzes</div>
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem>
+                                        <button
+                                            className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
+                                            onClick={() =>
+                                                dispatch(
+                                                    toggleshowDeleteModal({
+                                                        name: "child",
+                                                        id: row.original.id,
+                                                    }),
+                                                )
+                                            }
+                                        >
+                                            <RecycleIcon className="nav-icon text-red-700" />
+                                            <div className="text-red-600">
+                                                delete
+                                            </div>
+                                        </button>
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                            </DropdownMenuContent>
                         </DropdownMenu>
                     );
                 },
             },
         ],
-        []
+        [],
     );
 
     return (
         <AuthenticatedLayout>
             <div className="w-full flex flex-1 flex-col bg-white  rounded-xl min-h-screen gap-y-4 p-6">
                 <div className="flex justify-between items-center">
-                    <div className="header-one capitalize">list of members</div>
+                    <div className="flex flex-row gap-4">
+                        <Link
+                            href={route("backend.user.index")}
+                            className="p-4 bg-gray-100 border border-gray-200 rounded-2xl"
+                        >
+                            <ArrowLeft />
+                        </Link>
+                        <div className="header-one capitalize">
+                            {`Parent : ${element.name} - list of children`}
+                        </div>
+                    </div>
                     <Link
-                        href={route("backend.member.create")}
+                        href={route("backend.child.create", {
+                            user_id: query.user_id,
+                        })}
                         className="btn-default capitalize"
                     >
-                        create member
+                        create child
                     </Link>
                 </div>
                 <MainDataTable

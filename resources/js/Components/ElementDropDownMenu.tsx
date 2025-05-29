@@ -13,11 +13,17 @@ import { Link, usePage } from "@inertiajs/react";
 import { CircleArrowOutDownLeft, RecycleIcon } from "lucide-react";
 import { Suspense } from "react";
 
-export default function ({ id, active, type }: any): React.ReactNode {
+export default function ({
+    id,
+    active,
+    type,
+    showActive = false,
+    otherQuery = ``,
+}: any): React.ReactNode {
     const dispatch = useAppDispatch();
     const {
         ziggy: { query },
-    }: any = usePage().props;
+    } = usePage().props;
     return (
         <Suspense>
             <DropdownMenuContent
@@ -30,7 +36,7 @@ export default function ({ id, active, type }: any): React.ReactNode {
                         <Link
                             as="button"
                             type={"button"}
-                            href={route(`backend.${type}.edit`, id)}
+                            href={`${route(`backend.${type}.edit`, id)}?${otherQuery}`}
                             className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
                         >
                             <PencilIcon className="nav-icon" />
@@ -38,33 +44,35 @@ export default function ({ id, active, type }: any): React.ReactNode {
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                        <Link
-                            as="button"
-                            type={"button"}
-                            href={route(`backend.toggle.activate`, {
-                                id: id,
-                                model: type,
-                            })}
-                            className="flex flex-row flex-1 justify-between items-center"
-                        >
-                            <Label
-                                htmlFor={`activate-${id}`}
-                                className="flex flex-row gap-x-4"
+                    {showActive && (
+                        <DropdownMenuItem>
+                            <Link
+                                as="button"
+                                type={"button"}
+                                href={route(`backend.toggle.activate`, {
+                                    id: id,
+                                    model: type,
+                                })}
+                                className="flex flex-row flex-1 justify-between items-center"
                             >
-                                <CircleArrowOutDownLeft className="nav-icon" />
+                                <Label
+                                    htmlFor={`activate-${id}`}
+                                    className="flex flex-row gap-x-4"
+                                >
+                                    <CircleArrowOutDownLeft className="nav-icon" />
 
-                                <div className="capitalize truncate text-prim-800">
-                                    active
-                                </div>
-                            </Label>
-                            <Switch
-                                id={`activate-${id}`}
-                                checked={!active}
-                                className=" data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-red-500"
-                            />
-                        </Link>
-                    </DropdownMenuItem>
+                                    <div className="capitalize truncate text-prim-800">
+                                        active
+                                    </div>
+                                </Label>
+                                <Switch
+                                    id={`activate-${id}`}
+                                    checked={!active}
+                                    className=" data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-red-500"
+                                />
+                            </Link>
+                        </DropdownMenuItem>
+                    )}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
                         <button
@@ -74,7 +82,7 @@ export default function ({ id, active, type }: any): React.ReactNode {
                                     toggleshowDeleteModal({
                                         name: type,
                                         id: id,
-                                    })
+                                    }),
                                 )
                             }
                         >
