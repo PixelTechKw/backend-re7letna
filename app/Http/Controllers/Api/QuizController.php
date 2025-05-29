@@ -54,7 +54,7 @@ class QuizController extends Controller
     public function store(StoreQuizRequest $request)
     {
         try {
-            $questions = Questionnaire::find(request()->questionnaire_id)->questions()->active()->get();
+            $questions = Questionnaire::find(request()->questionnaire_id)->questions()->get();
             if (collect($request->answers)->pluck('question_id')->sort()->values() != $questions->pluck('id')->sort()->values()) {
                 return response()->json([
                     'message' => 'question ids are not valid. check these questions are related to questionnaire.',

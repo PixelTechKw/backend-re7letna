@@ -77,6 +77,20 @@ export type Questionnaire = {
     [key: string]: any;
 }
 
+export type Question = {
+    id: number | string;
+    name: string;
+    description: string;
+    order: number;
+    answers?: Answer[];
+    [key: string]: any;
+}
+
+export type Answer = {
+    name: string;
+    value: string | number;
+}
+
 export type Quiz = {
     id: number | string;
     child_id: number | string;

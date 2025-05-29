@@ -16,7 +16,7 @@ class QuestionnaireController extends Controller
     public function index()
     {
         $elements = Questionnaire::active()
-            ->has('questions')
+            ->has('questions', '>', 0)
             ->when(request()->stage_id, fn($q) => $q->where('stage_id', request()->stage_id))
             ->with('stage')
             ->orderBy('order', 'asc')

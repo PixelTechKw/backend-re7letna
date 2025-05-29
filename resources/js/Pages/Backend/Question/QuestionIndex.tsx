@@ -11,7 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu";
-import { Child, PageProps, Questionnaire } from "@/types";
+import { Question, PageProps, Questionnaire, Answer } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { capitalize, map, take } from "lodash";
@@ -22,24 +22,20 @@ import {
     ArrowLeft,
     ArrowUp,
     ArrowUpDown,
-    CircleArrowOutDownLeft,
     LucideListCheck,
     MoreHorizontalIcon,
     PencilIcon,
     RecycleIcon,
 } from "lucide-react";
 import { toggleshowDeleteModal } from "@/redux/slices/appSettingSlice";
-import { Label } from "@/shadcn/ui/label";
-import { Switch } from "@/shadcn/ui/switch";
-export default function ({
-    elements,
-}: PageProps<{ elements: any }>): React.ReactNode {
+export default function ({ elements, element }: PageProps): React.ReactNode {
+    console.log("elements", elements);
     const {
         ziggy: { location, query },
     } = usePage().props;
     const dispatch = useAppDispatch();
 
-    const columns: ColumnDef<Questionnaire>[] = useMemo(
+    const columns: ColumnDef<Question>[] = useMemo(
         () => [
             {
                 accessorKey: "id",
@@ -197,7 +193,7 @@ export default function ({
                 },
             },
             {
-                accessorKey: "stage",
+                accessorKey: "answers",
                 header: ({ column }: any) => {
                     return (
                         <Button
@@ -209,92 +205,30 @@ export default function ({
                                 )
                             }
                         >
-                            stage
+                            answers
                             <ArrowUpDown className="mx-2 h-4 w-4" />
                         </Button>
                     );
                 },
                 cell: ({ row }: any) => {
                     return (
-                        <div className="truncate w-20">
-                            {row.original.stage.name}
-                        </div>
+                        <ul className="flex flex-col gap-2 ">
+                            {map(
+                                row.original.answers,
+                                (a: Answer, i: number) => (
+                                    <li key={i} className="leading-6">
+                                        <div className="flex items-center gap-2 border-b border-prime-400">
+                                            <span>{a.name}</span>
+                                            <span>({a.value})</span>
+                                        </div>
+                                    </li>
+                                ),
+                            )}
+                        </ul>
                     );
                 },
             },
-            {
-                accessorKey: "questions",
-                header: ({ column }: any) => {
-                    return (
-                        <Button
-                            variant="ghost"
-                            className="capitalize !p-0"
-                            onClick={() =>
-                                column.toggleSorting(
-                                    column.getIsSorted() === "asc",
-                                )
-                            }
-                        >
-                            Questions
-                            <ArrowUpDown className="mx-2 h-4 w-4" />
-                        </Button>
-                    );
-                },
-                cell: ({ row }: any) => {
-                    return (
-                        <div className="text-center">
-                            {row.original.questions_count}
-                        </div>
-                    );
-                },
-            },
-            {
-                accessorKey: "active",
-                header: ({ column }) => {
-                    return (
-                        <Button
-                            variant="ghost"
-                            className="capitalize !p-0"
-                            onClick={() =>
-                                column.toggleSorting(
-                                    column.getIsSorted() === "asc",
-                                )
-                            }
-                        >
-                            <Tooltip>
-                                <TooltipTrigger className="capitalize">
-                                    active
-                                </TooltipTrigger>
-                                <TooltipContent
-                                    side="bottom"
-                                    align="center"
-                                    className="w-[300px] p-4" // Fixed width + padding
-                                    sideOffset={5}
-                                >
-                                    <p className="text-balance whitespace-pre-line leading-relaxed">
-                                        If not active questionnaires can not
-                                        subscribe to any courses or modify their
-                                        data.
-                                    </p>
-                                </TooltipContent>
-                            </Tooltip>
 
-                            <ArrowUpDown className="mx-2 h-4 w-4" />
-                        </Button>
-                    );
-                },
-                cell: ({ row }: any) => {
-                    return (
-                        <div
-                            className={`w-3 h-3 rounded-full text-center border text-[6px] lg:text-xxs ${
-                                row.original.active
-                                    ? `bg-green-600 border-green-200`
-                                    : `bg-red-600 border-red-100`
-                            }`}
-                        ></div>
-                    );
-                },
-            },
             {
                 accessorKey: "actions",
                 header: () => <div className="capitalize !p-0">actions</div>,
@@ -326,57 +260,13 @@ export default function ({
                                         </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
-
-                                    <DropdownMenuItem>
-                                        <Link
-                                            as="button"
-                                            type={"button"}
-                                            href={`${route(`backend.question.index`, { questionnaire_id: row.original.id })}`}
-                                            className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
-                                        >
-                                            <LucideListCheck className="nav-icon" />
-                                            <div>list of questions</div>
-                                        </Link>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem>
-                                        <Link
-                                            as="button"
-                                            type={"button"}
-                                            href={route(
-                                                `backend.toggle.activate`,
-                                                {
-                                                    id: row.original.id,
-                                                    model: "questionnaire",
-                                                },
-                                            )}
-                                            className="flex flex-row flex-1 justify-between items-center"
-                                        >
-                                            <Label
-                                                htmlFor={`activate-${row.original.id}`}
-                                                className="flex flex-row gap-x-4"
-                                            >
-                                                <CircleArrowOutDownLeft className="nav-icon" />
-
-                                                <div className="capitalize truncate text-prim-800">
-                                                    active
-                                                </div>
-                                            </Label>
-                                            <Switch
-                                                id={`activate-${row.original.id}`}
-                                                checked={!row.original.active}
-                                                className=" data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-red-500"
-                                            />
-                                        </Link>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSeparator />
                                     <DropdownMenuItem>
                                         <button
                                             className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
                                             onClick={() =>
                                                 dispatch(
                                                     toggleshowDeleteModal({
-                                                        name: "questionnaire",
+                                                        name: "question",
                                                         id: row.original.id,
                                                     }),
                                                 )
@@ -402,14 +292,26 @@ export default function ({
         <AuthenticatedLayout header={capitalize("list of Questionnaires")}>
             <div className="w-full flex flex-1 flex-col bg-white  rounded-xl min-h-screen gap-y-4 p-6">
                 <div className="flex justify-between items-center">
-                    <div className="header-one capitalize">
-                        list of Questionnaires
+                    <div className="flex flex-row gap-4">
+                        <Link
+                            href={route("backend.questionnaire.index", {
+                                questionnaire_id: element.id,
+                            })}
+                            className="p-4 bg-gray-100 border border-gray-200 rounded-2xl"
+                        >
+                            <ArrowLeft />
+                        </Link>
+                        <div className="header-one capitalize">
+                            {`Questionnaire : ${element.name} - list of questions`}
+                        </div>
                     </div>
                     <Link
-                        href={route("backend.questionnaire.create")}
+                        href={route("backend.question.create", {
+                            questionnaire_id: element.questionnaire_id,
+                        })}
                         className="btn-default capitalize"
                     >
-                        new questionnaire
+                        create question
                     </Link>
                 </div>
                 <MainDataTable

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->smallInteger("order")->unsigned()->nullable();
             $table->json('answers');  //['name' => 'text' , 'value' => true]
             $table->foreignId('questionnaire_id')->references('id')->on('questionnaires')->cascadeOnDelete()->cascadeOnUpdate(); // parent
-            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\ChildController;
 use App\Http\Controllers\Backend\CommentController;
 use App\Http\Controllers\Backend\ConsultantController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\QuestionController;
 use App\Http\Controllers\Backend\QuestionnaireController;
 use App\Http\Controllers\Backend\QuizController;
 use App\Http\Controllers\Backend\SettingController;
@@ -36,6 +37,7 @@ Route::group(
         Route::resource('setting', SettingController::class);
         Route::resource('stage', StageController::class);
         Route::resource('questionnaire', QuestionnaireController::class);
+        Route::resource('question', QuestionController::class);
         Route::resource('child', ChildController::class);
         Route::resource('category', CategoryController::class);
         Route::resource('tool', ToolController::class);

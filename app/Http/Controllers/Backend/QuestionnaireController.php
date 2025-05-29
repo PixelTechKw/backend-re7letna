@@ -14,7 +14,7 @@ class QuestionnaireController extends Controller
     public function index()
     {
         $elements = Questionnaire::when(request()->stage_id, fn($q) => $q->where('state_id', request()->stage_id))
-            ->orderBy('order', 'asc')->with('stage')->get();
+            ->orderBy('order', 'asc')->with('stage')->withCount('questions')->get();
         return inertia('Backend/Questionnaire/QuestionnaireIndex', compact('elements'));
     }
 
