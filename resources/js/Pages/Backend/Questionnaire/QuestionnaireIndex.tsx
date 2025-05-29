@@ -274,6 +274,7 @@ export default function ({
                                 type={"questionnaire"}
                                 id={element.id}
                                 active={element.active}
+                                showActive={true}
                                 key={element.id}
                             />
                         </DropdownMenu>
