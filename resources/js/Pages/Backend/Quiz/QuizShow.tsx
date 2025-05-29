@@ -8,7 +8,7 @@ import moment from "moment";
 
 export default function ({ element }: PageProps) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header={element.child.name}>
             <div className="w-full flex flex-1 flex-col bg-white  rounded-xl min-h-screen gap-y-4 p-6">
                 <div className="flex flex-row gap-x-4 justify-between items-center capitalize">
                     <div className="flex flex-row gap-4">

@@ -27,6 +27,7 @@ class Questionnaire extends Model
     {
         return [
             'active' => 'boolean',
+            'order' => 'integer',
         ];
     }
 

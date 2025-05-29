@@ -52,58 +52,6 @@ export default function ({
             },
 
             {
-                accessorKey: "name",
-                header: ({ column }: any) => {
-                    return (
-                        <Button
-                            variant="ghost"
-                            className="capitalize !p-0"
-                            onClick={() =>
-                                column.toggleSorting(
-                                    column.getIsSorted() === "asc",
-                                )
-                            }
-                        >
-                            name
-                            <ArrowUpDown className="mx-2 h-4 w-4" />
-                        </Button>
-                    );
-                },
-                cell: ({ row }: any) => {
-                    return (
-                        <div className="flex flex-col justify-start items-start  sm-text gap-y-2 capitalize max-w-40 truncate">
-                            <div>{row.original.name}</div>
-                        </div>
-                    );
-                },
-            },
-            {
-                accessorKey: "email",
-                header: ({ column }: any) => {
-                    return (
-                        <Button
-                            variant="ghost"
-                            className="capitalize !p-0"
-                            onClick={() =>
-                                column.toggleSorting(
-                                    column.getIsSorted() === "asc",
-                                )
-                            }
-                        >
-                            email
-                            <ArrowUpDown className="mx-2 h-4 w-4" />
-                        </Button>
-                    );
-                },
-                cell: ({ row }: any) => {
-                    return (
-                        <div className="flex flex-col justify-start items-start  sm-text gap-y-2  max-w-40 truncate">
-                            <div>{row.original.email}</div>
-                        </div>
-                    );
-                },
-            },
-            {
                 accessorKey: "mobile",
                 header: ({ column }: any) => {
                     return (
@@ -129,9 +77,8 @@ export default function ({
                     );
                 },
             },
-
             {
-                accessorKey: "children",
+                accessorKey: "content",
                 header: ({ column }: any) => {
                     return (
                         <Button
@@ -143,61 +90,20 @@ export default function ({
                                 )
                             }
                         >
-                            children
+                            content
                             <ArrowUpDown className="mx-2 h-4 w-4" />
                         </Button>
                     );
                 },
                 cell: ({ row }: any) => {
-                    return <ul className="flex flex-col gap-2"></ul>;
+                    return (
+                        <div className="flex flex-col justify-start items-start  sm-text gap-y-2 capitalize max-w-40 truncate">
+                            <div>{row.original.content}</div>
+                        </div>
+                    );
                 },
             },
-            {
-                accessorKey: "active",
-                header: ({ column }) => {
-                    return (
-                        <Button
-                            variant="ghost"
-                            className="capitalize !p-0"
-                            onClick={() =>
-                                column.toggleSorting(
-                                    column.getIsSorted() === "asc",
-                                )
-                            }
-                        >
-                            <Tooltip>
-                                <TooltipTrigger className="capitalize">
-                                    active
-                                </TooltipTrigger>
-                                <TooltipContent
-                                    side="bottom"
-                                    align="center"
-                                    className="w-[300px] p-4" // Fixed width + padding
-                                    sideOffset={5}
-                                >
-                                    <p className="text-balance whitespace-pre-line leading-relaxed">
-                                        If not active comments can not subscribe
-                                        to any courses or modify their data.
-                                    </p>
-                                </TooltipContent>
-                            </Tooltip>
 
-                            <ArrowUpDown className="mx-2 h-4 w-4" />
-                        </Button>
-                    );
-                },
-                cell: ({ row }: any) => {
-                    return (
-                        <div
-                            className={`w-3 h-3 rounded-full text-center border text-[6px] lg:text-xxs ${
-                                row.original.active
-                                    ? `bg-green-600 border-green-200`
-                                    : `bg-red-600 border-red-100`
-                            }`}
-                        ></div>
-                    );
-                },
-            },
             {
                 accessorKey: "actions",
                 header: () => <div className="capitalize !p-0">actions</div>,
@@ -214,7 +120,6 @@ export default function ({
                             <ElementDropDownMenu
                                 type={"comment"}
                                 id={element.id}
-                                active={element.active}
                                 key={element.id}
                             />
                         </DropdownMenu>

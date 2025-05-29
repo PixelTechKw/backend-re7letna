@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('image')->default('default.png');
+            $table->string('image')->default('category.png');
             $table->smallInteger("order")->unsigned()->nullable();
             $table->boolean('active')->default(true);
             // $table->string('group'); // questionnaire / questions or videos /

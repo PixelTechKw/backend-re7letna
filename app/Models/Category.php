@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Casts\ImageLargeCast;
+use App\Casts\ImageThumbCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -11,6 +13,7 @@ class Category extends Model
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory, ModelHelpers;
     protected $guarded = ['id'];
+    protected $appends = ['thumb'];
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -20,7 +23,10 @@ class Category extends Model
     protected function casts(): array
     {
         return [
-            'active' => 'boolean'
+            'thumb' => ImageThumbCast::class,
+            'large' => ImageLargeCast::class,
+            'active' => 'boolean',
+            'order' => 'integer',
         ];
     }
     public function videos(): MorphToMany

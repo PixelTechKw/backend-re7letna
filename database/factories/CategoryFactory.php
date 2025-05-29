@@ -19,7 +19,6 @@ class CategoryFactory extends Factory
         return [
             'name' => fake()->name(),
             'description' => fake()->sentence,
-            'image' => fake()->imageUrl(),
             'order' => fake()->numberBetween(1, 10),
         ];
     }

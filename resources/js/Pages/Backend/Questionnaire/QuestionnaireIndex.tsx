@@ -4,13 +4,18 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useAppDispatch } from "@/redux/hooks";
 import { Button } from "@/shadcn/ui/button";
 import { DropdownMenu, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
 import { Child, PageProps, Questionnaire } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { capitalize, map, take } from "lodash";
-import { ArrowUpDown, MoreHorizontalIcon } from "lucide-react";
 import { useMemo } from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
+import {
+    ArrowDown,
+    ArrowUp,
+    ArrowUpDown,
+    MoreHorizontalIcon,
+} from "lucide-react";
 export default function ({
     elements,
 }: PageProps<{ elements: any }>): React.ReactNode {
@@ -78,7 +83,7 @@ export default function ({
                 },
             },
             {
-                accessorKey: "email",
+                accessorKey: "description",
                 header: ({ column }: any) => {
                     return (
                         <Button
@@ -90,7 +95,7 @@ export default function ({
                                 )
                             }
                         >
-                            email
+                            description
                             <ArrowUpDown className="mx-2 h-4 w-4" />
                         </Button>
                     );
@@ -98,14 +103,14 @@ export default function ({
                 cell: ({ row }: any) => {
                     return (
                         <div className="flex flex-col justify-start items-start  sm-text gap-y-2  max-w-40 truncate">
-                            <div>{row.original.email}</div>
+                            {row.original.description}
                         </div>
                     );
                 },
             },
             {
-                accessorKey: "mobile",
-                header: ({ column }: any) => {
+                accessorKey: "order",
+                header: ({ column }) => {
                     return (
                         <Button
                             variant="ghost"
@@ -116,22 +121,69 @@ export default function ({
                                 )
                             }
                         >
-                            mobile
+                            <Tooltip>
+                                <TooltipTrigger className="capitalize">
+                                    order
+                                </TooltipTrigger>
+                                <TooltipContent
+                                    side="bottom"
+                                    align="center"
+                                    className="w-[300px] p-4" // Fixed width + padding
+                                    sideOffset={5}
+                                >
+                                    <p className="text-balance whitespace-pre-line leading-relaxed">
+                                        Questionnaire will appear on the app in
+                                        ascending numerical order (with 1
+                                        representing the first/starting
+                                        position).
+                                    </p>
+                                </TooltipContent>
+                            </Tooltip>
                             <ArrowUpDown className="mx-2 h-4 w-4" />
                         </Button>
                     );
                 },
                 cell: ({ row }: any) => {
                     return (
-                        <div className="flex flex-col justify-start items-start  sm-text gap-y-2 capitalize max-w-40 truncate">
-                            <div>{row.original.mobile}</div>
+                        <div className="flex flex-row justify-center items-center truncate sm-text gap-3">
+                            {row.original.order > 1 ? (
+                                <Link
+                                    className="p-3"
+                                    href={route("backend.toggle.order", {
+                                        model: "questionnaire",
+                                        type: "up",
+                                        id: row.original.id,
+                                    })}
+                                >
+                                    <ArrowUp className="w-5 h-5 text-gray-400 " />
+                                </Link>
+                            ) : (
+                                <div className="w-12"></div>
+                            )}
+                            <div className="w-12 h-12 border border-gray-300 rounded-xl flex justify-center items-center">
+                                {row.original.order}
+                            </div>
+                            {row.original.order >= 1 ? (
+                                <Link
+                                    className="p-3"
+                                    href={route("backend.toggle.order", {
+                                        model: "questionnaire",
+                                        type: "down",
+                                        id: row.original.id,
+                                    })}
+                                >
+                                    <ArrowDown className="w-5 h-5 text-gray-400 " />
+                                </Link>
+                            ) : (
+                                <div className="w-12"></div>
+                            )}
                         </div>
                     );
                 },
             },
 
             {
-                accessorKey: "children",
+                accessorKey: "stage",
                 header: ({ column }: any) => {
                     return (
                         <Button
@@ -143,7 +195,7 @@ export default function ({
                                 )
                             }
                         >
-                            children
+                            stage
                             <ArrowUpDown className="mx-2 h-4 w-4" />
                         </Button>
                     );
@@ -151,17 +203,9 @@ export default function ({
                 cell: ({ row }: any) => {
                     return (
                         <ul className="flex flex-col gap-2">
-                            {map(
-                                take(row.original.children, 5),
-                                (c: Child, i: any) => (
-                                    <li
-                                        key={i}
-                                        className="truncate w-40 p-1  text-gray-600 hover:text-white hover:bg-gray-600"
-                                    >
-                                        {c.name}
-                                    </li>
-                                ),
-                            )}
+                            <li className="truncate w-40 p-1  text-gray-600 hover:text-white hover:bg-gray-600">
+                                {row.original.stage.name}
+                            </li>
                         </ul>
                     );
                 },
