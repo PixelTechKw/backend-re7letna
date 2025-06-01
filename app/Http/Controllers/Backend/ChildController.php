@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Backend;
 use App\Enums\UserGenderEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Child;
+use App\Models\Stage;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ChildController extends Controller
 {
@@ -47,7 +50,28 @@ class ChildController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validator = validator(request()->all(), [
+                'name' => 'required|string|max:255',
+                'user_id' => 'required|exists:users,id',
+                'gender' => [Rule::in(UserGenderEnum::cases()), 'required'],
+                'dob' => 'required|date',
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator->errors()->all());
+            }
+            $age = Carbon::parse($request->dob)->age;
+            $stage = Stage::where('from', '<=', $age)
+                ->where('to', '>=', $age)
+                ->firstOr(function () {
+                    return Stage::orderByDesc('to')->first();
+                });
+            $request->request->add(['stage_id' => $stage->id]);
+            User::whereId(request()->user_id)->first()->children()->create($request->all());
+            return redirect()->route('backend.child.index', ['user_id' => request()->user_id])->with(['message' => 'Child created successfully']);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
     /**
@@ -64,7 +88,8 @@ class ChildController extends Controller
     public function edit(Child $child)
     {
         $element = $child->load('parent', 'stage');
-        return inertia('Backend/Child/ChildEdit', compact('element'));
+        $genders = collect(UserGenderEnum::cases())->pluck('value');
+        return inertia('Backend/Child/ChildEdit', compact('element', 'genders'));
     }
 
     /**
@@ -72,7 +97,28 @@ class ChildController extends Controller
      */
     public function update(Request $request, Child $child)
     {
-        //
+        try {
+            $validator = validator(request()->all(), [
+                'name' => 'required|string|max:255',
+                'user_id' => 'required|exists:users,id',
+                'gender' => [Rule::in(UserGenderEnum::cases()), 'required'],
+                'dob' => 'required|date',
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator->errors()->all());
+            }
+            $age = Carbon::parse($request->dob)->age;
+            $stage = Stage::where('from', '<=', $age)
+                ->where('to', '>=', $age)
+                ->firstOr(function () {
+                    return Stage::orderByDesc('to')->first();
+                });
+            $request->request->add(['stage_id' => $stage->id]);
+            $child->update($request->all());
+            return redirect()->route('backend.child.index', ['user_id' => request()->user_id])->with(['message' => 'Child created successfully']);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
     /**
@@ -80,6 +126,14 @@ class ChildController extends Controller
      */
     public function destroy(Child $child)
     {
-        //
+        try {
+            $child->quizzes()->delete();
+            if ($child->delete()) {
+                return redirect()->back()->with(['message' => trans('general.process_success')]);
+            }
+            return redirect()->back()->withErrors(trans('general.process_failure'));
+        } catch (\Throwable $e) {
+            return redirect()->back()->withErrors(trans('general.process_failure'));
+        }
     }
 }

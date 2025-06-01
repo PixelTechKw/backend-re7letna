@@ -303,6 +303,7 @@ export default function ({
                                 id={element.id}
                                 active={element.active}
                                 key={element.id}
+                                showActive={true}
                             />
                         </DropdownMenu>
                     );

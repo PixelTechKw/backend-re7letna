@@ -17,8 +17,6 @@ class Video extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'active'
-
     ];
     /**
      * Get the attributes that should be cast.

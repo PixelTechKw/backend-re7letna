@@ -78,7 +78,9 @@ export default function ({
                 cell: ({ row }: any) => {
                     return (
                         <div className="flex flex-col justify-start items-start  sm-text gap-y-2 capitalize max-w-40 truncate">
-                            <a href={row.original.url} target="_blank">{row.original.name}</a>
+                            <a href={row.original.url} target="_blank">
+                                {row.original.name}
+                            </a>
                         </div>
                     );
                 },
@@ -273,6 +275,7 @@ export default function ({
                                 id={element.id}
                                 active={element.active}
                                 key={element.id}
+                                showActive={true}
                             />
                         </DropdownMenu>
                     );

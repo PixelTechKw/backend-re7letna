@@ -161,7 +161,7 @@ export default function ({ elements, element }: PageProps): React.ReactNode {
                                 <Link
                                     className="p-3"
                                     href={route("backend.toggle.order", {
-                                        model: "questionnaire",
+                                        model: "question",
                                         type: "up",
                                         id: row.original.id,
                                     })}
@@ -178,7 +178,7 @@ export default function ({ elements, element }: PageProps): React.ReactNode {
                                 <Link
                                     className="p-3"
                                     href={route("backend.toggle.order", {
-                                        model: "questionnaire",
+                                        model: "question",
                                         type: "down",
                                         id: row.original.id,
                                     })}

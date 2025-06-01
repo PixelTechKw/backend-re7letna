@@ -49,7 +49,6 @@ class UserController extends Controller
             $user = User::create($request->request->all());
             DB::commit();
             if ($user) {
-                $request->has("role") ? $user->syncRoles([$request->role]) : null;
                 $request->file("image") ? $this->saveMimes(
                     $user,
                     $request,
@@ -58,7 +57,6 @@ class UserController extends Controller
                     true,
                     false
                 ) : $user->update(['image' => $request->role . '.png']);
-                $user = $user->load('roles');
                 return redirect()->route("backend.user.edit", $user)->with("success", trans("general.process_success"));
             }
         } catch (Throwable $e) {
@@ -92,7 +90,6 @@ class UserController extends Controller
     {
         $updated = $user->update($request->filled("password") ? $request->except(["_token", "image", "categories", "tags"]) : $request->except(["_token", "image", "categories", "tags", "password"]));
         if ($updated) {
-            $user->syncRoles([$request->role]);
             $request->file("image") ? $this->saveMimes(
                 $user,
                 $request,

@@ -16,7 +16,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return request()->user()->can('user_index');
+        return request()->user()->is_admin;
     }
 
     /**
@@ -27,11 +27,9 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'string|required|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', Rule::in(Role::all()->pluck('name'))],
             'mobile' => 'nullable|min:8|max:16|regex:/[0-9]/|unique:users,mobile',
             'dob' => 'nullable|date',
             'gender' => ['required', Rule::in(UserGenderEnum::cases())],

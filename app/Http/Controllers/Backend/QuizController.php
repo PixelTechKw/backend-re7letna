@@ -22,7 +22,7 @@ class QuizController extends Controller
             return redirect()->back()->withErrors($validator->errors()->all());
         }
         $element = Child::whereId(request()->child_id)->with('parent')->first();
-        $elements = Quiz::with('questionnaire')->orderby('id', 'desc')->get();
+        $elements = Quiz::where('child_id', request()->child_id)->with('questionnaire')->orderby('id', 'desc')->get();
         return inertia('Backend/Quiz/QuizIndex', compact('elements', 'element'));
     }
 
