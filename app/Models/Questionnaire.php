@@ -40,4 +40,9 @@ class Questionnaire extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function quizzes(): HasMany
+    {
+        return $this->hasMany(Quiz::class);
+    }
 }

@@ -25,7 +25,7 @@ class ChildController extends Controller
             return redirect()->back()->withErrors($validator->errors()->all());
         }
         $element = User::where('id', request()->user_id)->first();
-        $elements = Child::where('user_id', request()->user_id)->orderBy('created_at', 'desc')->get();
+        $elements = Child::where('user_id', request()->user_id)->with('stage')->orderBy('created_at', 'desc')->get();
         return inertia('Backend/Child/ChildIndex', compact('elements', 'element'));
     }
 

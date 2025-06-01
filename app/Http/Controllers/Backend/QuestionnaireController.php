@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreQuestionnaireRequest;
+use App\Http\Requests\StoreQuestionRequest;
 use App\Models\Questionnaire;
+use App\Models\Stage;
 use Illuminate\Http\Request;
 
 class QuestionnaireController extends Controller
@@ -23,15 +26,17 @@ class QuestionnaireController extends Controller
      */
     public function create()
     {
-        //
+        $stages = Stage::all();
+        return inertia('Backend/Questionnaire/QuestionnaireCreate', compact('stages'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreQuestionnaireRequest $request)
     {
-        //
+        $element = Questionnaire::create($request->validated());
+        return redirect()->route('backend.questionnaire.index')->with('message', 'Questionnaire created successfully');
     }
 
     /**
@@ -47,7 +52,9 @@ class QuestionnaireController extends Controller
      */
     public function edit(Questionnaire $questionnaire)
     {
-        //
+        $stages = Stage::all();
+        $element = $questionnaire->load('stage');
+        return inertia('Backend/Questionnaire/QuestionnaireEdit', compact('element', 'stages'));
     }
 
     /**
@@ -63,6 +70,11 @@ class QuestionnaireController extends Controller
      */
     public function destroy(Questionnaire $questionnaire)
     {
-        //
+        $questionnaire->load('quizzes');
+        if ($questionnaire->quizzes->isEmpty()) {
+            $questionnaire->delete();
+            return redirect()->route('backend.questionnaire.index')->with('message', 'Questionnaire deleted successfully');
+        }
+        return redirect()->route('backend.questionnaire.index')->with('message', 'Questionnaire has quizzes, you can not delete it');
     }
 }

@@ -114,11 +114,7 @@ export default function ({
                     );
                 },
                 cell: ({ row }: any) => {
-                    return (
-                        <div className="flex flex-col justify-start items-start  sm-text gap-y-2 capitalize max-w-40 truncate">
-                            {row.original.gender}
-                        </div>
-                    );
+                    return <div>{row.original.gender}</div>;
                 },
             },
             {
@@ -147,7 +143,28 @@ export default function ({
                     );
                 },
             },
-
+            {
+                accessorKey: "stage",
+                header: ({ column }: any) => {
+                    return (
+                        <Button
+                            variant="ghost"
+                            className="capitalize !p-0"
+                            onClick={() =>
+                                column.toggleSorting(
+                                    column.getIsSorted() === "asc",
+                                )
+                            }
+                        >
+                            stage
+                            <ArrowUpDown className="mx-2 h-4 w-4" />
+                        </Button>
+                    );
+                },
+                cell: ({ row }: any) => {
+                    return <div>{row.original.stage.name}</div>;
+                },
+            },
             {
                 accessorKey: "actions",
                 header: () => <div className="capitalize !p-0">actions</div>,

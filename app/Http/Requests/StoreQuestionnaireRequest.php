@@ -11,7 +11,7 @@ class StoreQuestionnaireRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->is_admin;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreQuestionnaireRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'stage_id' => 'required|exists:stages,id',
+            'order' => 'numeric'
         ];
     }
 }
