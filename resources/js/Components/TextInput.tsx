@@ -33,8 +33,7 @@ export default forwardRef(function TextInput(
             type={type}
             className={
                 "rounded-md border-gray-300 shadow-sm focus:border-prime-500 focus:ring-prime-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-prime-600 dark:focus:ring-prime-600  " +
-                className +
-                `py-3.5`
+                className
             }
             ref={localRef}
         />
