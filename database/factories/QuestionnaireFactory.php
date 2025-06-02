@@ -20,7 +20,7 @@ class QuestionnaireFactory extends Factory
         return [
             'name' => fake()->name(),
             'description' => fake()->sentence,
-            'order' => fake()->numberBetween(1, 10),
+            'order' => fake()->numberBetween(1, 50),
             'stage_id' => Stage::all()->random()->id,
         ];
     }

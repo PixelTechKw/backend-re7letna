@@ -11,7 +11,7 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return request()->user()->is_admin;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'active' => 'required|boolean',
+            'order' => 'required|integer'
         ];
     }
 }

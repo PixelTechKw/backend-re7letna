@@ -250,7 +250,6 @@ export default function ({ element }: PageProps) {
                             </div>
                         </div>
                         {/* image */}
-
                         <div className="col-span-full mb-2 flex flex-row justify-between items-center">
                             <div className="w-1/4">
                                 <InputLabel htmlFor="logo" value={"logo"} />

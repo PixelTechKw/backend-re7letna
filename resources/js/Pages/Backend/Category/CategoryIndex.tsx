@@ -5,10 +5,10 @@ import { useAppDispatch } from "@/redux/hooks";
 import { Button } from "@/shadcn/ui/button";
 import { DropdownMenu, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
-import { Category, Child, PageProps } from "@/types";
+import { Category, PageProps } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
-import { capitalize, map, take } from "lodash";
+import { capitalize } from "lodash";
 import {
     ArrowDown,
     ArrowUp,
@@ -211,7 +211,52 @@ export default function ({
                     );
                 },
             },
+            {
+                accessorKey: "active",
+                header: ({ column }) => {
+                    return (
+                        <Button
+                            variant="ghost"
+                            className="capitalize !p-0"
+                            onClick={() =>
+                                column.toggleSorting(
+                                    column.getIsSorted() === "asc",
+                                )
+                            }
+                        >
+                            <Tooltip>
+                                <TooltipTrigger className="capitalize">
+                                    active
+                                </TooltipTrigger>
+                                <TooltipContent
+                                    side="bottom"
+                                    align="center"
+                                    className="w-[300px] p-4" // Fixed width + padding
+                                    sideOffset={5}
+                                >
+                                    <p className="text-balance whitespace-pre-line leading-relaxed">
+                                        If not active users can not subscribe to
+                                        any courses or modify their data.
+                                    </p>
+                                </TooltipContent>
+                            </Tooltip>
 
+                            <ArrowUpDown className="mx-2 h-4 w-4" />
+                        </Button>
+                    );
+                },
+                cell: ({ row }: any) => {
+                    return (
+                        <div
+                            className={`w-3 h-3 rounded-full text-center border text-[6px] lg:text-xxs ${
+                                row.original.active
+                                    ? `bg-green-600 border-green-200`
+                                    : `bg-red-600 border-red-100`
+                            }`}
+                        ></div>
+                    );
+                },
+            },
             {
                 accessorKey: "actions",
                 header: () => <div className="capitalize !p-0">actions</div>,
@@ -229,7 +274,7 @@ export default function ({
                                 type={"category"}
                                 id={element.id}
                                 active={element.active}
-                                showActive={false}
+                                showActive={true}
                                 key={element.id}
                             />
                         </DropdownMenu>

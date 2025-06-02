@@ -59,10 +59,8 @@ export default function ({ element }: PageProps): React.ReactNode {
         );
     };
 
-    console.log("element", element);
-
     return (
-        <AuthenticatedLayout header={capitalize("create question")}>
+        <AuthenticatedLayout header={capitalize("edit question")}>
             <form onSubmit={submit} className={`flex flex-1 flex-col gap-y-2 `}>
                 <section className="flex flex-col w-full bg-white p-4 gap-y-4 rounded-xl my-1">
                     <div className="flex flex-row gap-x-4 justify-start items-center capitalize">
@@ -74,7 +72,7 @@ export default function ({ element }: PageProps): React.ReactNode {
                         >
                             <ArrowLeft />
                         </Link>
-                        <div className="header-one my-4">create question</div>
+                        <div className="header-one my-4">edit question</div>
                     </div>
                     <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                         {/* name */}

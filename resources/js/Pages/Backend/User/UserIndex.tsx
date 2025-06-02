@@ -2,18 +2,15 @@ import { MainDataTable } from "@/Components/MainDataTable";
 import UserDropDownMenu from "@/Components/User/UserDropDownMenu";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useAppDispatch } from "@/redux/hooks";
-import { Badge } from "@/shadcn/ui/badge";
 import { Button } from "@/shadcn/ui/button";
 import { DropdownMenu, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu";
-import { PageProps, User, Child } from "@/types";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
+import { Child, PageProps, User } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { capitalize, map, take } from "lodash";
 import { ArrowUpDown, MoreHorizontalIcon } from "lucide-react";
 import { useMemo } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
-import ElementDropDownMenu from "@/Components/ElementDropDownMenu";
-import MainHead from "@/Pages/Frontend/Partials/MainHead";
 export default function ({
     elements,
 }: PageProps<{ elements: any }>): React.ReactNode {

@@ -43,23 +43,23 @@ export default function ({ element, stages }: PageProps): React.ReactNode {
         }));
     };
 
-     const submit: FormEventHandler = (e) => {
-         e.preventDefault();
-         router.post(
-             route(`backend.questionnaire.update`, element.id),
-             {
-                 _method: "put",
-                 ...data,
-             },
-             {
-                 forceFormData: true,
-                 preserveScroll: true,
-             },
-         );
-     };
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        router.post(
+            route(`backend.questionnaire.update`, element.id),
+            {
+                _method: "put",
+                ...data,
+            },
+            {
+                forceFormData: true,
+                preserveScroll: true,
+            },
+        );
+    };
 
     return (
-        <AuthenticatedLayout header={capitalize("create questionnaire")}>
+        <AuthenticatedLayout header={capitalize("edit questionnaire")}>
             <form onSubmit={submit} className={`flex flex-1 flex-col gap-y-2 `}>
                 <section className="flex flex-col w-full bg-white p-4 gap-y-4 rounded-xl my-1">
                     <div className="flex flex-row gap-x-4 justify-start items-center capitalize">
@@ -70,7 +70,7 @@ export default function ({ element, stages }: PageProps): React.ReactNode {
                             <ArrowLeft />
                         </Link>
                         <div className="header-one my-4">
-                            create questionnaire
+                            edit questionnaire
                         </div>
                     </div>
                     <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
