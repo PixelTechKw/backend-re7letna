@@ -179,7 +179,7 @@ export default function ({ element, genders }: PageProps): React.ReactNode {
                                     control: (baseStyles, state) => ({
                                         ...baseStyles,
                                         borderColor: state.isFocused
-                                            ? "#1422B5"
+                                            ? "#75641F"
                                             : "lightgrey",
                                         borderRadius: 20,
                                         padding: 8,

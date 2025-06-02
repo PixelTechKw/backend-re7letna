@@ -22,6 +22,12 @@ class StoreQuizRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [];
+        return [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'questionnaire_id' => 'required|exists:questionnaires,id',
+            'answers' => ['required', 'array', new ValidAnswerStructure()],
+            'order' => 'required|integer',
+        ];
     }
 }

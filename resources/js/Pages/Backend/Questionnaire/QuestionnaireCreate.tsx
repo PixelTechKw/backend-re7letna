@@ -15,7 +15,7 @@ interface FormProps {
     description: string;
     active: boolean;
     stage_id: string;
-    order: number;
+    order: number | string;
     [key: string]: any;
 }
 
@@ -29,7 +29,7 @@ export default function ({ stages }: PageProps): React.ReactNode {
             description: "",
             active: true,
             stage_id: "",
-            order: 1,
+            order: query.order,
         });
 
     const handleChange = (
@@ -118,14 +118,14 @@ export default function ({ stages }: PageProps): React.ReactNode {
                                 }}
                                 className="basic-multi-select pt-2 capitalize"
                                 classNamePrefix="select select-box capitalize"
-                                placeholder="stage_id"
+                                placeholder="choose stage"
                                 styles={{
                                     control: (baseStyles, state) => ({
                                         ...baseStyles,
                                         borderColor: state.isFocused
-                                            ? "#1422B5"
+                                            ? "#75641F"
                                             : "lightgrey",
-                                        borderRadius: 20,
+                                        borderRadius: 10,
                                         padding: 8,
                                     }),
                                 }}
@@ -133,9 +133,9 @@ export default function ({ stages }: PageProps): React.ReactNode {
                                     ...theme,
                                     colors: {
                                         ...theme.colors,
-                                        primary25: "#5CBDAD",
-                                        primary: "#5CBDAD",
-                                        dangerLight: "#5CBDAD",
+                                        primary25: "#C5A835",
+                                        primary: "#C5A835",
+                                        dangerLight: "#C5A835",
                                     },
                                 })}
                             />

@@ -20,7 +20,7 @@ class ValidAnswerStructure implements ValidationRule
         foreach ($value as $item) {
             if (
                 !is_array($item) ||
-                !isset($item['question_id']) ||
+                // !isset($item['question_id']) ||
                 !isset($item['name']) ||
                 !isset($item['value'])
             ) {

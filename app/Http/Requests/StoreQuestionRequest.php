@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ValidAnswerStructure;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreQuestionRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreQuestionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return request()->user()->is_admin;
     }
 
     /**
@@ -22,7 +23,11 @@ class StoreQuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'questionnaire_id' => 'required|exists:questionnaires,id',
+            'answers' => ['required', 'array', new ValidAnswerStructure()],
+            'order' => 'required|integer',
         ];
     }
 }

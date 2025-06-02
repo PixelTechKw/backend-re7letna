@@ -3,7 +3,7 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Gender, PageProps } from "@/types";
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { Link, router, useForm, usePage } from "@inertiajs/react";
 import { capitalize, get, map } from "lodash";
 import { ArrowLeft } from "lucide-react";
 import moment from "moment";
@@ -43,17 +43,20 @@ export default function ({ element, stages }: PageProps): React.ReactNode {
         }));
     };
 
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-        post(
-            route(`backend.questionnaire.store`),
-            { data },
-            {
-                forceFormData: true,
-                preserveScroll: true,
-            },
-        );
-    };
+     const submit: FormEventHandler = (e) => {
+         e.preventDefault();
+         router.post(
+             route(`backend.questionnaire.update`, element.id),
+             {
+                 _method: "put",
+                 ...data,
+             },
+             {
+                 forceFormData: true,
+                 preserveScroll: true,
+             },
+         );
+     };
 
     return (
         <AuthenticatedLayout header={capitalize("create questionnaire")}>
@@ -122,12 +125,12 @@ export default function ({ element, stages }: PageProps): React.ReactNode {
                                 }}
                                 className="basic-multi-select pt-2 capitalize"
                                 classNamePrefix="select select-box capitalize"
-                                placeholder="stage_id"
+                                placeholder="choose stage"
                                 styles={{
                                     control: (baseStyles, state) => ({
                                         ...baseStyles,
                                         borderColor: state.isFocused
-                                            ? "#1422B5"
+                                            ? "#75641F"
                                             : "lightgrey",
                                         borderRadius: 20,
                                         padding: 8,

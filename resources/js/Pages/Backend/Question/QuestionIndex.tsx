@@ -252,7 +252,7 @@ export default function ({ elements, element }: PageProps): React.ReactNode {
                                         <Link
                                             as="button"
                                             type={"button"}
-                                            href={`${route(`backend.questionnaire.edit`, row.original.id)}`}
+                                            href={`${route(`backend.question.edit`, row.original.id)}`}
                                             className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
                                         >
                                             <PencilIcon className="nav-icon" />
@@ -307,7 +307,7 @@ export default function ({ elements, element }: PageProps): React.ReactNode {
                     </div>
                     <Link
                         href={route("backend.question.create", {
-                            questionnaire_id: element.questionnaire_id,
+                            questionnaire_id: element.id,
                         })}
                         className="btn-default capitalize"
                     >

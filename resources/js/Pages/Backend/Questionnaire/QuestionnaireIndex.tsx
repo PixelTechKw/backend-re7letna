@@ -14,7 +14,7 @@ import {
 import { Child, PageProps, Questionnaire } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
-import { capitalize, map, take } from "lodash";
+import { capitalize, countBy, map, size, take } from "lodash";
 import { useMemo } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
 import {
@@ -26,6 +26,7 @@ import {
     LucideListCheck,
     MoreHorizontalIcon,
     PencilIcon,
+    PlusIcon,
     RecycleIcon,
 } from "lucide-react";
 import { toggleshowDeleteModal } from "@/redux/slices/appSettingSlice";
@@ -38,6 +39,8 @@ export default function ({
         ziggy: { location, query },
     } = usePage().props;
     const dispatch = useAppDispatch();
+
+    console.log("elements", size(elements) + 1);
 
     const columns: ColumnDef<Questionnaire>[] = useMemo(
         () => [
@@ -343,6 +346,18 @@ export default function ({
                                         <Link
                                             as="button"
                                             type={"button"}
+                                            href={`${route(`backend.question.create`, { questionnaire_id: row.original.id })}`}
+                                            className="flex flex-row flex-1 justify-start items-center gap-x-3 capitalize truncate text-prim-800"
+                                        >
+                                            <PlusIcon className="nav-icon" />
+                                            <div>create question</div>
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem>
+                                        <Link
+                                            as="button"
+                                            type={"button"}
                                             href={route(
                                                 `backend.toggle.activate`,
                                                 {
@@ -406,7 +421,9 @@ export default function ({
                         list of Questionnaires
                     </div>
                     <Link
-                        href={route("backend.questionnaire.create")}
+                        href={route("backend.questionnaire.create", {
+                            order: `${size(elements) + 1}`,
+                        })}
                         className="btn-default capitalize"
                     >
                         new questionnaire

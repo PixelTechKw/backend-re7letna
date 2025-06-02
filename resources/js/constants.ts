@@ -53,3 +53,39 @@ export function generateRandomString(length = 12) {
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
     return times(length, () => sample(chars)).join('');
 }
+
+export const SometimesAnswers = [
+    {
+        name: "نعم",
+        value: 100,
+    },
+    {
+        name: "أحيانا",
+        value: 50,
+    },
+    {
+        name: "لا",
+        value: 0,
+    },
+];
+export const yesNoAnswers = [
+    {
+        name: "نعم",
+        value: 100,
+    },
+    {
+        name: "لا",
+        value: 0,
+    },
+];
+
+export const listofAnswers = [
+    {
+        label: "yes-no",
+        value: "yes-no",
+    },
+    {
+        label: "sometimes",
+        value: "yes-no-sometimes",
+    },
+]

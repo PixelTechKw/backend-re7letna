@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreQuestionRequest;
+use App\Http\Requests\UpdateQuestionRequest;
 use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Models\Quiz;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -43,9 +46,14 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreQuestionRequest $request)
     {
-        //
+        try {
+            $element = Question::create($request->validated());
+            return redirect()->route('backend.question.index', ['questionnaire_id' => $element->questionnaire_id])->with('success', 'Question created successfully');
+        } catch (QueryException $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
     /**
@@ -61,15 +69,17 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+
+        return inertia('Backend/Question/QuestionEdit', ['element' => $question]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Question $question)
+    public function update(UpdateQuestionRequest $request, Question $question)
     {
-        //
+        $question->update($request->validated());
+        return redirect()->route('backend.question.index', ['questionnaire_id' => $question->questionnaire_id])->with('success', 'Question updated successfully');
     }
 
     /**
