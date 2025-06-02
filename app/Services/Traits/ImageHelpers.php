@@ -17,6 +17,7 @@ use RuntimeException;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Str;
+use Throwable;
 
 trait ImageHelpers
 {
@@ -119,7 +120,7 @@ trait ImageHelpers
                     return response()->json(['message' => 'else case for image'], 400);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             abort(404, $e->getMessage());
         }
     }
@@ -147,7 +148,7 @@ trait ImageHelpers
                 $path = str_replace('storage/uploads/files/', '', $path);
                 $element->update([$colName => $path]);
             }
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return $e->getMessage();
         }
     }

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rule;
+use Throwable;
 
 class UserController extends Controller
 {
@@ -89,7 +90,7 @@ class UserController extends Controller
             $token = $element->createToken('personal')->plainTextToken;
             $element->token = $token;
             return response()->json(AuthResource::make($element), 200);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
@@ -157,7 +158,7 @@ class UserController extends Controller
             }
             $user->token = $user->createToken('personal')->plainTextToken;
             return response()->json(AuthResource::make($user), 200);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return response()->json(["message" => $e->getMessage()], 404);
         }
     }
@@ -171,7 +172,7 @@ class UserController extends Controller
         try {
             $element = $request->user();
             return response()->json(AuthResource::make($element), 200);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
@@ -191,7 +192,7 @@ class UserController extends Controller
                 return response()->json(AuthResource::make($element), 200);
             }
             return response()->json(["message" => trans("general.information_not_correct")], 403);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return response()->json(["message" => $e->getMessage()], 404);
         }
     }

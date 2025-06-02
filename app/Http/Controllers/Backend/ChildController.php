@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Throwable;
 
 class ChildController extends Controller
 {
@@ -69,7 +70,7 @@ class ChildController extends Controller
             $request->request->add(['stage_id' => $stage->id]);
             User::whereId(request()->user_id)->first()->children()->create($request->all());
             return redirect()->route('backend.child.index', ['user_id' => request()->user_id])->with(['message' => 'Child created successfully']);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
@@ -116,7 +117,7 @@ class ChildController extends Controller
             $request->request->add(['stage_id' => $stage->id]);
             $child->update($request->all());
             return redirect()->route('backend.child.index', ['user_id' => request()->user_id])->with(['message' => 'Child created successfully']);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }
     }

@@ -11,6 +11,7 @@ use App\Models\Stage;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Validation\Rule;
+use Throwable;
 
 class ChildController extends Controller
 {
@@ -57,7 +58,7 @@ class ChildController extends Controller
             $request->request->add(['stage_id' => $stage->id]);
             $element = request()->user()->children()->create($request->all());
             return response()->json($element, 200);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
@@ -91,7 +92,7 @@ class ChildController extends Controller
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
             $validator = validator(request()->all(), [
-                'name' => 'string|max:255',
+                'name' => 'string|min:3|max:255',
                 'gender' => [Rule::in(UserGenderEnum::cases())],
                 'dob' => 'date',
             ]);
@@ -107,7 +108,7 @@ class ChildController extends Controller
             $request->request->add(['stage_id' => $stage->id]);
             $child->update($request->all());
             return response()->json($child, 200);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
