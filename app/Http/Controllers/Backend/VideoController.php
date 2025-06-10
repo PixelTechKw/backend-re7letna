@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Enums\LevelEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class VideoController extends Controller
 {
@@ -23,7 +26,8 @@ class VideoController extends Controller
      */
     public function create()
     {
-        //
+        $levels = collect(LevelEnum::cases())->pluck('value');
+        return inertia('Backend/Video/VideoCreate', compact('levels'));
     }
 
     /**
@@ -31,7 +35,25 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $element = Video::create($request->request->all());
+            DB::commit();
+            if ($element) {
+                $request->file("image") ? $this->saveMimes(
+                    $element,
+                    $request,
+                    ["image"],
+                    ["1500", "1500"],
+                    true,
+                    false
+                ) : $element->update(['image' => $request->role . '.png']);
+                return redirect()->route("backend.video.edit", $element)->with("success", trans("general.process_success"));
+            }
+        } catch (Throwable $e) {
+            DB::rollback();
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
     /**
@@ -47,7 +69,8 @@ class VideoController extends Controller
      */
     public function edit(Video $video)
     {
-        //
+        $levels = collect(LevelEnum::cases())->pluck('value');
+        return inertia('Backend/Video/VideoEdit', ['element' => $video, 'levels' => $levels]);
     }
 
     /**
@@ -55,7 +78,19 @@ class VideoController extends Controller
      */
     public function update(Request $request, Video $video)
     {
-        //
+        $updated = $video->update($request->all());
+        if ($updated) {
+            $request->file("image") ? $this->saveMimes(
+                $video,
+                $request,
+                ["image"],
+                ["1500", "1500"],
+                true,
+                false
+            ) : null;
+            return redirect()->route("backend.video.index")->with("success", trans("general.process_success"));
+        }
+        return redirect()->route("backend.video.edit", $video->id)->with("error", trans("general.process_failure"));
     }
 
     /**
@@ -63,6 +98,8 @@ class VideoController extends Controller
      */
     public function destroy(Video $video)
     {
-        //
+        $video->categories()->sync([]);
+        $video->delete();
+        return redirect()->route("backend.video.index")->with("success", trans("general.process_success"));
     }
 }

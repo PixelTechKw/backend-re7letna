@@ -5,23 +5,26 @@ import { getIcon } from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Input } from "@/shadcn/ui/input";
 import { Label } from "@/shadcn/ui/label";
-import { PageProps } from "@/types";
+import { Level, PageProps } from "@/types";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
-import { capitalize, get } from "lodash";
+import { capitalize, get, map } from "lodash";
 import { ArrowLeft } from "lucide-react";
+import moment from "moment";
 import { ChangeEvent, FormEventHandler } from "react";
+import Select from "react-select";
 import { ReactSVG } from "react-svg";
 
 interface FormProps {
     name: string;
     description: string;
-    image: string;
-    order: number | string;
+    url: string;
+    order: string | number;
+    level: "easy" | "hard" | "medium";
     active: boolean;
     [key: string]: any;
 }
 
-export default function ({ element }: PageProps): React.ReactNode {
+export default function ({ levels, element }: PageProps): React.ReactNode {
     const {
         ziggy: { query },
     } = usePage().props;
@@ -30,7 +33,8 @@ export default function ({ element }: PageProps): React.ReactNode {
             name: element.name,
             description: element.description,
             active: element.active,
-            image: element.image,
+            url: element.url,
+            level: element.level,
             order: element.order,
         });
 
@@ -48,7 +52,7 @@ export default function ({ element }: PageProps): React.ReactNode {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         router.post(
-            route(`backend.category.update`, element.id),
+            route(`backend.video.update`, element.id),
             {
                 _method: "put",
                 ...data,
@@ -61,17 +65,17 @@ export default function ({ element }: PageProps): React.ReactNode {
     };
 
     return (
-        <AuthenticatedLayout header={capitalize("edit category")}>
+        <AuthenticatedLayout header={capitalize("edit video")}>
             <form onSubmit={submit} className={`flex flex-1 flex-col gap-y-2 `}>
                 <section className="flex flex-col w-full bg-white p-4 gap-y-4 rounded-xl my-1">
                     <div className="flex flex-row gap-x-4 justify-start items-center capitalize">
                         <Link
-                            href={route("backend.category.index")}
+                            href={route("backend.video.index")}
                             className="p-4 bg-gray-100 border border-gray-200 rounded-2xl"
                         >
                             <ArrowLeft />
                         </Link>
-                        <div className="header-one my-4">edit category</div>
+                        <div className="header-one my-4">edit video</div>
                     </div>
                     <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                         {/* name */}
@@ -99,48 +103,80 @@ export default function ({ element }: PageProps): React.ReactNode {
                                 />
                             </div>
                         </div>
-                        {/* image */}
-                        <div className="col-span-full mb-2 flex flex-row justify-between items-center">
-                            <div className="w-1/4">
-                                <InputLabel htmlFor="image" value={"image"} />
-                                <img
-                                    src={element.thumb}
-                                    className="object-contain  h-28 w-auto"
+                        {/* url */}
+                        <div className="col-span-1">
+                            <div>
+                                <InputLabel
+                                    htmlFor="url"
+                                    value={"video url"}
+                                    className="required capitalize"
+                                />
+                                <TextInput
+                                    id="url"
+                                    name="url"
+                                    required
+                                    aria-required
+                                    onChange={(e) =>
+                                        setData("url", e.target.value)
+                                    }
+                                    defaultValue={data.url}
+                                    className="block w-full px-4 py-2 mt-2 "
+                                />
+                                <InputError
+                                    message={get(errors, "url")}
+                                    className="mt-2"
                                 />
                             </div>
-                            <div className="flex w-3/4 h-28 flex-col justify-center items-center border border-gray-300 rounded-2xl bg-transparent">
-                                <Label
-                                    htmlFor="image"
-                                    className="w-full flex flex-1 flex-col justify-center items-center relative top-4 z-0 gap-y-4"
-                                >
-                                    <ReactSVG
-                                        src={getIcon("download.svg")}
-                                        className="h-8 w-8 p-2 text-gray-500 border border-gray-200 rounded-xl"
-                                    />
-                                    <div className="text-lg text-prime-600">
-                                        click here to upload your image
-                                    </div>
-                                </Label>
-                                <Input
-                                    onChange={(
-                                        e: ChangeEvent<HTMLInputElement>,
-                                    ) => {
-                                        e.target.files
-                                            ? setData(
-                                                  "image",
-                                                  e.target.files[0],
-                                              )
-                                            : null;
-                                    }}
-                                    type="file"
-                                    name="image"
-                                    id="image"
-                                    accept="image/jpg, image/jpeg , image/png"
-                                    className="h-20 border-none shadow-none bg-transparent focus:border-none focus:ring-0 !text-white placeholder:text-white opacity-0"
-                                />
-                            </div>
+                        </div>
+                        {/* level */}
+                        <div className="col-span-1">
+                            <InputLabel
+                                htmlFor="level"
+                                value="level"
+                                className="capitalize required"
+                            />
+                            <Select
+                                name="level"
+                                isMulti={false}
+                                required
+                                options={map(levels, (c: any, i) => {
+                                    return {
+                                        label: c,
+                                        value: c,
+                                    };
+                                })}
+                                onChange={(e: any) => {
+                                    setData("level", e.value);
+                                }}
+                                defaultValue={{
+                                    label: data.level,
+                                    value: data.level,
+                                }}
+                                className="basic-multi-select pt-2 capitalize"
+                                classNamePrefix="select select-box capitalize"
+                                placeholder="choose level"
+                                styles={{
+                                    control: (baseStyles, state) => ({
+                                        ...baseStyles,
+                                        borderColor: state.isFocused
+                                            ? "#75641F"
+                                            : "lightgrey",
+                                        borderRadius: 10,
+                                        padding: 8,
+                                    }),
+                                }}
+                                theme={(theme) => ({
+                                    ...theme,
+                                    colors: {
+                                        ...theme.colors,
+                                        primary25: "#C5A835",
+                                        primary: "#C5A835",
+                                        dangerLight: "#C5A835",
+                                    },
+                                })}
+                            />
                             <InputError
-                                message={get(errors, "image")}
+                                message={get(errors, "level")}
                                 className="mt-2"
                             />
                         </div>
@@ -202,7 +238,7 @@ export default function ({ element }: PageProps): React.ReactNode {
                     </div>
                     <div className="flex flex-row justify-end items-end w-full gap-x-4 my-6">
                         <Link
-                            href={route(`backend.category.index`)}
+                            href={route(`backend.video.index`)}
                             className="text-center  rounded-3xl p-3 px-6 w-24 border border-prime-700 text-prime-700 hover:border-red-700 hover:text-red-700 capitalize"
                             disabled={processing}
                         >

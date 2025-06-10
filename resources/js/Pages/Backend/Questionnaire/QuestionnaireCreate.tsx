@@ -2,11 +2,10 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Gender, PageProps } from "@/types";
+import { PageProps } from "@/types";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { capitalize, get, map } from "lodash";
 import { ArrowLeft } from "lucide-react";
-import moment from "moment";
 import { FormEventHandler } from "react";
 import Select from "react-select";
 

@@ -47,6 +47,7 @@ export type Setting = {
 }
 
 export type Gender = 'male' | 'female';
+export type Level = 'easy' | 'medium' | 'hard';
 
 export type Stage = {
     id: number | string;
