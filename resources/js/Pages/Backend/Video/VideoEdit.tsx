@@ -114,6 +114,7 @@ export default function ({ levels, element }: PageProps): React.ReactNode {
                                 <TextInput
                                     id="url"
                                     name="url"
+                                    type="url"
                                     required
                                     aria-required
                                     onChange={(e) =>
