@@ -47,7 +47,7 @@ class VideoController extends Controller
                     ["1500", "1500"],
                     true,
                     false
-                ) : $element->update(['image' => $request->role . '.png']);
+                ) : null;
                 return redirect()->route("backend.video.edit", $element)->with("success", trans("general.process_success"));
             }
         } catch (Throwable $e) {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Tool;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class ToolController extends Controller
 {
@@ -22,7 +24,7 @@ class ToolController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Backend/Tool/ToolCreate');
     }
 
     /**
@@ -30,7 +32,25 @@ class ToolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $element = Tool::create($request->request->all());
+            DB::commit();
+            if ($element) {
+                $request->file("image") ? $this->saveMimes(
+                    $element,
+                    $request,
+                    ["image"],
+                    ["1500", "1500"],
+                    true,
+                    false
+                ) : null;
+                return redirect()->route('backend.tool.index')->with('success', 'Tool created successfully!');
+            }
+        } catch (Throwable $e) {
+            DB::rollback();
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
     /**
@@ -46,7 +66,7 @@ class ToolController extends Controller
      */
     public function edit(Tool $tool)
     {
-        //
+        return inertia('Backend/Tool/ToolEdit', ['element' => $tool]);
     }
 
     /**
@@ -54,7 +74,19 @@ class ToolController extends Controller
      */
     public function update(Request $request, Tool $tool)
     {
-        //
+        $updated = $tool->update($request->all());
+        if ($updated) {
+            $request->file("image") ? $this->saveMimes(
+                $tool,
+                $request,
+                ["image"],
+                ["1500", "1500"],
+                true,
+                false
+            ) : null;
+            return redirect()->route("backend.tool.index")->with("success", trans("general.process_success"));
+        }
+        return redirect()->route("backend.tool.edit", $tool->id)->with("error", trans("general.process_failure"));
     }
 
     /**
@@ -62,6 +94,7 @@ class ToolController extends Controller
      */
     public function destroy(Tool $tool)
     {
-        //
+        $tool->delete();
+        return redirect()->back()->with('success', 'Tool deleted successfully!');
     }
 }

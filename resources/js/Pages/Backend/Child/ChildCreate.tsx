@@ -181,7 +181,7 @@ export default function ({ element, genders }: PageProps): React.ReactNode {
                                         borderColor: state.isFocused
                                             ? "#75641F"
                                             : "lightgrey",
-                                        borderRadius: 20,
+                                        borderRadius: 10,
                                         padding: 8,
                                     }),
                                 }}
@@ -189,9 +189,9 @@ export default function ({ element, genders }: PageProps): React.ReactNode {
                                     ...theme,
                                     colors: {
                                         ...theme.colors,
-                                        primary25: "#5CBDAD",
-                                        primary: "#5CBDAD",
-                                        dangerLight: "#5CBDAD",
+                                        primary25: "#C5A835",
+                                        primary: "#C5A835",
+                                        dangerLight: "#C5A835",
                                     },
                                 })}
                             />

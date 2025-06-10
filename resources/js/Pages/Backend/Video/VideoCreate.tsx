@@ -1,18 +1,13 @@
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import { getIcon } from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Input } from "@/shadcn/ui/input";
-import { Label } from "@/shadcn/ui/label";
-import { Level, PageProps } from "@/types";
+import { PageProps } from "@/types";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { capitalize, get, map } from "lodash";
 import { ArrowLeft } from "lucide-react";
-import moment from "moment";
-import { ChangeEvent, FormEventHandler } from "react";
+import { FormEventHandler } from "react";
 import Select from "react-select";
-import { ReactSVG } from "react-svg";
 
 interface FormProps {
     name: string;

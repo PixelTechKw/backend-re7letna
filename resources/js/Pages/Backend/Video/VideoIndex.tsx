@@ -180,7 +180,7 @@ export default function ({
                                 <Link
                                     className="p-3"
                                     href={route("backend.toggle.order", {
-                                        model: "questionnaire",
+                                        model: "video",
                                         type: "up",
                                         id: row.original.id,
                                     })}

@@ -22,7 +22,7 @@ class StageController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Backend/Stage/StageCreate');
     }
 
     /**
@@ -30,7 +30,8 @@ class StageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $element = Stage::create($request->all());
+        return redirect()->route('backend.stage.index')->with('success', 'Stage created successfully');
     }
 
     /**
@@ -46,7 +47,7 @@ class StageController extends Controller
      */
     public function edit(Stage $stage)
     {
-        //
+        return inertia('Backend/Stage/StageEdit', ['element' => $stage]);
     }
 
     /**
@@ -54,7 +55,8 @@ class StageController extends Controller
      */
     public function update(Request $request, Stage $stage)
     {
-        //
+        $element = $stage->update($request->all());
+        return redirect()->route('backend.stage.index')->with('success', 'Stage updated successfully');
     }
 
     /**
@@ -62,6 +64,12 @@ class StageController extends Controller
      */
     public function destroy(Stage $stage)
     {
-        //
+        if ($stage->children()->get()->isEmpty()) {
+            $stage->questionnaires()->delete();
+            $stage->videos()->sync([]);
+            $stage->delete();
+            return redirect()->route('backend.stage.index')->with('success', 'Stage deleted successfully');
+        }
+        return redirect()->route('backend.stage.index')->withError(['message' => 'you can not delete this stage, it has children']);
     }
 }
