@@ -21,6 +21,7 @@ class ChildController extends Controller
     public function index()
     {
         $elements = Child::where('user_id', request()->user()->id)->orderBy('id', 'desc')
+            ->with('stage')
             ->paginate(SELF::TAKE_LESS)
             ->setPath('?')
             ->withQueryString();

@@ -19,6 +19,7 @@ class QuestionnaireController extends Controller
             ->has('questions', '>', 0)
             ->when(request()->stage_id, fn($q) => $q->where('stage_id', request()->stage_id))
             ->with('stage')
+            ->withCount('questions')
             ->orderBy('order', 'asc')
             ->paginate(SELF::TAKE_LESS)
             ->setPath('?')
