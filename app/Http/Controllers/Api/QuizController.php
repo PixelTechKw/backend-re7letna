@@ -18,6 +18,7 @@ class QuizController extends Controller
      */
     public function index()
     {
+
         request()->validate([
             'child_id' => 'sometimes|exists:children,id',
         ]);
@@ -29,7 +30,7 @@ class QuizController extends Controller
                 'message' => 'Child not found',
             ], 404);
         }
-        $elements = Quiz::with('answers.question', 'questionnaire')
+        $elements = Quiz::with(['answers.question.categories' => fn($q) => $q->select('categoryables.category_id'), 'questionnaire'])
             ->when(request('child_id'), function ($query) {
                 return $query->where('child_id', request('child_id'));
             })
