@@ -89,7 +89,7 @@ class ChildController extends Controller
     public function update(UpdateChildRequest $request, Child $child)
     {
         try {
-            if ($child->user_id !== request()->user()->id) {
+            if ($child->user_id != request()->user()->id) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
             $validator = validator(request()->all(), [
