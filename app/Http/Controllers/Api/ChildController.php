@@ -70,7 +70,7 @@ class ChildController extends Controller
     public function show(Child $child)
     {
         if ($child->user_id === request()->user()->id) {
-            return response()->json($child, 200);
+            return response()->json($child->load('stage'), 200);
         }
         return response()->json(['message' => 'Unauthorized'], 403);
     }
