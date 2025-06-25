@@ -12,6 +12,8 @@ import Select from "react-select";
 
 interface FormProps {
     name: string;
+    disability: string;
+    notes: string;
     gender: Gender;
     dob: string;
     user_id: string;
@@ -25,6 +27,8 @@ export default function ({ element, genders }: PageProps): React.ReactNode {
     const { data, setData, post, processing, errors, transform, reset }: any =
         useForm<FormProps>({
             name: "",
+            disability: "",
+            notes: "",
             gender: "male",
             dob: moment().locale("en").format("YYYY-MM-DD"),
             user_id: query.user_id,
@@ -197,6 +201,50 @@ export default function ({ element, genders }: PageProps): React.ReactNode {
                             />
                             <InputError
                                 message={get(errors, "gender")}
+                                className="mt-2"
+                            />
+                        </div>
+                    </div>
+                    <div className="col-span-1">
+                        <div>
+                            <InputLabel
+                                htmlFor="disability"
+                                value={"disability"}
+                                className="capitalize"
+                            />
+                            <TextInput
+                                id="disability"
+                                name="disability"
+                                onChange={(e) =>
+                                    setData("disability", e.target.value)
+                                }
+                                defaultValue={data.disability}
+                                className="block w-full px-4 py-2 mt-2 "
+                            />
+                            <InputError
+                                message={get(errors, "disability")}
+                                className="mt-2"
+                            />
+                        </div>
+                    </div>
+                    <div className="col-span-1">
+                        <div>
+                            <InputLabel
+                                htmlFor="notes"
+                                value={"notes"}
+                                className="capitalize"
+                            />
+                            <TextInput
+                                id="notes"
+                                name="notes"
+                                onChange={(e) =>
+                                    setData("notes", e.target.value)
+                                }
+                                defaultValue={data.notes}
+                                className="block w-full px-4 py-2 mt-2 "
+                            />
+                            <InputError
+                                message={get(errors, "notes")}
                                 className="mt-2"
                             />
                         </div>

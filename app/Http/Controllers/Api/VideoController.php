@@ -26,6 +26,9 @@ class VideoController extends Controller
                     $q->where('stage_id', request()->stage_id);
                 });
             })
+            ->when(request()->level, function ($q) {
+                $q->where('level', request()->level);
+            })
             ->with('categories', 'stages')
             ->orderBy('order', 'asc')
             ->paginate(SELF::TAKE_MIN)

@@ -22,6 +22,8 @@ class ChildFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'disability' => fake()->name(),
+            'notes' => fake()->name(),
             'dob' => fake()->dateTimeBetween('-18 years', '- 2 years')->format('Y-m-d'),
             'gender' => fake()->randomElement(UserGenderEnum::cases()),
             'stage_id' => fn($array) => Stage::where('to', '>=', Carbon::parse($array['dob'])->age)->first()->id,

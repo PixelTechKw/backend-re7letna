@@ -96,6 +96,32 @@ export default function ({
                 },
             },
             {
+                accessorKey: "disability",
+                header: ({ column }: any) => {
+                    return (
+                        <Button
+                            variant="ghost"
+                            className="capitalize !p-0"
+                            onClick={() =>
+                                column.toggleSorting(
+                                    column.getIsSorted() === "asc",
+                                )
+                            }
+                        >
+                            disability
+                            <ArrowUpDown className="mx-2 h-4 w-4" />
+                        </Button>
+                    );
+                },
+                cell: ({ row }: any) => {
+                    return (
+                        <div className="flex flex-col justify-start items-start  sm-text gap-y-2 capitalize max-w-40 truncate">
+                            <div>{row.original.disability}</div>
+                        </div>
+                    );
+                },
+            },
+            {
                 accessorKey: "gender",
                 header: ({ column }: any) => {
                     return (

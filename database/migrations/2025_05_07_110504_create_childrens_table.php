@@ -16,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->date('dob');
+            $table->string('disability')->nullable();
+            $table->string('notes')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate(); // parent
             $table->foreignId('stage_id')->references('id')->on('stages')->cascadeOnDelete()->cascadeOnUpdate();
             $table->enum('gender', collect(UserGenderEnum::cases())->pluck('value')->toArray())->default('male');
