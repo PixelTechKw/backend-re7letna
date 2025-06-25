@@ -1,7 +1,7 @@
-import {baseUrl} from '@/constants';
-import {PageProps} from '@/types';
-import {Head, usePage} from '@inertiajs/react';
-import {ReactNode} from 'react';
+import { baseUrl } from "@/constants";
+import { PageProps } from "@/types";
+import { Head, usePage } from "@inertiajs/react";
+import { ReactNode } from "react";
 
 export default function ({
     title,
@@ -10,7 +10,7 @@ export default function ({
     title?: string | any;
     description?: string;
 }): ReactNode {
-    const {settings}: any = usePage().props;
+    const { settings }: any = usePage().props;
 
     return (
         <Head>
@@ -36,38 +36,26 @@ export default function ({
                 content={description ? description : settings.description}
             />
             <meta property="og:image" content={settings.thumb} />
-            <link
-                rel="apple-touch-icon"
-                sizes="57x57"
-                href="/icons/icon-48x48.png"
-            />
-            <link
-                rel="apple-touch-icon"
-                sizes="60x60"
-                href="/icons/icon-48x48.png"
-            />
-            <link
-                rel="apple-touch-icon"
-                sizes="72x72"
-                href="/icons/icon-96x96.png"
-            />
+            <link rel="apple-touch-icon" sizes="57x57" href={settings.thumb} />
+            <link rel="apple-touch-icon" sizes="60x60" href={settings.thumb} />
+            <link rel="apple-touch-icon" sizes="72x72" href={settings.thumb} />
 
             <link
                 rel="apple-touch-icon"
                 sizes="180x180"
-                href="/icons/icon-180x180.png"
+                href={settings.thumb}
             />
             <link
                 rel="icon"
                 type="image/png"
                 sizes="192x192"
-                href="/icons/icon-180x180.png"
+                href={settings.thumb}
             />
             <link
                 rel="icon"
                 type="image/png"
                 sizes="256x256"
-                href="/icons/icon-256x256.png"
+                href={settings.thumb}
             />
 
             <link rel="manifest" href="/manifest.json" />
@@ -130,7 +118,7 @@ export default function ({
                 property="description"
                 content={description ? description : settings.description}
             />
-            <meta property="og:locale" content={'en'} />
+            <meta property="og:locale" content={"en"} />
             <meta
                 property="og:site_name"
                 content={title ? title : settings.name}

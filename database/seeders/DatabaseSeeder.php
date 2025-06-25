@@ -18,12 +18,12 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Admin User',
-            'email' => 'admin@gmail.com',
+            'email' => 'info@rehlatna.net',
             'is_admin' => true,
         ]);
         User::factory()->create([
             'name' => 'Parent',
-            'email' => 'parent@gmail.com',
+            'email' => 'parent@rehlatna.com',
         ]);
         $this->call(UserSeeder::class);
         $this->call(VideoSeeder::class);

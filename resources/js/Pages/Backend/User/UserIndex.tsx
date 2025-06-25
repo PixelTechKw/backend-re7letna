@@ -151,17 +151,19 @@ export default function ({
                 cell: ({ row }: any) => {
                     return (
                         <ul className="flex flex-col gap-2">
-                            {map(
-                                take(row.original.children, 5),
-                                (c: Child, i: any) => (
-                                    <li
-                                        key={i}
-                                        className="truncate w-40 p-1  text-gray-600 hover:text-white hover:bg-gray-600"
-                                    >
-                                        {c.name}
-                                    </li>
-                                ),
-                            )}
+                            {row.original.children
+                                ? map(
+                                      take(row.original?.children, 5),
+                                      (c: Child, i: any) => (
+                                          <li
+                                              key={i}
+                                              className="truncate w-40 p-1  text-gray-600 hover:text-white hover:bg-gray-600"
+                                          >
+                                              {c.name}
+                                          </li>
+                                      ),
+                                  )
+                                : "N/A"}
                         </ul>
                     );
                 },
