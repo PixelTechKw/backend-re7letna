@@ -18,7 +18,6 @@ class QuizController extends Controller
      */
     public function index()
     {
-
         request()->validate([
             'child_id' => 'sometimes|exists:children,id',
         ]);

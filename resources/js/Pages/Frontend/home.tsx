@@ -7,10 +7,11 @@ import { getImage } from "@/constants";
 import { useAppDispatch } from "@/redux/hooks";
 import { setActivePath } from "@/redux/slices/appSettingSlice";
 
-export default function Welcome({
+export default function ({
     auth,
     laravelVersion,
     isDev,
+    settings,
 }: PageProps<{ laravelVersion: string; isDev: boolean }>) {
     const dispatch = useAppDispatch();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -20,7 +21,7 @@ export default function Welcome({
     }, []);
     return (
         <>
-            <Head title="re7letna" />
+            <Head title={settings.name} />
             <div className=" text-black/50 dark:bg-black dark:text-white/50">
                 <img
                     id="background"
@@ -160,14 +161,14 @@ export default function Welcome({
                                 <img
                                     id="background"
                                     className="w-40 h-auto"
-                                    src={getImage("logo.png")}
+                                    src={settings.thumb}
                                 />
                             </Link>
                         </div>
 
                         <div className="text-center">
                             <h1 className="text-balance text-5xl font-semibold tracking-tight text-prime-600 sm:text-7xl capitalize">
-                                re7letna
+                                {settings.name}
                             </h1>
                             <p className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8"></p>
                             <div className="hidden mt-10 flex items-center justify-center gap-x-6">
@@ -191,7 +192,7 @@ export default function Welcome({
                                     isDev ? `text-gray-600` : `text-second-600`
                                 } ring-1 ring-gray-900/10 hover:ring-gray-900/20`}
                             >
-                                Helping Disabled.
+                                {settings.caption}
                             </div>
                         </div>
                     </div>
