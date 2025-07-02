@@ -138,7 +138,7 @@ export default function ({ element }: PageProps): React.ReactNode {
                                     id="to"
                                     name="to"
                                     type="number"
-                                    min={10}
+                                    min={1}
                                     max={70}
                                     required
                                     aria-required
