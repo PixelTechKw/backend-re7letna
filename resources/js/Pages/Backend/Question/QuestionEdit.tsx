@@ -5,7 +5,7 @@ import { listofAnswers, SometimesAnswers, yesNoAnswers } from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Gender, PageProps } from "@/types";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
-import { capitalize, get, map } from "lodash";
+import { capitalize, get, map, truncate } from "lodash";
 import { ArrowLeft } from "lucide-react";
 import moment from "moment";
 import { FormEventHandler } from "react";
@@ -16,11 +16,12 @@ interface FormProps {
     description: string;
     questionnaire_id: string;
     order: number | string;
-    answers: any;
+    answers: string | number[] | undefined;
+    categories: string | number[] | undefined;
     [key: string]: any;
 }
 
-export default function ({ element }: PageProps): React.ReactNode {
+export default function ({ element, categories }: PageProps): React.ReactNode {
     const {
         ziggy: { query },
     } = usePage().props;
@@ -30,6 +31,7 @@ export default function ({ element }: PageProps): React.ReactNode {
             description: element.description,
             questionnaire_id: element.questionnaire_id,
             answers: element.answers,
+            categories: map(element.categories, "id"),
             order: element.order,
         });
 
@@ -66,7 +68,7 @@ export default function ({ element }: PageProps): React.ReactNode {
                     <div className="flex flex-row gap-x-4 justify-start items-center capitalize">
                         <Link
                             href={route("backend.question.index", {
-                                questionnaire_id: query.questionnaire_id,
+                                questionnaire_id: element.questionnaire_id,
                             })}
                             className="p-4 bg-gray-100 border border-gray-200 rounded-2xl"
                         >
@@ -162,6 +164,62 @@ export default function ({ element }: PageProps): React.ReactNode {
                             />
                         </div>
                     </div>
+                    {categories ? (
+                        <div className="col-span-1">
+                            <InputLabel
+                                htmlFor="categories"
+                                value={"categories"}
+                            />
+                            <Select
+                                isMulti
+                                name="categories"
+                                options={map(categories, (c: any, i) => {
+                                    return {
+                                        label: c.name,
+                                        value: c.id,
+                                    };
+                                })}
+                                onChange={(e: any) => {
+                                    const categories: any = map(e, "value");
+                                    setData("categories", categories);
+                                }}
+                                defaultValue={map(element.categories, (c) => {
+                                    return {
+                                        label: truncate(c.name, {
+                                            length: 15,
+                                        }),
+                                        value: c.id,
+                                    };
+                                })}
+                                className="basic-multi-select pt-2"
+                                classNamePrefix="select select-box "
+                                placeholder={"categories"}
+                                styles={{
+                                    control: (baseStyles, state) => ({
+                                        ...baseStyles,
+                                        borderColor: state.isFocused
+                                            ? "#75641F"
+                                            : "lightgrey",
+                                        borderRadius: 10,
+                                        padding: 8,
+                                    }),
+                                }}
+                                theme={(theme) => ({
+                                    ...theme,
+                                    colors: {
+                                        ...theme.colors,
+                                        primary25: "#C5A835",
+                                        primary: "#C5A835",
+                                        dangerLight: "#C5A835",
+                                    },
+                                })}
+                            />
+                            <InputError
+                                message={get(errors, "categories")}
+                                className="mt-2"
+                            />
+                        </div>
+                    ) : null}
 
                     <div className="col-span-full">
                         <InputLabel

@@ -34,6 +34,7 @@ export default function ({ elements, element }: PageProps): React.ReactNode {
         ziggy: { location, query },
     } = usePage().props;
     const dispatch = useAppDispatch();
+    console.log("ele", element);
 
     const columns: ColumnDef<Question>[] = useMemo(
         () => [
@@ -94,7 +95,7 @@ export default function ({ elements, element }: PageProps): React.ReactNode {
                 },
             },
             {
-                accessorKey: "description",
+                accessorKey: "categories",
                 header: ({ column }: any) => {
                     return (
                         <Button
@@ -106,7 +107,7 @@ export default function ({ elements, element }: PageProps): React.ReactNode {
                                 )
                             }
                         >
-                            description
+                            categories
                             <ArrowUpDown className="mx-2 h-4 w-4" />
                         </Button>
                     );
@@ -114,7 +115,20 @@ export default function ({ elements, element }: PageProps): React.ReactNode {
                 cell: ({ row }: any) => {
                     return (
                         <div className="flex flex-col justify-start items-start  sm-text gap-y-2  max-w-40 truncate">
-                            {row.original.description}
+                            {row.original.categories ? (
+                                <ul className="flex flex-col gap-y-2">
+                                    {map(row.original.categories, (c, i) => (
+                                        <li
+                                            className="p-1 bg-gray-100 border border-gray-300 rounded-lg text-xs"
+                                            key={i}
+                                        >
+                                            {c.name}
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                "N/A"
+                            )}
                         </div>
                     );
                 },

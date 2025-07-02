@@ -7,7 +7,7 @@ import { Input } from "@/shadcn/ui/input";
 import { Label } from "@/shadcn/ui/label";
 import { Level, PageProps } from "@/types";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
-import { capitalize, get, map } from "lodash";
+import { capitalize, get, map, truncate } from "lodash";
 import { ArrowLeft } from "lucide-react";
 import moment from "moment";
 import { ChangeEvent, FormEventHandler } from "react";
@@ -21,10 +21,15 @@ interface FormProps {
     order: string | number;
     level: "easy" | "hard" | "medium";
     active: boolean;
+    categories: string | number[] | undefined;
     [key: string]: any;
 }
 
-export default function ({ levels, element }: PageProps): React.ReactNode {
+export default function ({
+    levels,
+    element,
+    categories,
+}: PageProps): React.ReactNode {
     const {
         ziggy: { query },
     } = usePage().props;
@@ -36,6 +41,7 @@ export default function ({ levels, element }: PageProps): React.ReactNode {
             url: element.url,
             level: element.level,
             order: element.order,
+            categories: map(element.categories, "id"),
         });
 
     const handleChange = (
@@ -129,6 +135,65 @@ export default function ({ levels, element }: PageProps): React.ReactNode {
                                 />
                             </div>
                         </div>
+                        {categories ? (
+                            <div className="col-span-1">
+                                <InputLabel
+                                    htmlFor="categories"
+                                    value={"categories"}
+                                />
+                                <Select
+                                    isMulti
+                                    name="categories"
+                                    options={map(categories, (c: any, i) => {
+                                        return {
+                                            label: c.name,
+                                            value: c.id,
+                                        };
+                                    })}
+                                    onChange={(e: any) => {
+                                        const categories: any = map(e, "value");
+                                        setData("categories", categories);
+                                    }}
+                                    defaultValue={map(
+                                        element.categories,
+                                        (c) => {
+                                            return {
+                                                label: truncate(c.name, {
+                                                    length: 15,
+                                                }),
+                                                value: c.id,
+                                            };
+                                        },
+                                    )}
+                                    className="basic-multi-select pt-2"
+                                    classNamePrefix="select select-box "
+                                    placeholder={"categories"}
+                                    styles={{
+                                        control: (baseStyles, state) => ({
+                                            ...baseStyles,
+                                            borderColor: state.isFocused
+                                                ? "#75641F"
+                                                : "lightgrey",
+                                            borderRadius: 10,
+                                            padding: 8,
+                                        }),
+                                    }}
+                                    theme={(theme) => ({
+                                        ...theme,
+                                        colors: {
+                                            ...theme.colors,
+                                            primary25: "#C5A835",
+                                            primary: "#C5A835",
+                                            dangerLight: "#C5A835",
+                                        },
+                                    })}
+                                />
+                                <InputError
+                                    message={get(errors, "categories")}
+                                    className="mt-2"
+                                />
+                            </div>
+                        ) : null}
                         {/* level */}
                         <div className="col-span-1">
                             <InputLabel

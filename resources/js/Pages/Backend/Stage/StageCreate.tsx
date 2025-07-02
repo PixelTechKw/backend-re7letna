@@ -108,7 +108,7 @@ export default function ({ element, genders }: PageProps): React.ReactNode {
                                     name="from"
                                     required
                                     type="number"
-                                    min={10}
+                                    min={1}
                                     max={70}
                                     aria-required
                                     onChange={(e) =>

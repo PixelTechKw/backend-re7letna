@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
+use App\Models\Category;
 use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Models\Quiz;
@@ -25,7 +26,7 @@ class QuestionController extends Controller
             return redirect()->back()->withErrors($validator->errors()->all());
         }
         $element = Questionnaire::find(request('questionnaire_id'));
-        $elements = Question::where('questionnaire_id', request('questionnaire_id'))->orderBy('order', 'asc')->get();
+        $elements = Question::where('questionnaire_id', request('questionnaire_id'))->orderBy('order', 'asc')->with('categories')->get();
         return inertia('Backend/Question/QuestionIndex', compact('elements', 'element'));
     }
 
@@ -40,7 +41,8 @@ class QuestionController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors()->all());
         }
-        return inertia('Backend/Question/QuestionCreate');
+        $categories = Category::active()->orderBy('order', 'asc')->get(['name', 'id']);
+        return inertia('Backend/Question/QuestionCreate', compact('categories'));
     }
 
     /**
@@ -49,7 +51,8 @@ class QuestionController extends Controller
     public function store(StoreQuestionRequest $request)
     {
         try {
-            $element = Question::create($request->validated());
+            $element = Question::create($request->except('categories'));
+            $request->has("categories") ? $element->categories()->sync($request->categories) : null;
             return redirect()->route('backend.question.index', ['questionnaire_id' => $element->questionnaire_id])->with('success', 'Question created successfully');
         } catch (QueryException $e) {
             return redirect()->back()->withErrors($e->getMessage());
@@ -69,8 +72,8 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-
-        return inertia('Backend/Question/QuestionEdit', ['element' => $question]);
+        $categories = Category::active()->orderBy('order', 'asc')->get(['name', 'id']);
+        return inertia('Backend/Question/QuestionEdit', ['element' => $question->load('categories'), 'categories' => $categories]);
     }
 
     /**
@@ -79,6 +82,7 @@ class QuestionController extends Controller
     public function update(UpdateQuestionRequest $request, Question $question)
     {
         $question->update($request->validated());
+        $request->has("categories") ? $question->categories()->sync($request->categories) : null;
         return redirect()->route('backend.question.index', ['questionnaire_id' => $question->questionnaire_id])->with('success', 'Question updated successfully');
     }
 

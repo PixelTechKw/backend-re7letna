@@ -16,10 +16,11 @@ interface FormProps {
     order: string | number;
     level: "easy" | "hard" | "medium";
     active: boolean;
+    categories: [] | undefined;
     [key: string]: any;
 }
 
-export default function ({ levels }: PageProps): React.ReactNode {
+export default function ({ levels, categories }: PageProps): React.ReactNode {
     const {
         ziggy: { query },
     } = usePage().props;
@@ -30,6 +31,7 @@ export default function ({ levels }: PageProps): React.ReactNode {
             active: true,
             url: "",
             level: "easy",
+            categories: [],
             order: 1,
         });
 
@@ -120,6 +122,55 @@ export default function ({ levels }: PageProps): React.ReactNode {
                                     className="mt-2"
                                 />
                             </div>
+                        </div>
+                        {/* categories */}
+                        <div className="col-span-1">
+                            <InputLabel
+                                htmlFor="categories"
+                                value="categories"
+                                className="capitalize required"
+                            />
+                            <Select
+                                name="categories"
+                                isMulti={true}
+                                required
+                                options={map(categories, (c: any, i) => {
+                                    return {
+                                        label: c.name,
+                                        value: c.id,
+                                    };
+                                })}
+                                onChange={(e: any) => {
+                                    const categories: any = map(e, "value");
+                                    setData("categories", categories);
+                                }}
+                                className="basic-multi-select pt-2 capitalize"
+                                classNamePrefix="select select-box capitalize"
+                                placeholder="choose categories"
+                                styles={{
+                                    control: (baseStyles, state) => ({
+                                        ...baseStyles,
+                                        borderColor: state.isFocused
+                                            ? "#75641F"
+                                            : "lightgrey",
+                                        borderRadius: 10,
+                                        padding: 8,
+                                    }),
+                                }}
+                                theme={(theme) => ({
+                                    ...theme,
+                                    colors: {
+                                        ...theme.colors,
+                                        primary25: "#C5A835",
+                                        primary: "#C5A835",
+                                        dangerLight: "#C5A835",
+                                    },
+                                })}
+                            />
+                            <InputError
+                                message={get(errors, "categories")}
+                                className="mt-2"
+                            />
                         </div>
                         {/* level */}
                         <div className="col-span-1">

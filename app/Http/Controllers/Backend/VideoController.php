@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Enums\LevelEnum;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class VideoController extends Controller
     public function index()
     {
         $elements = Video::when(request()->category_id, fn($q) => $q->categories()->where('id', request()->category_id))
-            ->orderBy('id', 'desc')->get();
+            ->orderBy('id', 'desc')->with('categories')->get();
         return inertia('Backend/Video/VideoIndex', compact('elements'));
     }
 
@@ -27,7 +28,8 @@ class VideoController extends Controller
     public function create()
     {
         $levels = collect(LevelEnum::cases())->pluck('value');
-        return inertia('Backend/Video/VideoCreate', compact('levels'));
+        $categories = Category::active()->orderBy('order', 'asc')->get(['name', 'id']);
+        return inertia('Backend/Video/VideoCreate', compact('levels', 'categories'));
     }
 
     /**
@@ -48,6 +50,7 @@ class VideoController extends Controller
                     true,
                     false
                 ) : null;
+                $request->has("categories") ? $element->categories()->sync($request->categories) : null;
                 return redirect()->route("backend.video.edit", $element)->with("success", trans("general.process_success"));
             }
         } catch (Throwable $e) {
@@ -70,7 +73,8 @@ class VideoController extends Controller
     public function edit(Video $video)
     {
         $levels = collect(LevelEnum::cases())->pluck('value');
-        return inertia('Backend/Video/VideoEdit', ['element' => $video, 'levels' => $levels]);
+        $categories = Category::active()->orderBy('order', 'asc')->get(['name', 'id']);
+        return inertia('Backend/Video/VideoEdit', ['element' => $video->load('categories'), 'levels' => $levels, 'categories' => $categories]);
     }
 
     /**
@@ -88,6 +92,7 @@ class VideoController extends Controller
                 true,
                 false
             ) : null;
+            $request->has("categories") ? $video->categories()->sync($request->categories) : null;
             return redirect()->route("backend.video.index")->with("success", trans("general.process_success"));
         }
         return redirect()->route("backend.video.edit", $video->id)->with("error", trans("general.process_failure"));

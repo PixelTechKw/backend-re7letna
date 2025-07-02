@@ -28,6 +28,7 @@ class StoreQuestionRequest extends FormRequest
             'questionnaire_id' => 'required|exists:questionnaires,id',
             'answers' => ['required', 'array', new ValidAnswerStructure()],
             'order' => 'required|integer',
+            'categories' => 'array|required'
         ];
     }
 }

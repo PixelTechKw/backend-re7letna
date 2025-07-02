@@ -17,10 +17,11 @@ interface FormProps {
     questionnaire_id: string;
     order: number | string;
     answers: [];
+    categories: [] | undefined;
     [key: string]: any;
 }
 
-export default function ({ stages }: PageProps): React.ReactNode {
+export default function ({ stages, categories }: PageProps): React.ReactNode {
     const {
         ziggy: { query },
     } = usePage().props;
@@ -30,6 +31,7 @@ export default function ({ stages }: PageProps): React.ReactNode {
             description: "",
             questionnaire_id: query.questionnaire_id,
             answers: [],
+            categories: [],
             order: 1,
         });
 
@@ -147,6 +149,55 @@ export default function ({ stages }: PageProps): React.ReactNode {
                             />
                             <InputError
                                 message={get(errors, "answers")}
+                                className="mt-2"
+                            />
+                        </div>
+                        {/* categories */}
+                        <div className="col-span-1">
+                            <InputLabel
+                                htmlFor="categories"
+                                value="categories"
+                                className="capitalize required"
+                            />
+                            <Select
+                                name="categories"
+                                isMulti={true}
+                                required
+                                options={map(categories, (c: any, i) => {
+                                    return {
+                                        label: c.name,
+                                        value: c.id,
+                                    };
+                                })}
+                                onChange={(e: any) => {
+                                    const categories: any = map(e, "value");
+                                    setData("categories", categories);
+                                }}
+                                className="basic-multi-select pt-2 capitalize"
+                                classNamePrefix="select select-box capitalize"
+                                placeholder="choose categories"
+                                styles={{
+                                    control: (baseStyles, state) => ({
+                                        ...baseStyles,
+                                        borderColor: state.isFocused
+                                            ? "#75641F"
+                                            : "lightgrey",
+                                        borderRadius: 10,
+                                        padding: 8,
+                                    }),
+                                }}
+                                theme={(theme) => ({
+                                    ...theme,
+                                    colors: {
+                                        ...theme.colors,
+                                        primary25: "#C5A835",
+                                        primary: "#C5A835",
+                                        dangerLight: "#C5A835",
+                                    },
+                                })}
+                            />
+                            <InputError
+                                message={get(errors, "categories")}
                                 className="mt-2"
                             />
                         </div>
