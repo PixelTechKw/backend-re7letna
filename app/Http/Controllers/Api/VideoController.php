@@ -29,7 +29,11 @@ class VideoController extends Controller
             ->when(request()->level, function ($q) {
                 $q->where('level', request()->level);
             })
-            ->with('categories', 'stages')
+            ->with([
+                'categories:id,name,image',
+                'stages:id,name',
+                'categories.tools:id,name,image'
+            ])
             ->orderBy('order', 'asc')
             ->paginate(SELF::TAKE_MIN)
             ->setPath('?')
@@ -58,7 +62,7 @@ class VideoController extends Controller
      */
     public function show(Video $video)
     {
-        return $video->load('categories');
+        return $video->load('categories:id,name,image', 'stages:id,name', 'categories.tools:id,name,image');
     }
 
     /**
