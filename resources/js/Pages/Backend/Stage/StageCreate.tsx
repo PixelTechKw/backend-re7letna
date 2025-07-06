@@ -123,7 +123,6 @@ export default function ({ element, genders }: PageProps): React.ReactNode {
                                 />
                             </div>
                         </div>
-
                         {/* to */}
                         <div className="col-span-1">
                             <div>

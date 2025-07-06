@@ -15,6 +15,12 @@ class ToolController extends Controller
     public function index()
     {
         $elements = Tool::active()
+            ->when(request()->category_id, function ($q) {
+                $q->whereHas('categories', function ($q) {
+                    $q->where('category_id', request()->category_id);
+                });
+            })
+            ->with('categories')
             ->orderBy('order', 'asc')
             ->paginate(SELF::TAKE_MIN)
             ->setPath('?')
