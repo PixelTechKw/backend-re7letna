@@ -20,7 +20,7 @@ class ToolController extends Controller
                     $q->where('category_id', request()->category_id);
                 });
             })
-            ->with('categories')
+            ->with(['categories:id,name,image'])
             ->orderBy('order', 'asc')
             ->paginate(SELF::TAKE_MIN)
             ->setPath('?')
